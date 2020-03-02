@@ -5,4 +5,5 @@ package com.kryptkode.template.app.utils
  */
 object Constants {
     const val APP_PREFS = "app_prefs"
+    const val CACHE_TIME_MILLIS = 60* 60* 1000L
 }

@@ -1,4 +1,4 @@
-package ptml.releasing.driver.app.widgets
+package com.kryptkode.template.app.customviews
 
 import android.content.Context
 import android.graphics.Canvas

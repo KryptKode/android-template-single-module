@@ -1,64 +1,56 @@
 package com.kryptkode.template.app.data.local.prefs
 
 import android.content.SharedPreferences
-import com.afollestad.rxkprefs.rxjava.observe
-import com.afollestad.rxkprefs.rxkPrefs
-import io.reactivex.Completable
-import io.reactivex.Observable
 
 /**
  * Created by kryptkode on 10/23/2019.
  */
 
-abstract class BasePreferencesManager(protected val sharedPreferences: SharedPreferences) {
+abstract class BasePreferencesManager(private val sharedPreferences: SharedPreferences) {
 
     protected val defaultStringValue = "{}"
-    private val rxkPrefs = rxkPrefs(sharedPreferences)
 
-    protected fun setStringPreference(key: String, value: String): Completable {
-        return Completable.fromCallable {
-            rxkPrefs.string(key).set(value)
-        }
+    protected fun setStringPreference(key: String, value: String) {
+        sharedPreferences.edit()
+            .putString(key, value)
+            .apply()
     }
 
     protected fun getStringPreference(
         key: String,
         defaultValue: String = defaultStringValue
-    ): Observable<String> {
-        return rxkPrefs.string(key, defaultValue).observe()
+    ): String {
+        return sharedPreferences.getString(key, defaultValue) ?: defaultStringValue
     }
 
-    protected fun setIntPreference(key: String, value: Int): Completable {
-        return Completable.fromCallable {
-            rxkPrefs.integer(key).set(value)
-        }
+    protected fun setIntPreference(key: String, value: Int) {
+        sharedPreferences.edit()
+            .putInt(key, value)
+            .apply()
     }
 
-    protected fun getIntPreference(key: String, defaultValue: Int = -1): Observable<Int> {
-        return rxkPrefs.integer(key, defaultValue).observe()
+    protected fun getIntPreference(key: String, defaultValue: Int=-1): Int {
+        return sharedPreferences.getInt(key, defaultValue)
     }
 
 
-    protected fun setLongPreference(key: String, value: Long): Completable {
-        return Completable.fromCallable {
-            rxkPrefs.long(key).set(value)
-        }
+    protected fun setLongPreference(key: String, value: Long) {
+        sharedPreferences.edit()
+            .putLong(key, value)
+            .apply()
     }
 
-    protected fun getLongPreference(key: String, defaultValue: Long = -1L): Observable<Long> {
-        return rxkPrefs.long(key, defaultValue).observe()
+    protected fun getLongPreference(key: String, defaultValue: Long = -1): Long {
+        return sharedPreferences.getLong(key, defaultValue)
     }
 
-    protected fun getBooleanPreference(
-        key: String,
-        defaultValue: Boolean = false
-    ): Observable<Boolean> {
-        return rxkPrefs.boolean(key, defaultValue).observe()
+    protected fun getBooleanPreference(key: String, defaultValue: Boolean = false): Boolean {
+        return sharedPreferences.getBoolean(key, defaultValue)
     }
 
-    protected fun setBooleanPreference(key: String, value: Boolean): Completable {
-        return Completable.fromCallable {
-            rxkPrefs.boolean(key).set(value)
-        }
+    protected fun setBooleanPreference(key: String, value: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(key, value)
+            .apply()
     }
 }

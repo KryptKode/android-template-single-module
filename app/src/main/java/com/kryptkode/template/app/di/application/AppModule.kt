@@ -7,13 +7,11 @@ import com.kryptkode.template.app.data.dispatchers.AppDispatchers
 import com.kryptkode.template.app.data.local.prefs.AppPrefs
 import com.kryptkode.template.app.data.local.prefs.PreferencesManagerImpl
 import com.kryptkode.template.app.data.local.room.AppDb
-import com.kryptkode.template.app.data.schedulers.AppSchedulers
+import com.kryptkode.template.app.data.remote.RestClient
 import com.kryptkode.template.app.utils.Constants.APP_PREFS
 import com.securepreferences.SecurePreferences
 import dagger.Module
 import dagger.Provides
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.coroutines.Dispatchers
 
 /**
@@ -51,15 +49,10 @@ class AppModule {
         return AppDispatchers(Dispatchers.IO, Dispatchers.Default, Dispatchers.Main)
     }
 
-
     @ApplicationScope
     @Provides
-    fun provideAppSchedulers(): AppSchedulers {
-        return AppSchedulers(
-            Schedulers.computation(),
-            Schedulers.io(),
-            AndroidSchedulers.mainThread()
-        )
+    fun provideRestClient(): RestClient {
+        return RestClient()
     }
 }
 

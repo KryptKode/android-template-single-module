@@ -5,10 +5,12 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.kryptkode.template.app.data.local.room.migrations.Migrations
-import com.kryptkode.template.app.data.local.room.model.SampleModel
+import com.kryptkode.template.app.data.local.room.model.CardEntity
+import com.kryptkode.template.app.data.local.room.model.CategoryEntity
+import com.kryptkode.template.app.data.local.room.model.SubCategoryEntity
 
 @Database(
-    entities = [SampleModel::class],
+    entities = [CardEntity::class, CategoryEntity::class, SubCategoryEntity::class],
     version = 1, exportSchema = true
 )
 abstract class AppDb : RoomDatabase() {

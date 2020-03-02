@@ -6,13 +6,12 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
 /**
  * Created by kryptkode on 10/23/2019.
  */
 
-class RestClient @Inject constructor() {
+class RestClient {
 
     companion object {
         private const val TIMEOUT = 50L
@@ -28,7 +27,6 @@ class RestClient @Inject constructor() {
                 connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(TIMEOUT, TimeUnit.SECONDS)
-
                 addInterceptor(loggingInterceptor)
             }
 
