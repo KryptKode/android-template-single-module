@@ -3,4 +3,16 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+
+    <color name="colorAccentLight">#96FF4081</color>
+    <color name="colorGray">#FF555555</color>
+    <color name="colorWhite">#FFFFFFFF</color>
+    <color name="myPrimaryColorTransparent">#1F3F51B5</color>
+
+    <color name="colorAccLight">#44FFFFFF</color>
+    <color name="colorTextOnOverlay">#FFFFFF</color>
+    <color name="colorBlack">#FF000000</color>
+    <color name="colorGrayLight">#55000000</color>
+
+    <color name="blackTranslucent">#44000000</color>
 </resources>

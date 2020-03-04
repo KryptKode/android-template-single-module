@@ -10,4 +10,7 @@
     <string name="menu_home">Home</string>
     <string name="menu_share">Share</string>
     <string name="menu_send">Send</string>
+    <string name="default_empty_state_text">It\'s lonely here</string>
+    <string name="menu_categories">Categories</string>
+    <string name="img_lock_content_description">Shows that this category is locked</string>
 </resources>

@@ -24,7 +24,8 @@ android {
             }
         }
 
-        buildConfigField("String", "BASE_URL", "\"http://app_base_url.com\"")
+        buildConfigField 'String', 'BASE_URL', '"http://api.wish3.xyz/api/api/public/"'
+        buildConfigField 'String', 'IMAGE_URL', '"http://api.wish3.xyz/api/admin/"'
     }
 
     sourceSets {
@@ -60,6 +61,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.2.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
 
 
@@ -84,7 +86,9 @@ dependencies {
     /*Do not update retrofit this version is required to support minSdkVersion < API 21*/
     def retrofitVersion = "2.6.0"
     def okhttp3Logging = "3.9.0"
-    implementation "com.squareup.moshi:moshi:1.9.2"
+    def moshiVersion = "1.9.2"
+    implementation "com.squareup.moshi:moshi:$moshiVersion"
+    kapt "com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-moshi:$retrofitVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3Logging"
@@ -127,4 +131,14 @@ dependencies {
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:2.1"
+
+    // Chuck
+    dependencies {
+        def chuckVersion = "1.1.0"
+        debugImplementation "com.readystatesoftware.chuck:library:${chuckVersion}"
+        releaseImplementation "com.readystatesoftware.chuck:library-no-op:${chuckVersion}"
+    }
 }

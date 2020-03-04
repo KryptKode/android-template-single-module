@@ -12,8 +12,8 @@ data class CategoryEntity(
     @PrimaryKey val id: String,
     val name: String,
     val imageUrl: String,
-    val favorite: Boolean,
     val status: String,
-    val sort: String,
+    val sortOrder: String,
+    val favorite: Boolean,
     val locked: Boolean
 )

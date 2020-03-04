@@ -8,7 +8,7 @@ import com.kryptkode.template.app.di.screen.ScreenComponent
 
 abstract class BaseFragment : Fragment() {
 
-    lateinit var baseActivity: BaseActivity;
+    lateinit var baseActivity: BaseActivity
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -21,5 +21,4 @@ abstract class BaseFragment : Fragment() {
     fun getScreenComponent(): ScreenComponent {
         return baseActivity.getScreenComponent()
     }
-
 }

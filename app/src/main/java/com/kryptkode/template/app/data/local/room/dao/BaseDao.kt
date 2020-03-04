@@ -6,37 +6,50 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Update
 
 
-interface BaseDao<T> {
+abstract class BaseDao<T> {
 
     /**
      * Insert an object in the database.
      *
-     * @param obj the object to be inserted.
+     * @param item the object to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(obj: T)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insert(item: T): Long
 
     /**
      * Insert an array of objects in the database.
      *
-     * @param obj the objects to be inserted.
+     * @param items the objects to be inserted.
      */
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(obj: List<T>)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    abstract suspend fun insert(items: List<T>): List<Long>
 
     /**
      * Update an object from the database.
      *
-     * @param obj the object to be updated
+     * @param item the object to be updated
      */
     @Update
-    suspend fun update(obj: T)
+    abstract suspend fun update(item: T)
 
     /**
      * Delete an object from the database
      *
-     * @param obj the object to be deleted
+     * @param item the object to be deleted
      */
     @Delete
-    suspend fun delete(obj: T): Int
+    abstract suspend fun delete(item: T): Int
+
+    open suspend fun handleInsertConflict(item:T){
+
+    }
+
+    suspend fun upsert(items: List<T>) {
+        val ids = insert(items)
+        ids.forEachIndexed { index, id ->
+            if (id == -1L) {
+                handleInsertConflict(items[index])
+            }
+        }
+    }
 }

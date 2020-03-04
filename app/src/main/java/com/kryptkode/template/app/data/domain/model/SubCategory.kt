@@ -9,6 +9,6 @@ data class SubCategory(
     val parentId: String,
     val imageUrl: String,
     val status: String,
-    val sort: String,
+    val sortOrder: String,
     val favorite: Boolean
 )

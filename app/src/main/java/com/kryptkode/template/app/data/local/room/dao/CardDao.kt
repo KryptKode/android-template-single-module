@@ -1,15 +1,15 @@
 package com.kryptkode.template.app.data.local.room.dao
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.kryptkode.template.app.data.local.room.model.CardEntity
-import kotlinx.coroutines.flow.Flow
 
 /**
  * Created by kryptkode on 2/23/2020.
  */
 @Dao
-abstract class CardDao : BaseDao<CardEntity> {
+abstract class CardDao : BaseDao<CardEntity>() {
 
     /**
      * Get entity by id.
@@ -25,7 +25,7 @@ abstract class CardDao : BaseDao<CardEntity> {
      * @return List of the wallpapers
      */
     @Query("SELECT * FROM CardEntity")
-    abstract fun getAllCards(): Flow<List<CardEntity>>
+    abstract fun getAllCards(): LiveData<List<CardEntity>>
 
 
     /**
@@ -33,7 +33,7 @@ abstract class CardDao : BaseDao<CardEntity> {
      * @return
      */
     @Query("SELECT * FROM CardEntity WHERE favorite = 1")
-    abstract fun getAllFavoriteCards(): Flow<List<CardEntity>>
+    abstract fun getAllFavoriteCards(): LiveData<List<CardEntity>>
 
 
     /**
@@ -42,9 +42,9 @@ abstract class CardDao : BaseDao<CardEntity> {
      * @return
      */
     @Query("SELECT * FROM CardEntity WHERE subCategoryId  = :subCategoryId")
-    abstract fun getCardEntitysWithSubCategory(subCategoryId: String): Flow<List<CardEntity>>
+    abstract fun getCardEntitysWithSubCategory(subCategoryId: String): LiveData<List<CardEntity>>
 
 
     @Query("SELECT * FROM CardEntity WHERE categoryId  = :categoryId")
-    abstract fun getCardEntitysWithCategory(categoryId: String): Flow<List<CardEntity>>
+    abstract fun getCardEntitysWithCategory(categoryId: String): LiveData<List<CardEntity>>
 }

@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.kryptkode.template.app.data.local.room.dao.CardDao
+import com.kryptkode.template.app.data.local.room.dao.CategoryDao
+import com.kryptkode.template.app.data.local.room.dao.SubCategoryDao
 import com.kryptkode.template.app.data.local.room.migrations.Migrations
 import com.kryptkode.template.app.data.local.room.model.CardEntity
 import com.kryptkode.template.app.data.local.room.model.CategoryEntity
@@ -14,6 +17,10 @@ import com.kryptkode.template.app.data.local.room.model.SubCategoryEntity
     version = 1, exportSchema = true
 )
 abstract class AppDb : RoomDatabase() {
+
+    abstract fun categoryDao():CategoryDao
+    abstract fun subCategoryDao():SubCategoryDao
+    abstract fun cardDao():CardDao
 
     companion object {
         private const val DB_NAME = "releasing.db"

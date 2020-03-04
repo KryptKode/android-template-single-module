@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.createViewModelLazy
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.kryptkode.template.BR
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
@@ -18,13 +19,13 @@ abstract class BaseViewModelFragment<D, V>(klazz: KClass<V>) :
     BaseBindingFragment<D>() where D : ViewDataBinding, V : ViewModel {
 
     @Inject
-    lateinit var viewModelFractory: ViewModelProvider.Factory
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    protected val viewModel by viewModels(klazz) { viewModelFractory }
+    protected val viewModel by viewModels(klazz) { viewModelFactory }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        binding.setVariable(BR.viewModel, viewModel)
+        binding.setVariable(BR._all, viewModel)
     }
 
 }

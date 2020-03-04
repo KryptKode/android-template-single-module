@@ -1,9 +1,11 @@
 package com.kryptkode.template.app.di.screen
 
 import com.kryptkode.template.MainActivity
-import com.kryptkode.template.app.di.viewmodel.ViewModelFactoryModule
-import com.kryptkode.template.app.di.viewmodel.ViewModelModule
-import com.kryptkode.template.ui.home.HomeFragment
+import com.kryptkode.template.app.di.screen.modules.ScreenModule
+import com.kryptkode.template.app.di.screen.viewmodel.ViewModelFactoryModule
+import com.kryptkode.template.app.di.screen.viewmodel.ViewModelModule
+import com.kryptkode.template.app.di.screen.viewmodel.ViewModelProviderModule
+import com.kryptkode.template.categories.CategoriesFragment
 import dagger.Subcomponent
 
 /**
@@ -14,10 +16,12 @@ import dagger.Subcomponent
     modules = [
         ScreenModule::class,
         ViewModelFactoryModule::class,
-        ViewModelModule::class
+        ViewModelModule::class,
+        ViewModelProviderModule::class
     ]
 )
+@ScreenScope
 interface ScreenComponent {
     fun inject(mainActivity: MainActivity)
-    fun inject(fragment: HomeFragment)
+    fun inject(fragment: CategoriesFragment)
 }

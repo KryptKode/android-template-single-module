@@ -4,8 +4,8 @@ import android.app.Activity
 import android.app.Service
 import android.content.Context
 import androidx.fragment.app.Fragment
-import androidx.multidex.BuildConfig
 import androidx.multidex.MultiDexApplication
+import com.kryptkode.template.BuildConfig
 import com.kryptkode.template.app.di.application.AppComponent
 import com.kryptkode.template.app.di.application.DaggerAppComponent
 import timber.log.Timber

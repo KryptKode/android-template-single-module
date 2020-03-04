@@ -2,7 +2,7 @@ package com.kryptkode.template.app.di.application
 
 import com.kryptkode.template.app.App
 import com.kryptkode.template.app.di.screen.ScreenComponent
-import com.kryptkode.template.app.di.screen.ScreenModule
+import com.kryptkode.template.app.di.screen.modules.ScreenModule
 import dagger.BindsInstance
 import dagger.Component
 
@@ -13,6 +13,7 @@ import dagger.Component
 @Component(
     modules = [AppModule::class]
 )
+@ApplicationScope
 interface AppComponent {
 
 

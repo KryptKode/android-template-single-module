@@ -8,6 +8,9 @@ import android.content.SharedPreferences
 
 abstract class BasePreferencesManager(private val sharedPreferences: SharedPreferences) {
 
+    protected val prefLink = "prefLink"
+    protected val prefLinkCacheTime = "prefLinkCacheTime"
+    protected val prefCardCacheTime = "prefCardCacheTime"
     protected val defaultStringValue = "{}"
 
     protected fun setStringPreference(key: String, value: String) {
