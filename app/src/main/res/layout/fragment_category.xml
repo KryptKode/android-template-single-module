@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.kryptkode.template.categories.CategoriesViewModel" />
@@ -28,11 +29,16 @@
                     android:id="@+id/category_recycler_view"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/card_side_margin"
+                    android:paddingTop="@dimen/header_margin"
+                    android:paddingEnd="@dimen/card_side_margin"
+                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0"
+                    app:spanCount="@integer/grid_columns"
                     tools:listitem="@layout/item_category_grid" />
 
                 <include

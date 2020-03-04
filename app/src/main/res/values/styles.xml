@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorSurface</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -56,6 +57,15 @@
     <style name="TextAppearance.App.TextInputLayout.HintText" parent="TextAppearance.MaterialComponents.Caption">
         <item name="android:textColor">?colorOnSurface</item>
     </style>
+
+    <style name="ShapeAppearance.Card" parent="ShapeAppearance.MaterialComponents">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopLeft">0dp</item>
+        <item name="cornerSizeTopRight">@dimen/card_corner_radius</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">@dimen/card_corner_radius</item>
+    </style>
+
 
 
 </resources>

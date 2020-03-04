@@ -30,11 +30,12 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
     @Query("SELECT * FROM CategoryEntity WHERE favorite = 1 ")
     abstract fun getAllFavoriteCategories(): LiveData<List<CategoryEntity>>
 
+
     /**
      * Get all entities of type Category
      * @return
      */
-    @Query("SELECT * FROM CategoryEntity")
+    @Query("SELECT * FROM CategoryEntity ORDER BY id ASC")
     abstract fun getAllCategories(): LiveData<List<CategoryEntity>>
 
     override suspend fun handleInsertConflict(item: CategoryEntity) {

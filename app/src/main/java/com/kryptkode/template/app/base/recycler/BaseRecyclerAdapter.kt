@@ -1,20 +1,12 @@
 package com.kryptkode.template.app.base.recycler
 
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 
-abstract class BaseRecyclerAdapter<T, V> :
-    RecyclerView.Adapter<V>() where V : BaseRecyclerViewHolder<T, *> {
-    protected val listItems = mutableListOf<T>()
-
-    fun setList(listOfItems: List<T>) {
-        listItems.clear()
-        listItems.addAll(listOfItems)
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount() = listItems.size
+abstract class BaseRecyclerAdapter<T, V>(diffCallback: DiffUtil.ItemCallback<T>) :
+    ListAdapter<T, V>(diffCallback) where V : BaseRecyclerViewHolder<T, *> {
 
     override fun onBindViewHolder(holder: V, position: Int) {
-        holder.performBind(listItems[position])
+        holder.performBind(getItem(position))
     }
 }
