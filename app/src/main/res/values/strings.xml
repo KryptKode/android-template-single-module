@@ -13,4 +13,27 @@
     <string name="default_empty_state_text">It\'s lonely here</string>
     <string name="menu_categories">Categories</string>
     <string name="img_lock_content_description">Shows that this category is locked</string>
+    <string name="title_favorites">Favorites</string>
+    <string name="title_rate_this_app">Rate this app</string>
+    <string name="title_share_this_app">Share with friends</string>
+    <string name="title_privacy_policy">Privacy Policy</string>
+    <string name="title_open_source">Open source licences</string>
+    <string name="title_more_apps">More apps</string>
+    <string name="title_contact">Contact us</string>
+    <string name="title_nav_end">Menu</string>
+    <string name="menu_more">More Options</string>
+
+    <string name="contact_us_close_dialog">Close</string>
+    <string name="contact_us_dialog_positive_text">Send Message</string>
+    <string name="feedback_failed_to_send_msg">You are offline. Connect to the internet to send feedback</string>
+    <string name="feedback_sent_msg">Feedback sent successfully</string>
+
+    <string name="share_msg">Share with…</string>
+    <string name="share_text">Hey, check out this awesome app!\n%s</string>
+
+    <string name="rate_dialog_title">Rate this app</string>
+    <string name="rate_dialog_message">If you enjoy playing this app, would you mind taking a moment to rate it? It won\'t take more than a minute. Thanks for your support!</string>
+    <string name="rate_dialog_ok">Rate now</string>
+    <string name="rate_dialog_cancel">Later</string>
+    <string name="open_playstore_with">Open with</string>
 </resources>

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:id="@+id/group_favorites">
+
+        <item
+            android:id="@+id/action_favorites"
+            android:icon="@drawable/ic_favorite_full"
+            android:title="@string/title_favorites" />
+    </group>
+
+    <group android:id="@+id/group_rate">
+        <item
+            android:id="@+id/action_rate"
+            android:icon="@drawable/ic_star_half"
+            android:title="@string/title_rate_this_app" />
+    </group>
+
+    <group android:id="@+id/group_share">
+
+        <item
+            android:id="@+id/action_share"
+            android:icon="@drawable/ic_share"
+            android:title="@string/title_share_this_app" />
+    </group>
+
+    <!--<group android:id="@+id/group_privacy">
+
+        <item
+            android:id="@+id/action_privacy"
+            android:icon="@drawable/ic_info_black_24dp"
+            android:title="@string/privacy_policy"
+            />
+    </group>
+
+    <group android:id="@+id/group_terms">
+
+        <item
+            android:id="@+id/action_terms"
+            android:icon="@drawable/ic_library_books_black_24dp"
+            android:title="@string/terms_amp_conditions"
+            />
+    </group>-->
+
+    <group android:id="@+id/group_contact">
+
+        <item
+            android:id="@+id/action_contact"
+            android:icon="@drawable/ic_rate_review"
+            android:title="@string/title_contact" />
+
+    </group>
+
+    <group android:id="@+id/group_privacy_policy">
+
+        <item
+            android:id="@+id/action_privacy_policy"
+            android:icon="@drawable/ic_privacy"
+            android:title="@string/title_privacy_policy" />
+    </group>
+
+    <group android:id="@+id/group_open_source">
+
+
+        <item
+            android:id="@+id/action_open_source"
+            android:icon="@drawable/ic_open_source"
+            android:title="@string/title_open_source" />
+    </group>
+
+
+    <group android:id="@+id/group_more_apps">
+
+        <item
+            android:id="@+id/action_more_apps"
+            android:icon="@drawable/ic_get_app"
+            android:title="@string/title_more_apps" />
+    </group>
+</menu>

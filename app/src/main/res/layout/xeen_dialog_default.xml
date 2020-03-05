@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/xeen_bg_dialog_inset">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_l"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.02" />
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_r"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.98" />
+
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dialog_text_margin_horiz"
+            android:layout_marginTop="@dimen/dialog_title_margin_top"
+            android:layout_marginEnd="@dimen/dialog_text_margin_horiz"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="@dimen/dialog_title_line_spacing"
+            android:text="@string/app_name"
+            android:textAppearance="@style/TextAppearance.App.H2"
+            android:textSize="@dimen/text_size_h2"
+            app:layout_constraintEnd_toEndOf="@id/guideline_r"
+            app:layout_constraintStart_toStartOf="@id/guideline_l"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/secondary_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dialog_text_margin_top"
+            android:gravity="center_horizontal"
+            android:lineSpacingExtra="@dimen/dialog_line_spacing"
+            android:maxLines="5"
+            android:padding="8dp"
+            android:textAppearance="@style/TextAppearance.App.Subtitle"
+            app:layout_constraintEnd_toEndOf="@id/guideline_r"
+            app:layout_constraintStart_toStartOf="@id/guideline_l"
+            app:layout_constraintTop_toBottomOf="@id/main_text"
+            tools:text="@tools:sample/lorem/random" />
+
+
+        <Button
+            android:id="@+id/btn_no"
+            style="@style/Widget.App.Button.Outlined"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dialog_buttom_margin_top"
+            android:layout_marginEnd="@dimen/dialog_text_margin_horiz"
+            android:layout_marginBottom="@dimen/dialog_buttom_margin_bottom"
+            android:maxLines="1"
+            android:text="@android:string/cancel"
+            android:visibility="visible"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="9sp"
+            app:autoSizeStepGranularity="1sp"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_ok"
+            app:layout_constraintHeight_min="@dimen/dialog_button_height"
+            app:layout_constraintStart_toStartOf="@id/guideline_l"
+            app:layout_constraintTop_toBottomOf="@id/secondary_text"
+            app:layout_constraintWidth_max="@dimen/dialog_button_width"
+            android:layout_marginRight="@dimen/dialog_text_margin_horiz" />
+
+        <Button
+            android:id="@+id/btn_ok"
+            style="@style/Widget.App.Button"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dialog_text_margin_horiz"
+            android:layout_marginTop="@dimen/dialog_buttom_margin_top"
+            android:layout_marginBottom="@dimen/dialog_buttom_margin_bottom"
+            android:maxLines="1"
+            android:text="@android:string/ok"
+            app:autoSizeMaxTextSize="16sp"
+            app:autoSizeMinTextSize="9sp"
+            app:autoSizeStepGranularity="1sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guideline_r"
+            app:layout_constraintHeight_min="@dimen/dialog_button_height"
+            app:layout_constraintStart_toEndOf="@id/btn_no"
+            app:layout_constraintTop_toBottomOf="@id/secondary_text"
+            app:layout_constraintWidth_max="@dimen/dialog_button_width"
+            android:layout_marginLeft="@dimen/dialog_text_margin_horiz" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>

@@ -2,10 +2,12 @@ package com.kryptkode.template.app.di.screen.modules
 
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.kryptkode.template.Navigator
 import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.local.LocalImpl
 import com.kryptkode.template.app.data.local.mapper.LocalMappers
 import com.kryptkode.template.app.data.local.prefs.AppPrefs
+import com.kryptkode.template.app.data.local.prefs.PreferencesManagerImpl
 import com.kryptkode.template.app.data.local.room.AppDb
 import com.kryptkode.template.app.data.remote.Remote
 import com.kryptkode.template.app.data.remote.RemoteImpl
@@ -15,6 +17,10 @@ import com.kryptkode.template.app.di.screen.ScreenScope
 import com.kryptkode.template.app.di.screen.modules.mapper.MapperModule
 import com.kryptkode.template.app.di.screen.modules.mapper.local.LocalMapperModule
 import com.kryptkode.template.app.di.screen.modules.repo.RepositoryModule
+import com.kryptkode.template.app.utils.rating.RatingDataProvider
+import com.kryptkode.template.app.utils.rating.RatingManager
+import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
+import com.kryptkode.template.app.utils.sharing.ShareUtils
 import dagger.Module
 import dagger.Provides
 
@@ -46,5 +52,35 @@ class ScreenModule(private val activity: FragmentActivity) {
     @ScreenScope
     fun provideRemote(api: Api, remoteMappers: RemoteMappers): Remote {
         return RemoteImpl(api, remoteMappers)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideShareUtils( @ScreenScope context: Context): ShareUtils {
+        return ShareUtils(context)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideAppPrefs(preferencesManagerImpl: PreferencesManagerImpl): RatingDataProvider {
+        return preferencesManagerImpl
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideRatingManager(ratingDataProvider: RatingDataProvider): RatingManager {
+        return RatingManager(ratingDataProvider)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideNavigator(activity: FragmentActivity): Navigator {
+        return Navigator(activity)
+    }
+
+    @Provides
+    @ScreenScope
+    fun providePlayStoreUtils(activity: FragmentActivity): PlayStoreUtils {
+        return PlayStoreUtils(activity)
     }
 }

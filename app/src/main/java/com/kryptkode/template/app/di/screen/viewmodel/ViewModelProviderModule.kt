@@ -1,5 +1,6 @@
 package com.kryptkode.template.app.di.screen.viewmodel
 
+import com.kryptkode.template.MainActivityViewModel
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.categories.CategoriesViewModel
 import com.kryptkode.template.categories.mapper.CategoriesViewMapper
@@ -18,5 +19,10 @@ class ViewModelProviderModule {
         categoriesViewMapper: CategoriesViewMapper
     ): CategoriesViewModel {
         return CategoriesViewModel(categoryRepository, categoriesViewMapper)
+    }
+
+    @Provides
+    fun provideMainActivityViewModel(): MainActivityViewModel {
+        return MainActivityViewModel()
     }
 }

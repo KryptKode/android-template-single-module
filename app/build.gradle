@@ -1,9 +1,10 @@
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 apply plugin: 'com.android.application'
-
+apply plugin: 'com.google.android.gms.oss-licenses-plugin'
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'io.fabric'
 
 android {
     compileSdkVersion 29
@@ -23,6 +24,12 @@ android {
                                      "$projectDir/schemas".toString()]
             }
         }
+
+        manifestPlaceholders = [
+                onesignal_app_id               : 'c93d908f-cab2-4d89-ab07-9df52c0384a7',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
 
         buildConfigField 'String', 'BASE_URL', '"http://api.wish3.xyz/api/api/public/"'
         buildConfigField 'String', 'IMAGE_URL', '"http://api.wish3.xyz/api/admin/"'
@@ -51,6 +58,10 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    dexOptions {
+        javaMaxHeapSize "4g"
+    }
+
 }
 
 dependencies {
@@ -106,6 +117,16 @@ dependencies {
     implementation "io.coil-kt:coil:0.9.5"
     implementation "io.coil-kt:coil-gif:0.9.5"
 
+    //google
+    implementation 'com.google.android.gms:play-services-ads:18.3.0'
+    implementation 'com.google.firebase:firebase-core:17.2.3'
+    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
+    implementation 'com.google.android.play:core:1.6.5'
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
+
+    implementation 'com.onesignal:OneSignal:3.12.4'
+
     //permissions
     def permission_dispatcher = "4.6.0"
     implementation "org.permissionsdispatcher:permissionsdispatcher:$permission_dispatcher"
@@ -142,3 +163,5 @@ dependencies {
         releaseImplementation "com.readystatesoftware.chuck:library-no-op:${chuckVersion}"
     }
 }
+
+apply plugin: 'com.google.gms.google-services'

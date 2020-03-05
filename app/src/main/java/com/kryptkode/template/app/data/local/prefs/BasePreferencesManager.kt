@@ -13,6 +13,14 @@ abstract class BasePreferencesManager(private val sharedPreferences: SharedPrefe
     protected val prefCardCacheTime = "prefCardCacheTime"
     protected val defaultStringValue = "{}"
 
+    protected val PREF_KEY_INSTALL_DATE = "android_rate_install_date"
+
+    protected val PREF_KEY_LAUNCH_TIMES = "android_rate_launch_times"
+
+    protected val PREF_KEY_IS_AGREE_SHOW_DIALOG = "android_rate_is_agree_show_dialog"
+
+    protected val PREF_KEY_REMIND_INTERVAL = "android_rate_remind_interval"
+
     protected fun setStringPreference(key: String, value: String) {
         sharedPreferences.edit()
             .putString(key, value)
@@ -54,6 +62,17 @@ abstract class BasePreferencesManager(private val sharedPreferences: SharedPrefe
     protected fun setBooleanPreference(key: String, value: Boolean) {
         sharedPreferences.edit()
             .putBoolean(key, value)
+            .apply()
+    }
+
+    fun resetPreferences(): Boolean {
+        sharedPreferences.edit().clear().apply()
+        return true
+    }
+
+    fun removePreference(key: String) {
+        sharedPreferences.edit()
+            .remove(key)
             .apply()
     }
 }

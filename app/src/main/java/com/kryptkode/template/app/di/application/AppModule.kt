@@ -27,12 +27,6 @@ class AppModule {
 
     @ApplicationScope
     @Provides
-    fun provideContext(app: App): Context {
-        return app
-    }
-
-    @ApplicationScope
-    @Provides
     fun provideApplication(app: App): Application {
         return app
     }
@@ -40,13 +34,19 @@ class AppModule {
 
     @ApplicationScope
     @Provides
-    fun providePrefs(sharedPreferences: SharedPreferences): AppPrefs {
+    fun providePrefs(sharedPreferences: SharedPreferences): PreferencesManagerImpl {
         return PreferencesManagerImpl(sharedPreferences)
+    }
+
+    @ApplicationScope
+    @Provides
+    fun provideAppPrefs(preferencesManagerImpl: PreferencesManagerImpl): AppPrefs {
+        return preferencesManagerImpl
     }
 
     @Provides
     @ApplicationScope
-    fun provideSharedPrefs(context: Context): SharedPreferences {
+    fun provideSharedPrefs(context: Application): SharedPreferences {
         return if (BuildConfig.DEBUG) context.getSharedPreferences(
             APP_PREFS,
             Context.MODE_PRIVATE
@@ -55,7 +55,7 @@ class AppModule {
 
     @ApplicationScope
     @Provides
-    fun provideAppDb(context: Context): AppDb {
+    fun provideAppDb(context: Application): AppDb {
         return AppDb.getInstance(context)
     }
 
@@ -67,7 +67,7 @@ class AppModule {
 
     @ApplicationScope
     @Provides
-    fun provideRestClient(context: Context): RestClient {
+    fun provideRestClient(context: Application): RestClient {
         return RestClient(context)
     }
 
