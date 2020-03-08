@@ -12,7 +12,7 @@ class SubcategoryLocalDomainMapper : Mapper<SubCategoryEntity, SubCategory> {
         return SubCategory(
             model.id,
             model.name,
-            model.parentId,
+            model.categoryId,
             model.imageUrl,
             model.status,
             model.sortOrder,

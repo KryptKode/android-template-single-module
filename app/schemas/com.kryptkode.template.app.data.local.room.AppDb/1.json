@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "8f6018fad6609a513025aba5fa659a9c",
+    "identityHash": "6779c47c2becc9c5f610b06b7be4d69e",
     "entities": [
       {
-        "tableName": "CardEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `categoryId` TEXT NOT NULL, `subcategoryId` TEXT NOT NULL, `imgUrl` TEXT NOT NULL, `status` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "card",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `category_id` TEXT NOT NULL, `sub_category_id` TEXT NOT NULL, `image_url` TEXT NOT NULL, `status` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -22,19 +22,19 @@
           },
           {
             "fieldPath": "categoryId",
-            "columnName": "categoryId",
+            "columnName": "category_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "subcategoryId",
-            "columnName": "subcategoryId",
+            "columnName": "sub_category_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "imgUrl",
-            "columnName": "imgUrl",
+            "columnName": "image_url",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -61,8 +61,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "CategoryEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `favorite` INTEGER NOT NULL, `status` TEXT NOT NULL, `sortOrder` TEXT NOT NULL, `locked` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "category",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `image_url` TEXT NOT NULL, `status` TEXT NOT NULL, `sort` TEXT NOT NULL, `favorite` INTEGER NOT NULL, `locked` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -78,14 +78,8 @@
           },
           {
             "fieldPath": "imageUrl",
-            "columnName": "imageUrl",
+            "columnName": "image_url",
             "affinity": "TEXT",
-            "notNull": true
-          },
-          {
-            "fieldPath": "favorite",
-            "columnName": "favorite",
-            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -96,8 +90,14 @@
           },
           {
             "fieldPath": "sortOrder",
-            "columnName": "sortOrder",
+            "columnName": "sort",
             "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "favorite",
+            "columnName": "favorite",
+            "affinity": "INTEGER",
             "notNull": true
           },
           {
@@ -117,8 +117,8 @@
         "foreignKeys": []
       },
       {
-        "tableName": "SubCategoryEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `parentId` TEXT NOT NULL, `imageUrl` TEXT NOT NULL, `status` TEXT NOT NULL, `sortOrder` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "tableName": "subcategory",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `name` TEXT NOT NULL, `category_id` TEXT NOT NULL, `image_url` TEXT NOT NULL, `status` TEXT NOT NULL, `sort` TEXT NOT NULL, `favorite` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -133,14 +133,14 @@
             "notNull": true
           },
           {
-            "fieldPath": "parentId",
-            "columnName": "parentId",
+            "fieldPath": "categoryId",
+            "columnName": "category_id",
             "affinity": "TEXT",
             "notNull": true
           },
           {
             "fieldPath": "imageUrl",
-            "columnName": "imageUrl",
+            "columnName": "image_url",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -152,7 +152,7 @@
           },
           {
             "fieldPath": "sortOrder",
-            "columnName": "sortOrder",
+            "columnName": "sort",
             "affinity": "TEXT",
             "notNull": true
           },
@@ -176,7 +176,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '8f6018fad6609a513025aba5fa659a9c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6779c47c2becc9c5f610b06b7be4d69e')"
     ]
   }
 }

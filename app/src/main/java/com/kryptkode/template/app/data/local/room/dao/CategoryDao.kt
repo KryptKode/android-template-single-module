@@ -3,7 +3,9 @@ package com.kryptkode.template.app.data.local.room.dao
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
+import androidx.room.Transaction
 import com.kryptkode.template.app.data.local.room.model.CategoryEntity
+import com.kryptkode.template.app.data.local.room.model.CategoryWithSubCategoriesEntity
 
 /**
  * Created by kryptkode on 2/19/2020.
@@ -16,10 +18,10 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
      * @param id A Unique identifier for a given record within the Database.
      * @return
      */
-    @Query("SELECT * FROM CategoryEntity WHERE id = :id ")
+    @Query("SELECT * FROM category WHERE id = :id ")
     abstract fun getCategoryLiveById(id: String?): LiveData<CategoryEntity>
 
-    @Query("SELECT * FROM CategoryEntity WHERE id = :id ")
+    @Query("SELECT * FROM category WHERE id = :id ")
     abstract fun getCategoryById(id: String?): CategoryEntity
 
 
@@ -27,15 +29,19 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
      * Get all entities that are marked as favorite
      * @return
      */
-    @Query("SELECT * FROM CategoryEntity WHERE favorite = 1 ")
+    @Query("SELECT * FROM category WHERE favorite = 1 ")
     abstract fun getAllFavoriteCategories(): LiveData<List<CategoryEntity>>
 
+
+    @Transaction
+    @Query("SELECT * FROM category ORDER BY id ASC")
+    abstract fun getCategoriesWithSubCategories(): List<CategoryWithSubCategoriesEntity>
 
     /**
      * Get all entities of type Category
      * @return
      */
-    @Query("SELECT * FROM CategoryEntity ORDER BY id ASC")
+    @Query("SELECT * FROM category ORDER BY id ASC")
     abstract fun getAllCategories(): LiveData<List<CategoryEntity>>
 
     override suspend fun handleInsertConflict(item: CategoryEntity) {

@@ -125,7 +125,7 @@ dependencies {
     implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
 
-    implementation 'com.onesignal:OneSignal:3.12.4'
+//    implementation 'com.onesignal:OneSignal:3.12.4'
 
     //permissions
     def permission_dispatcher = "4.6.0"

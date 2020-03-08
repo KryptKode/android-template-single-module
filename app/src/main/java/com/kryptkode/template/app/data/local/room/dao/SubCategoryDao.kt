@@ -9,13 +9,13 @@ import com.kryptkode.template.app.data.local.room.model.SubCategoryEntity
  * Created by kryptkode on 2/19/2020.
  */
 @Dao
-abstract class SubCategoryDao : BaseDao<SubCategoryEntity>(){
+abstract class SubCategoryDao : BaseDao<SubCategoryEntity>() {
     /**
      * Get entity by id.
      * @param id A Unique identifier for a given record within the Database.
      * @return
      */
-    @Query("SELECT * FROM SubCategoryEntity WHERE id = :id")
+    @Query("SELECT * FROM subcategory WHERE id = :id")
     abstract fun getSubCategoryById(id: String): LiveData<SubCategoryEntity>
 
 
@@ -23,14 +23,14 @@ abstract class SubCategoryDao : BaseDao<SubCategoryEntity>(){
      * Get all entities of type SubCategory
      * @return List of the Subcategories
      */
-    @Query("SELECT * FROM SubCategoryEntity ORDER BY sortOrder ASC")
+    @Query("SELECT * FROM subcategory ORDER BY sort ASC")
     abstract fun getAllSubCategories(): LiveData<List<SubCategoryEntity>>
 
     /**
      * Get all entities that are marked as favorite
      * @return
      */
-    @Query("SELECT * FROM SubCategoryEntity WHERE favorite = 1")
+    @Query("SELECT * FROM subcategory WHERE favorite = 1")
     abstract fun getAllFavoriteSubCategories(): LiveData<List<SubCategoryEntity>>
 
     /**
@@ -38,7 +38,7 @@ abstract class SubCategoryDao : BaseDao<SubCategoryEntity>(){
      *
      * @return
      */
-    @Query("SELECT * FROM SubCategoryEntity WHERE parentId  = :categoryId")
+    @Query("SELECT * FROM subcategory WHERE category_id  = :categoryId")
     abstract fun getSubCategoriesInCategory(categoryId: String): LiveData<List<SubCategoryEntity>>
 
 }

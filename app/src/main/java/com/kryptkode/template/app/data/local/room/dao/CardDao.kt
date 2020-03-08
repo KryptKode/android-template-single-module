@@ -16,7 +16,7 @@ abstract class CardDao : BaseDao<CardEntity>() {
      * @param id A Unique identifier for a given record within the Database.
      * @return
      */
-    @Query("SELECT * FROM CardEntity WHERE id = :id")
+    @Query("SELECT * FROM card WHERE id = :id")
     abstract fun getCardEntityById(id: String?): CardEntity
 
 
@@ -24,7 +24,7 @@ abstract class CardDao : BaseDao<CardEntity>() {
      * Get all entities of type CardEntity
      * @return List of the wallpapers
      */
-    @Query("SELECT * FROM CardEntity")
+    @Query("SELECT * FROM card")
     abstract fun getAllCards(): LiveData<List<CardEntity>>
 
 
@@ -32,7 +32,7 @@ abstract class CardDao : BaseDao<CardEntity>() {
      * Get all entities that are marked as favorite
      * @return
      */
-    @Query("SELECT * FROM CardEntity WHERE favorite = 1")
+    @Query("SELECT * FROM card WHERE favorite = 1")
     abstract fun getAllFavoriteCards(): LiveData<List<CardEntity>>
 
 
@@ -41,10 +41,10 @@ abstract class CardDao : BaseDao<CardEntity>() {
      *
      * @return
      */
-    @Query("SELECT * FROM CardEntity WHERE subCategoryId  = :subCategoryId")
+    @Query("SELECT * FROM card WHERE sub_category_id  = :subCategoryId")
     abstract fun getCardEntitysWithSubCategory(subCategoryId: String): LiveData<List<CardEntity>>
 
 
-    @Query("SELECT * FROM CardEntity WHERE categoryId  = :categoryId")
+    @Query("SELECT * FROM card WHERE category_id  = :categoryId")
     abstract fun getCardEntitysWithCategory(categoryId: String): LiveData<List<CardEntity>>
 }
