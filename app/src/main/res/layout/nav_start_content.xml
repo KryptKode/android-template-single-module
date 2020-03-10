@@ -42,10 +42,6 @@
             android:textAppearance="@style/TextAppearance.App.H2"
             android:textColor="?colorOnPrimary" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/colorOnPrimary" />
 
         <FrameLayout
             android:id="@+id/root_start_drawer"

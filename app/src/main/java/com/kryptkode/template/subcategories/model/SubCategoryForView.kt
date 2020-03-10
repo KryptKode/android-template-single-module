@@ -1,7 +1,7 @@
 package com.kryptkode.template.subcategories.model
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
-import com.kryptkode.template.app.utils.expandableadapter.models.Child
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -16,7 +16,7 @@ data class SubCategoryForView(
     val status: String,
     val sortOrder: String,
     val favorite: Boolean
-) : Child {
+) : Parcelable {
 
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<SubCategoryForView>() {

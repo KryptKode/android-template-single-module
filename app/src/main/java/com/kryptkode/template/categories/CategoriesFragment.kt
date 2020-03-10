@@ -42,7 +42,7 @@ class CategoriesFragment :
 
     private fun initViews() {
         binding.swipe.setOnRefreshListener {
-            viewModel.refreshCategories()
+            viewModel.refresh()
         }
         initList()
     }

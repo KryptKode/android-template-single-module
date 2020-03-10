@@ -18,7 +18,7 @@ class CategoriesViewHolder(
     private val placeholderDrawable = PlaceHolderDrawable(binding.root.context)
     override fun performBind(item: CategoryForView?) {
 
-        binding.tvName.text = item?.name
+        binding.tvName.text = item?.name?.capitalize()
         binding.imgBtnFavourite.isChecked = item?.favorite ?: false
         binding.imgThumbnail.load(getImageUrl(item?.imageUrl)){
             placeholder(placeholderDrawable)

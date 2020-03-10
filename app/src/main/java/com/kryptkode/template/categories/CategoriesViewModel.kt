@@ -18,9 +18,9 @@ class CategoriesViewModel(
         it.map { categoryViewMapper.mapTo(it) }
     }
 
-    fun refreshCategories() {
+    fun refresh() {
         launchDataLoad {
-            repository.refreshAllCategories()
+            repository.refreshAllCategoriesAndSubCategories()
         }
     }
 

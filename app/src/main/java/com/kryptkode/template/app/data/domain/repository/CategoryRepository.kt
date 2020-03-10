@@ -10,7 +10,7 @@ import com.kryptkode.template.app.data.domain.model.CategoryWithSubCategories
 interface CategoryRepository {
     fun getAllCategories(): LiveData<List<Category>>
     fun getCategoryWithSubcategories(): LiveData<List<CategoryWithSubCategories>>
-    suspend fun refreshAllCategories()
+    suspend fun refreshAllCategoriesAndSubCategories()
     fun getFavoriteCategories(): LiveData<List<Category>>
     suspend fun markCardAsFavorite(category: Category)
     suspend fun unMarkCardAsFavorite(category: Category)

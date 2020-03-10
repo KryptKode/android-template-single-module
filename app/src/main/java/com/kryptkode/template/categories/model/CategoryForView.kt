@@ -1,7 +1,7 @@
 package com.kryptkode.template.categories.model
 
+import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
-import com.kryptkode.template.app.utils.expandableadapter.models.Parent
 import kotlinx.android.parcel.Parcelize
 
 /**
@@ -16,7 +16,7 @@ data class CategoryForView(
     val sortOrder: String,
     val status: String,
     val locked: Boolean
-) : Parent {
+) : Parcelable {
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<CategoryForView>() {
             override fun areContentsTheSame(

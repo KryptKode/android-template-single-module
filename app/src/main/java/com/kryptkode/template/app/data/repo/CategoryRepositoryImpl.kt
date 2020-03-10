@@ -24,7 +24,7 @@ class CategoryRepositoryImpl(
     override fun getAllCategories(): LiveData<List<Category>> = liveData {
         val cachedExpired = local.isCardCacheExpired()
         if (cachedExpired) {
-            refreshAllCategories()
+            refreshAllCategoriesAndSubCategories()
             local.setCardCacheTime(dateHelper.nowInMillis())
         }
         emitSource(local.getAllCategories())
@@ -35,10 +35,12 @@ class CategoryRepositoryImpl(
     }
 
 
-    override suspend fun refreshAllCategories() {
+    override suspend fun refreshAllCategoriesAndSubCategories() {
         return withContext(dispatcher.network) {
-            val result = remote.getAllCategories()
-            local.addCategories(result)
+            val categoriesResult = remote.getAllCategories()
+            val subCategoriesResult = remote.getAllSubCategories()
+            local.addCategories(categoriesResult)
+            local.addSubcategories(subCategoriesResult)
         }
     }
 
