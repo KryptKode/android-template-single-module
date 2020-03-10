@@ -20,5 +20,5 @@ abstract class ChildViewHolder<T : ExpandableGroup<P, C>, P : Parent, C : Child,
         performBind(item?.children?.get(childPosition))
     }
 
-    abstract fun performBind(child: Child?)
+    abstract fun performBind(item: C?)
 }

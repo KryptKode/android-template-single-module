@@ -7,7 +7,7 @@ import com.kryptkode.template.categories.model.CategoryForView
 /**
  * Created by kryptkode on 3/3/2020.
  */
-class CategoriesViewMapper : Mapper<CategoryForView, Category> {
+class CategoryViewMapper : Mapper<CategoryForView, Category> {
     override fun mapFrom(model: CategoryForView): Category {
         return Category(
             model.id,

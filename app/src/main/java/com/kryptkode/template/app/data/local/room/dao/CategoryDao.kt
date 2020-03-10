@@ -35,7 +35,7 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
 
     @Transaction
     @Query("SELECT * FROM category ORDER BY id ASC")
-    abstract fun getCategoriesWithSubCategories(): List<CategoryWithSubCategoriesEntity>
+    abstract fun getCategoriesWithSubCategories(): LiveData<List<CategoryWithSubCategoriesEntity>>
 
     /**
      * Get all entities of type Category

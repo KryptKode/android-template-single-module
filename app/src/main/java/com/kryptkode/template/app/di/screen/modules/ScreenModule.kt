@@ -17,6 +17,7 @@ import com.kryptkode.template.app.di.screen.ScreenScope
 import com.kryptkode.template.app.di.screen.modules.mapper.MapperModule
 import com.kryptkode.template.app.di.screen.modules.mapper.local.LocalMapperModule
 import com.kryptkode.template.app.di.screen.modules.repo.RepositoryModule
+import com.kryptkode.template.app.utils.DateHelper
 import com.kryptkode.template.app.utils.rating.RatingDataProvider
 import com.kryptkode.template.app.utils.rating.RatingManager
 import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
@@ -44,8 +45,13 @@ class ScreenModule(private val activity: FragmentActivity) {
 
     @Provides
     @ScreenScope
-    fun provideLocal(appDb: AppDb, appPrefs: AppPrefs, localMappers: LocalMappers): Local {
-        return LocalImpl(appDb, appPrefs, localMappers)
+    fun provideLocal(
+        appDb: AppDb,
+        appPrefs: AppPrefs,
+        localMappers: LocalMappers,
+        dateHelper: DateHelper
+    ): Local {
+        return LocalImpl(appDb, appPrefs, localMappers, dateHelper)
     }
 
     @Provides
@@ -56,7 +62,7 @@ class ScreenModule(private val activity: FragmentActivity) {
 
     @Provides
     @ScreenScope
-    fun provideShareUtils( @ScreenScope context: Context): ShareUtils {
+    fun provideShareUtils(@ScreenScope context: Context): ShareUtils {
         return ShareUtils(context)
     }
 

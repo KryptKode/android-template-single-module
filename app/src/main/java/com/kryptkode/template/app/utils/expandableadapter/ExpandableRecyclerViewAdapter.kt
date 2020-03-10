@@ -4,7 +4,6 @@ import android.app.Activity
 import android.os.Bundle
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.kryptkode.template.app.base.recycler.BaseRecyclerAdapter
 import com.kryptkode.template.app.base.recycler.BaseRecyclerViewHolder
 import com.kryptkode.template.app.utils.expandableadapter.listeners.ExpandCollapseListener
 import com.kryptkode.template.app.utils.expandableadapter.listeners.GroupExpandCollapseListener
@@ -12,17 +11,18 @@ import com.kryptkode.template.app.utils.expandableadapter.listeners.OnGroupClick
 import com.kryptkode.template.app.utils.expandableadapter.models.*
 import com.kryptkode.template.app.utils.expandableadapter.viewholders.ChildViewHolder
 import com.kryptkode.template.app.utils.expandableadapter.viewholders.GroupViewHolder
+import timber.log.Timber
 
 @Suppress("UNCHECKED_CAST")
 abstract class ExpandableRecyclerViewAdapter<T: ExpandableGroup<P, C>, P : Parent, C : Child, GVH : GroupViewHolder<T, P, C, *>, CVH : ChildViewHolder<T, P, C, *>>(
     diffCallback: DiffUtil.ItemCallback<T>
-) : BaseRecyclerAdapter<T, BaseRecyclerViewHolder<T, *>>(
+) : BaseExpandableListAdapter<T, P, C, BaseRecyclerViewHolder<T, *>>(
     diffCallback
 ),
     ExpandCollapseListener,
     OnGroupClickListener {
     @JvmField
-    protected var expandableList = ExpandableList<T, P, C>(listOf())
+    protected var expandableList = ExpandableList<T, P, C>()
     private val expandCollapseController = ExpandCollapseController(expandableList, this)
     private var groupClickListener: OnGroupClickListener? = null
     private var expandCollapseListener: GroupExpandCollapseListener? = null
@@ -56,11 +56,15 @@ abstract class ExpandableRecyclerViewAdapter<T: ExpandableGroup<P, C>, P : Paren
         }
     }
 
-    override fun submitList(list: List<T>?) {
+    fun submitList(list: List<T>?) {
         list?.let {
             expandableList.groups = it
         }
-        super.submitList(expandableList.groups)
+//        super.submitList(expandableList.groups)
+        Timber.d(
+            "LIST $list"
+        )
+        super.submitList(expandableList)
     }
 
     /**
@@ -76,6 +80,8 @@ abstract class ExpandableRecyclerViewAdapter<T: ExpandableGroup<P, C>, P : Paren
         holder: BaseRecyclerViewHolder<T, *>,
         position: Int
     ) {
+        val item = getItem(position)
+        Timber.d("TIMEE $item")
         val listPos = expandableList.getUnflattenedPosition(position)
         val group = expandableList.getExpandableGroup(listPos)
         when (listPos.type) {
@@ -166,9 +172,7 @@ abstract class ExpandableRecyclerViewAdapter<T: ExpandableGroup<P, C>, P : Paren
      * @return false if click expanded group, true if click collapsed group
      */
     override fun onGroupClick(flatPos: Int): Boolean {
-        if (groupClickListener != null) {
-            groupClickListener!!.onGroupClick(flatPos)
-        }
+        groupClickListener?.onGroupClick(flatPos)
         return expandCollapseController.toggleGroup(flatPos)
     }
 

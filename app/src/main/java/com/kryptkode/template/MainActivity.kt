@@ -17,7 +17,7 @@ import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
 import com.kryptkode.template.app.utils.sharing.ShareUtils
 import com.kryptkode.template.databinding.ActivityMainBinding
 import com.kryptkode.template.databinding.NavEndHeaderBinding
-import com.kryptkode.template.databinding.NavStartContentBinding
+import com.kryptkode.template.startnav.StartNavFragment
 import com.xeenvpn.android.app.dialogs.InfoDialog
 import javax.inject.Inject
 
@@ -75,12 +75,12 @@ class MainActivity :
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
 
-        initHeaders()
+        initNavigationView()
 
         setupObservers()
     }
 
-    private fun initHeaders() {
+    private fun initNavigationView() {
         initEndNavigationView()
         initStartNavigationView()
     }
@@ -92,9 +92,18 @@ class MainActivity :
     }
 
     private fun initStartNavigationView() {
-        val navStart = NavStartContentBinding.inflate(layoutInflater, null, false)
-        navStart.viewModel = viewModel
-        binding.startNav.addView(navStart.root)
+        initStartNavigationViewFragment()
+    }
+
+    private fun initStartNavigationViewFragment() {
+        var startNavFragment =
+            supportFragmentManager.findFragmentById(R.id.root_start_drawer) as? StartNavFragment
+        if (startNavFragment == null) {
+            startNavFragment = StartNavFragment()
+        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.root_start_drawer, startNavFragment)
+            .commit()
     }
 
     private fun setupObservers() {

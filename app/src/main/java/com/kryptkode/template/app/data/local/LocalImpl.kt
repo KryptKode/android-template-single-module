@@ -2,16 +2,13 @@ package com.kryptkode.template.app.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
-import com.kryptkode.template.app.data.domain.model.Card
-import com.kryptkode.template.app.data.domain.model.Category
-import com.kryptkode.template.app.data.domain.model.Link
-import com.kryptkode.template.app.data.domain.model.SubCategory
+import com.kryptkode.template.app.data.domain.model.*
 import com.kryptkode.template.app.data.local.mapper.LocalMappers
 import com.kryptkode.template.app.data.local.prefs.AppPrefs
 import com.kryptkode.template.app.data.local.room.AppDb
 import com.kryptkode.template.app.utils.Constants.CARD_CACHE_TIME_MILLIS
+import com.kryptkode.template.app.utils.DateHelper
 import timber.log.Timber
-import java.util.*
 
 /**
  * Created by kryptkode on 3/2/2020.
@@ -19,13 +16,22 @@ import java.util.*
 class LocalImpl(
     private val appDb: AppDb,
     private val prefs: AppPrefs,
-    private val mappers: LocalMappers
+    private val mappers: LocalMappers,
+    private val dateHelper: DateHelper
 ) : Local {
 
     override fun getAllCategories(): LiveData<List<Category>> {
         return appDb.categoryDao().getAllCategories().map {
             it.map {
                 mappers.category.mapFrom(it)
+            }
+        }
+    }
+
+    override fun getCategoryWithSubcategories(): LiveData<List<CategoryWithSubCategories>> {
+        return appDb.categoryDao().getCategoriesWithSubCategories().map {
+            it.map {
+                mappers.categoryWithSubcategoriesLocalDomainMapper.mapFrom(it)
             }
         }
     }
@@ -98,7 +104,7 @@ class LocalImpl(
     }
 
     override suspend fun isCardCacheExpired(): Boolean {
-        return Date().time - prefs.getCardCacheTime() >= CARD_CACHE_TIME_MILLIS
+        return dateHelper.nowInMillis() - prefs.getCardCacheTime() >= CARD_CACHE_TIME_MILLIS
     }
 
     override suspend fun setLinkCacheTime(time: Long) {
@@ -106,6 +112,6 @@ class LocalImpl(
     }
 
     override suspend fun isLinkCacheExpired(): Boolean {
-        return Date().time - prefs.getLinkCacheTime() >= CARD_CACHE_TIME_MILLIS
+        return dateHelper.nowInMillis() - prefs.getLinkCacheTime() >= CARD_CACHE_TIME_MILLIS
     }
 }

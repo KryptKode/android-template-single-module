@@ -1,7 +1,9 @@
 package com.kryptkode.template.app.di.screen.modules.mapper.view
 
 import com.kryptkode.template.app.di.screen.ScreenScope
-import com.kryptkode.template.categories.mapper.CategoriesViewMapper
+import com.kryptkode.template.categories.mapper.CategoryViewMapper
+import com.kryptkode.template.startnav.mapper.CategoryWithSubcategoriesViewMapper
+import com.kryptkode.template.subcategories.mapper.SubcategoryViewMapper
 import dagger.Module
 import dagger.Provides
 
@@ -13,7 +15,22 @@ import dagger.Provides
 class ViewMapperModules {
     @Provides
     @ScreenScope
-    fun provideCategoriesViewMapper(): CategoriesViewMapper {
-        return CategoriesViewMapper()
+    fun provideCategoryViewMapper(): CategoryViewMapper {
+        return CategoryViewMapper()
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideSubcategoryViewMapper(): SubcategoryViewMapper {
+        return SubcategoryViewMapper()
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideCategoryWithSubcategoriesViewMapper(
+        categoryViewMapper: CategoryViewMapper,
+        subcategoryViewMapper: SubcategoryViewMapper
+    ): CategoryWithSubcategoriesViewMapper {
+        return CategoryWithSubcategoriesViewMapper(categoryViewMapper, subcategoryViewMapper)
     }
 }

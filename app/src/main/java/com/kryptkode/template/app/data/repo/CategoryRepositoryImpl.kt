@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.kryptkode.template.app.data.dispatchers.AppDispatchers
 import com.kryptkode.template.app.data.domain.model.Category
+import com.kryptkode.template.app.data.domain.model.CategoryWithSubCategories
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.remote.Remote
+import com.kryptkode.template.app.utils.DateHelper
 import kotlinx.coroutines.withContext
 
 /**
@@ -14,6 +16,7 @@ import kotlinx.coroutines.withContext
  */
 class CategoryRepositoryImpl(
     private val dispatcher: AppDispatchers,
+    private val dateHelper: DateHelper,
     private val local: Local,
     private val remote: Remote
 ) : CategoryRepository {
@@ -22,8 +25,13 @@ class CategoryRepositoryImpl(
         val cachedExpired = local.isCardCacheExpired()
         if (cachedExpired) {
             refreshAllCategories()
+            local.setCardCacheTime(dateHelper.nowInMillis())
         }
         emitSource(local.getAllCategories())
+    }
+
+    override fun getCategoryWithSubcategories(): LiveData<List<CategoryWithSubCategories>> {
+        return local.getCategoryWithSubcategories()
     }
 
 

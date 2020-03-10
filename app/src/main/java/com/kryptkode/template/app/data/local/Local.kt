@@ -2,16 +2,14 @@ package com.kryptkode.template.app.data.local
 
 
 import androidx.lifecycle.LiveData
-import com.kryptkode.template.app.data.domain.model.Card
-import com.kryptkode.template.app.data.domain.model.Category
-import com.kryptkode.template.app.data.domain.model.Link
-import com.kryptkode.template.app.data.domain.model.SubCategory
+import com.kryptkode.template.app.data.domain.model.*
 
 /**
  * Created by kryptkode on 2/19/2020.
  */
 interface Local {
     fun getAllCategories(): LiveData<List<Category>>
+    fun getCategoryWithSubcategories(): LiveData<List<CategoryWithSubCategories>>
     fun getFavoriteCategories(): LiveData<List<Category>>
     suspend fun updateCategory(card: Category)
     suspend fun addCategories(list: List<Category>)

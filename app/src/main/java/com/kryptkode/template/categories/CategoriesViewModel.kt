@@ -3,7 +3,7 @@ package com.kryptkode.template.categories
 import androidx.lifecycle.map
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
-import com.kryptkode.template.categories.mapper.CategoriesViewMapper
+import com.kryptkode.template.categories.mapper.CategoryViewMapper
 import com.kryptkode.template.categories.model.CategoryForView
 import timber.log.Timber
 
@@ -12,10 +12,10 @@ import timber.log.Timber
  */
 class CategoriesViewModel(
     private val repository: CategoryRepository,
-    private val categoriesViewMapper: CategoriesViewMapper
+    private val categoryViewMapper: CategoryViewMapper
 ) : BaseViewModel() {
     val categoriesList = repository.getAllCategories().map {
-        it.map { categoriesViewMapper.mapTo(it) }
+        it.map { categoryViewMapper.mapTo(it) }
     }
 
     fun refreshCategories() {
@@ -32,9 +32,9 @@ class CategoriesViewModel(
         launchDataLoad {
             item?.let {
                 if (favorite) {
-                    repository.markCardAsFavorite(categoriesViewMapper.mapFrom(item))
+                    repository.markCardAsFavorite(categoryViewMapper.mapFrom(item))
                 } else {
-                    repository.unMarkCardAsFavorite(categoriesViewMapper.mapFrom(item))
+                    repository.unMarkCardAsFavorite(categoryViewMapper.mapFrom(item))
                 }
             }
         }

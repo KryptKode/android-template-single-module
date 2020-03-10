@@ -13,6 +13,6 @@ class CategoryGroupViewHolder(binding: ItemExpandableCategoryBinding) :
     GroupViewHolder<CategoryWithSubCategoriesForView, CategoryForView, SubCategoryForView, ItemExpandableCategoryBinding>(binding) {
 
     override fun performBindGroup(item: CategoryForView?) {
-
+        binding.nameTextView.text = item?.name ?: "no name"
     }
 }

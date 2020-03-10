@@ -12,6 +12,7 @@ import com.kryptkode.template.app.data.local.room.AppDb
 import com.kryptkode.template.app.data.remote.api.Api
 import com.kryptkode.template.app.data.remote.api.RestClient
 import com.kryptkode.template.app.utils.Constants.APP_PREFS
+import com.kryptkode.template.app.utils.DateHelper
 import com.securepreferences.SecurePreferences
 import dagger.Module
 import dagger.Provides
@@ -75,6 +76,12 @@ class AppModule {
     @Provides
     fun provideApi(restClient: RestClient): Api {
         return restClient.getRemote()
+    }
+
+    @Provides
+    @ApplicationScope
+    fun provideDateHelper(): DateHelper {
+        return DateHelper()
     }
 }
 

@@ -11,9 +11,15 @@ package  com.kryptkode.template.app.utils.expandableadapter.models
  * This class acts as a translator between the flat list position - i.e. what groups
  * and children you see on the screen - to and from the full backing list of groups & their children
  */
-class ExpandableList<T: ExpandableGroup<P, C>, P: Parent, C:Child>(var groups: List<T>) {
-    @JvmField
+class ExpandableList<T : ExpandableGroup<P, C>, P : Parent, C : Child> {
+
+    var groups: List<T> = listOf()
+    set(value) {
+        expandedGroupIndexes =  BooleanArray(value.size)
+        field = value
+    }
     var expandedGroupIndexes: BooleanArray = BooleanArray(groups.size)
+
 
     /**
      * @param group the index of the [ExpandableGroup] in the full collection [.groups]
@@ -22,10 +28,14 @@ class ExpandableList<T: ExpandableGroup<P, C>, P: Parent, C:Child>(var groups: L
      * group + 1 for the group header
      */
     private fun numberOfVisibleItemsInGroup(group: Int): Int {
-        return if (expandedGroupIndexes[group]) {
-            groups[group].itemCount + 1
+        return if (expandedGroupIndexes.isNotEmpty()) {
+            if (expandedGroupIndexes[group]) {
+                groups[group].itemCount + 1
+            } else {
+                1
+            }
         } else {
-            1
+            0
         }
     }
 
@@ -61,7 +71,12 @@ class ExpandableList<T: ExpandableGroup<P, C>, P: Parent, C:Child>(var groups: L
             if (adapted == 0) {
                 return ExpandableListPosition.obtain(ExpandableListPosition.GROUP, i, -1, flPos)
             } else if (adapted < groupItemCount) {
-                return ExpandableListPosition.obtain(ExpandableListPosition.CHILD, i, adapted - 1, flPos)
+                return ExpandableListPosition.obtain(
+                    ExpandableListPosition.CHILD,
+                    i,
+                    adapted - 1,
+                    flPos
+                )
             }
             adapted -= groupItemCount
         }

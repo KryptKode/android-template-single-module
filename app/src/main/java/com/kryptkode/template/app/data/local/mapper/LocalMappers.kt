@@ -7,5 +7,6 @@ class LocalMappers(
     val card: CardLocalDomainMapper,
     val category: CategoryLocalDomainMapper,
     val subcategory: SubcategoryLocalDomainMapper,
-    val link: LinkLocalDomainMapper
+    val link: LinkLocalDomainMapper,
+    val categoryWithSubcategoriesLocalDomainMapper: CategoryWithSubcategoriesLocalDomainMapper
 )

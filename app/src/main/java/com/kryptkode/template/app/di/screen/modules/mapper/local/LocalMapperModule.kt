@@ -42,9 +42,25 @@ class LocalMapperModule {
         card: CardLocalDomainMapper,
         category: CategoryLocalDomainMapper,
         subcategory: SubcategoryLocalDomainMapper,
-        link: LinkLocalDomainMapper
+        link: LinkLocalDomainMapper,
+        categoryWithSubcategoriesLocalDomainMapper: CategoryWithSubcategoriesLocalDomainMapper
     ): LocalMappers {
-        return LocalMappers(card, category, subcategory, link)
+        return LocalMappers(
+            card,
+            category,
+            subcategory,
+            link,
+            categoryWithSubcategoriesLocalDomainMapper
+        )
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideLocalCategoryWithSubcategoriesMapper(
+        category: CategoryLocalDomainMapper,
+        subcategory: SubcategoryLocalDomainMapper
+    ): CategoryWithSubcategoriesLocalDomainMapper {
+        return CategoryWithSubcategoriesLocalDomainMapper(category, subcategory)
     }
 
 
