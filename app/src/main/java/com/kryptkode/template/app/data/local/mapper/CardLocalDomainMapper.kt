@@ -13,6 +13,6 @@ class CardLocalDomainMapper : Mapper<CardEntity, Card> {
     }
 
     override fun mapTo(model: Card): CardEntity {
-        return CardEntity(model.id, model.name, model.categoryId, model.subcategoryId, model.imgUrl, model.status, model.favorite)
+        return CardEntity(model.id, model.name, model.categoryId, model.subcategoryId, model.imageUrl, model.status, model.favorite)
     }
 }

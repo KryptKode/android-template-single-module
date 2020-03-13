@@ -8,7 +8,7 @@ import java.util.*
  * Created by kryptkode on 10/23/2019.
  */
 
-open class PreferencesManagerImpl (
+open class PreferencesManagerImpl(
     sharedPreferences: SharedPreferences
 ) : BasePreferencesManager(sharedPreferences), AppPrefs, RatingDataProvider {
 
@@ -28,12 +28,25 @@ open class PreferencesManagerImpl (
         return getLongPreference(prefLinkCacheTime)
     }
 
-    override fun setCardCacheTime(time: Long) {
-        return setLongPreference(prefCardCacheTime, time)
+
+    override fun setCardCacheTime(subcategoryId: String, time: Long) {
+        return setLongPreference(getCardKey(subcategoryId), time)
     }
 
-    override fun getCardCacheTime(): Long {
-        return getLongPreference(prefCardCacheTime)
+    private fun getCardKey(subcategoryId: String): String {
+        return "$prefCardCacheTime-$subcategoryId"
+    }
+
+    override fun getCardCacheTime(subcategoryId: String): Long {
+        return getLongPreference(getCardKey(subcategoryId))
+    }
+
+    override fun getCategoryCacheTime(): Long {
+        return getLongPreference(prefCategoryCacheTime)
+    }
+
+    override fun setCategoryCacheTime(time: Long) {
+        return setLongPreference(prefCategoryCacheTime, time)
     }
 
     override fun setAgreeShowDialog(isAgree: Boolean) {

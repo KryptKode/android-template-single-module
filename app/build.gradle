@@ -18,12 +18,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         vectorDrawables.useSupportLibrary true
-        javaCompileOptions {
-            annotationProcessorOptions {
-                arguments = ["room.schemaLocation":
-                                     "$projectDir/schemas".toString()]
+            javaCompileOptions {
+                annotationProcessorOptions {
+                    arguments = ["room.schemaLocation":
+                                         "$projectDir/schemas".toString()]
+                }
             }
-        }
 
         manifestPlaceholders = [
                 onesignal_app_id               : 'c93d908f-cab2-4d89-ab07-9df52c0384a7',

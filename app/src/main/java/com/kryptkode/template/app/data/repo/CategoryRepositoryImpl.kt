@@ -22,10 +22,10 @@ class CategoryRepositoryImpl(
 ) : CategoryRepository {
 
     override fun getAllCategories(): LiveData<List<Category>> = liveData {
-        val cachedExpired = local.isCardCacheExpired()
+        val cachedExpired = local.isCategoryCacheExpired()
         if (cachedExpired) {
             refreshAllCategoriesAndSubCategories()
-            local.setCardCacheTime(dateHelper.nowInMillis())
+            local.setCategoryCacheTime(dateHelper.nowInMillis())
         }
         emitSource(local.getAllCategories())
     }
@@ -48,11 +48,11 @@ class CategoryRepositoryImpl(
         return local.getFavoriteCategories()
     }
 
-    override suspend fun markCardAsFavorite(category: Category) {
+    override suspend fun markCategoryAsFavorite(category: Category) {
         return local.updateCategory(category.copy(favorite = true))
     }
 
-    override suspend fun unMarkCardAsFavorite(category: Category) {
+    override suspend fun unMarkCategoryAsFavorite(category: Category) {
         return local.updateCategory(category.copy(favorite = false))
     }
 }

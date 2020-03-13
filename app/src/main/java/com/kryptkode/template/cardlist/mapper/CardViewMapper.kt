@@ -1,33 +1,34 @@
-package com.kryptkode.template.app.data.remote.mapper
+package com.kryptkode.template.cardlist.mapper
 
 import com.kryptkode.template.app.data.domain.mapper.Mapper
 import com.kryptkode.template.app.data.domain.model.Card
-import com.kryptkode.template.app.data.remote.response.CardRemote
+import com.kryptkode.template.cardlist.model.CardForView
 
 /**
- * Created by kryptkode on 3/2/2020.
+ * Created by kryptkode on 3/8/2020.
  */
-class CardRemoteDomainMapper : Mapper<CardRemote, Card> {
-    override fun mapFrom(model: CardRemote): Card {
+class CardViewMapper : Mapper<CardForView, Card> {
+    override fun mapFrom(model: CardForView): Card {
         return Card(
             model.id,
             model.name,
             model.categoryId,
             model.subcategoryId,
-            model.imgUrl,
+            model.imageUrl,
             model.status,
-            false
+            model.favorite
         )
     }
 
-    override fun mapTo(model: Card): CardRemote {
-        return CardRemote(
+    override fun mapTo(model: Card): CardForView {
+        return CardForView(
             model.id,
             model.name,
             model.categoryId,
             model.subcategoryId,
             model.imageUrl,
-            model.status
+            model.status,
+            model.favorite
         )
     }
 }

@@ -12,6 +12,6 @@ interface CategoryRepository {
     fun getCategoryWithSubcategories(): LiveData<List<CategoryWithSubCategories>>
     suspend fun refreshAllCategoriesAndSubCategories()
     fun getFavoriteCategories(): LiveData<List<Category>>
-    suspend fun markCardAsFavorite(category: Category)
-    suspend fun unMarkCardAsFavorite(category: Category)
+    suspend fun markCategoryAsFavorite(category: Category)
+    suspend fun unMarkCategoryAsFavorite(category: Category)
 }

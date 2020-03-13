@@ -8,7 +8,7 @@ data class Card(
     val name: String,
     val categoryId: String,
     val subcategoryId: String,
-    val imgUrl: String,
+    val imageUrl: String,
     val status: String,
     val favorite: Boolean
 )

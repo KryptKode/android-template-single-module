@@ -17,7 +17,7 @@ fun GroupAdapter<GroupieViewHolder>.populate(items: List<CategoryWithSubCategori
         val headerItem = HeaderItem(it.category)
         val expandableGroup = ExpandableGroup(headerItem)
         val childItems = it.subcategories.map { item ->
-            ChildItem(item)
+            ChildItem(it.category, item)
         }
         expandableGroup.addAll(childItems)
         allGroups.add(expandableGroup)

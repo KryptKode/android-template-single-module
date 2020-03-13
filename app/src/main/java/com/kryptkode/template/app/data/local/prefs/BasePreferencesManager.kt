@@ -11,6 +11,7 @@ abstract class BasePreferencesManager(private val sharedPreferences: SharedPrefe
     protected val prefLink = "prefLink"
     protected val prefLinkCacheTime = "prefLinkCacheTime"
     protected val prefCardCacheTime = "prefCardCacheTime"
+    protected val prefCategoryCacheTime = "prefCategoryCacheTime"
     protected val defaultStringValue = "{}"
 
     protected val PREF_KEY_INSTALL_DATE = "android_rate_install_date"

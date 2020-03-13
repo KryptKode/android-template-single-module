@@ -6,6 +6,7 @@ import androidx.lifecycle.map
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.model.Event
+import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.startnav.mapper.CategoryWithSubcategoriesViewMapper
 import com.kryptkode.template.subcategories.model.SubCategoryForView
 
@@ -16,11 +17,14 @@ class StartNavViewModel(
     private val repository: CategoryRepository,
     private val viewMapper: CategoryWithSubcategoriesViewMapper
 ) : BaseViewModel() {
-    private val goToSubCategory = MutableLiveData<Event<SubCategoryForView>>()
-    fun getGoToSubCategoryEvent(): LiveData<Event<SubCategoryForView>> = goToSubCategory
+    private val goToSubCategory = MutableLiveData<Event<Pair<CategoryForView, SubCategoryForView>>>()
+    fun getGoToSubCategoryEvent(): LiveData<Event<Pair<CategoryForView, SubCategoryForView>>> = goToSubCategory
 
-    fun onSubCategoryClick(subCategoryForView: SubCategoryForView) {
-        goToSubCategory.postValue(Event(subCategoryForView))
+    fun onSubCategoryClick(
+        category: CategoryForView,
+        subcategory: SubCategoryForView
+    ) {
+        goToSubCategory.postValue(Event(Pair(category, subcategory)))
     }
 
     val categoryWithSubcategoriesList = repository.getCategoryWithSubcategories()

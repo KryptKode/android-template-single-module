@@ -1,10 +1,11 @@
 package com.kryptkode.template
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.privacypolicy.PrivacyPolicyActivity
+import com.kryptkode.template.subcategories.SubcategoryActivity
 import com.kryptkode.template.subcategories.model.SubCategoryForView
 
 /**
@@ -23,7 +24,7 @@ class Navigator(private val activity: FragmentActivity) {
         activity.startActivity(Intent(activity, PrivacyPolicyActivity::class.java))
     }
 
-    fun openSubCategories(subCategory: SubCategoryForView?) {
-        Toast.makeText(activity, "Coming soon:${subCategory?.name}", Toast.LENGTH_SHORT).show()
+    fun openSubCategories(categoryForView: CategoryForView, subCategoryForView: SubCategoryForView?=null) {
+        SubcategoryActivity.start(activity, categoryForView, subCategoryForView)
     }
 }

@@ -10,6 +10,7 @@ import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.customviews.SpacesItemDecoration
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.app.utils.extensions.populate
+import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.databinding.FragmentStartNavBinding
 import com.kryptkode.template.startnav.adapter.ChildItem
 import com.kryptkode.template.subcategories.model.SubCategoryForView
@@ -31,7 +32,7 @@ class StartNavFragment :
 
     private val onItemClickListener = OnItemClickListener { item, _ ->
         if (item is ChildItem) {
-            viewModel.onSubCategoryClick(item.subCategoryForView)
+            viewModel.onSubCategoryClick(item.categoryForView, item.subCategoryForView)
         }
     }
 
@@ -70,13 +71,13 @@ class StartNavFragment :
 
         viewModel.getGoToSubCategoryEvent().observe(this) { event ->
             event?.getContentIfNotHandled()?.let {
-                openSubCategory(it)
+                openSubCategory(it.first, it.second)
             }
         }
     }
 
-    private fun openSubCategory(subCategory: SubCategoryForView) {
-        navigator.openSubCategories(subCategory)
+    private fun openSubCategory(categoryForView: CategoryForView, subCategoryForView: SubCategoryForView?=null) {
+        navigator.openSubCategories(categoryForView, subCategoryForView)
     }
 
 }

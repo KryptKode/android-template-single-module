@@ -5,8 +5,10 @@ import com.kryptkode.template.app.di.screen.modules.ScreenModule
 import com.kryptkode.template.app.di.screen.viewmodel.ViewModelFactoryModule
 import com.kryptkode.template.app.di.screen.viewmodel.ViewModelModule
 import com.kryptkode.template.app.di.screen.viewmodel.ViewModelProviderModule
+import com.kryptkode.template.cardlist.CardListFragment
 import com.kryptkode.template.categories.CategoriesFragment
 import com.kryptkode.template.startnav.StartNavFragment
+import com.kryptkode.template.subcategories.SubcategoriesFragment
 import dagger.Subcomponent
 
 /**
@@ -26,4 +28,6 @@ interface ScreenComponent {
     fun inject(mainActivity: MainActivity)
     fun inject(fragment: CategoriesFragment)
     fun inject(startNavFragment: StartNavFragment)
+    fun inject(subcategoriesFragment: SubcategoriesFragment)
+    fun inject(cardListFragment: CardListFragment)
 }

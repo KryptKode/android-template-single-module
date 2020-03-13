@@ -1,6 +1,7 @@
 package com.kryptkode.template.app.di.screen.modules.mapper.view
 
 import com.kryptkode.template.app.di.screen.ScreenScope
+import com.kryptkode.template.cardlist.mapper.CardViewMapper
 import com.kryptkode.template.categories.mapper.CategoryViewMapper
 import com.kryptkode.template.startnav.mapper.CategoryWithSubcategoriesViewMapper
 import com.kryptkode.template.subcategories.mapper.SubcategoryViewMapper
@@ -32,5 +33,11 @@ class ViewMapperModules {
         subcategoryViewMapper: SubcategoryViewMapper
     ): CategoryWithSubcategoriesViewMapper {
         return CategoryWithSubcategoriesViewMapper(categoryViewMapper, subcategoryViewMapper)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideCardViewMapper(): CardViewMapper {
+        return CardViewMapper()
     }
 }

@@ -8,7 +8,9 @@ import com.kryptkode.template.app.data.domain.model.Card
  */
 interface CardRepository {
 
-    suspend fun getCardsForSubcategory(subCategoryId: String): LiveData<Card>
+    fun getCardsForSubcategory(subCategoryId: String): LiveData<List<Card>>
+
+    suspend fun refreshCards(subCategoryId: String)
 
     suspend fun markCardAsFavorite(card: Card)
 

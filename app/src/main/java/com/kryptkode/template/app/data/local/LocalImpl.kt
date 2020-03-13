@@ -99,12 +99,20 @@ class LocalImpl(
         return mappers.link.mapFrom(prefs.getLink())
     }
 
-    override suspend fun setCardCacheTime(time: Long) {
-        return prefs.setCardCacheTime(time)
+    override suspend fun setCardCacheTime(subcategoryId: String, time: Long) {
+        return prefs.setCardCacheTime(subcategoryId, time)
     }
 
-    override suspend fun isCardCacheExpired(): Boolean {
-        return dateHelper.nowInMillis() - prefs.getCardCacheTime() >= CARD_CACHE_TIME_MILLIS
+    override suspend fun isCardCacheExpired(subcategoryId: String): Boolean {
+        return dateHelper.nowInMillis() - prefs.getCardCacheTime(subcategoryId) >= CARD_CACHE_TIME_MILLIS
+    }
+
+    override suspend fun setCategoryCacheTime(time: Long) {
+        return prefs.setCategoryCacheTime(time)
+    }
+
+    override suspend fun isCategoryCacheExpired(): Boolean {
+        return dateHelper.nowInMillis() - prefs.getCategoryCacheTime() >= CARD_CACHE_TIME_MILLIS
     }
 
     override suspend fun setLinkCacheTime(time: Long) {
