@@ -1,26 +1,25 @@
-package com.kryptkode.template.cardlist
+package com.kryptkode.template.favoritecards
 
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.cardlist.adapter.CardAdapter
 import com.kryptkode.template.cardlist.adapter.CardListener
 import com.kryptkode.template.cardlist.model.CardForView
-import com.kryptkode.template.databinding.FragmentCardListBinding
-import com.kryptkode.template.subcategories.model.SubCategoryForView
+import com.kryptkode.template.databinding.FragmentFavoriteCardsBinding
+import javax.inject.Inject
 
 /**
- * Created by kryptkode on 3/12/2020.
+ * Created by kryptkode on 3/13/2020.
  */
-class CardListFragment :
-    BaseViewModelFragment<FragmentCardListBinding, CardListViewModel>(CardListViewModel::class) {
+class FavoriteCardsFragment : BaseViewModelFragment<FragmentFavoriteCardsBinding, FavoriteCardsViewModel>(FavoriteCardsViewModel::class) {
 
-    private val subcategory by lazy {
-        requireArguments().getParcelable<SubCategoryForView>(ARG_SUBCATEGORY)!!
-    }
+    @Inject
+    lateinit var navigator: Navigator
 
     private val cardListListener = object : CardListener {
         override fun onItemClick(item: CardForView?) {
@@ -38,18 +37,17 @@ class CardListFragment :
         getScreenComponent().inject(this)
     }
 
-    override fun getLayoutResource() = R.layout.fragment_card_list
+    override fun getLayoutResource() = R.layout.fragment_favorite_cards
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setupObservers()
-        viewModel.loadCards(subcategory.id)
     }
 
     private fun initViews() {
         binding.swipe.setOnRefreshListener {
-            viewModel.refresh(subcategory.id)
+            viewModel.refresh()
         }
         initList()
     }
@@ -60,7 +58,7 @@ class CardListFragment :
     }
 
     private fun setupObservers() {
-        viewModel.cardList.observe(this) {
+        viewModel.favoriteCardList.observe(this) {
             categoriesAdapter.submitList(it)
         }
 
@@ -69,18 +67,15 @@ class CardListFragment :
                 binding.swipe.isRefreshing = it
             }
         }
+
+        viewModel.getGoToCardDetailsEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                openCardDetails(it)
+            }
+        }
     }
 
-    companion object {
-        private const val ARG_SUBCATEGORY = "subcategory"
-        fun newInstance(
-            subcategory: SubCategoryForView
-        ): CardListFragment {
-            val fragment = CardListFragment()
-            val args = Bundle()
-            args.putParcelable(ARG_SUBCATEGORY, subcategory)
-            fragment.arguments = args
-            return fragment
-        }
+    private fun openCardDetails(card: CardForView) {
+        navigator.openCardDetails(card)
     }
 }

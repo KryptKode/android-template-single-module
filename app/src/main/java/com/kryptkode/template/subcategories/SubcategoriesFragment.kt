@@ -2,6 +2,9 @@ package com.kryptkode.template.subcategories
 
 import android.content.Context
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kryptkode.template.R
@@ -36,6 +39,35 @@ class SubcategoriesFragment :
     override fun onAttach(context: Context) {
         super.onAttach(context)
         getScreenComponent().inject(this)
+    }
+
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        val favoriteMenuItem = menu.findItem(R.id.action_favorites)
+        val currentlySelectedSubCategory = subcategories?.get(binding.viewPager.currentItem)
+        currentlySelectedSubCategory?.let {
+            favoriteMenuItem.title =
+                if (it.favorite) getString(R.string.subcategory_remove_from_favorites) else getString(
+                    R.string.subcategory_add_to_favorites
+                )
+            favoriteMenuItem.setIcon(if (it.favorite) R.drawable.ic_favorite_full else R.drawable.ic_favorite_outline)
+        }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_subcategories, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.action_favorites) {
+            val currentlySelectedSubCategory = subcategories?.get(binding.viewPager.currentItem)
+            currentlySelectedSubCategory?.let {
+                viewModel.toggleSubcategoryFavorite(it)
+                requireActivity().invalidateOptionsMenu()
+            }
+            return true
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun getLayoutResource() = R.layout.fragment_subcategory
@@ -76,13 +108,13 @@ class SubcategoriesFragment :
         initTabs()
     }
 
-    private fun toggleEmptyViewVisibility(visible:Boolean){
+    private fun toggleEmptyViewVisibility(visible: Boolean) {
         binding.emptyStateLayout.beVisibleIf(visible)
     }
 
     private fun scrollToTabIfCategoryPresent() {
         subcategory?.let {
-            val subcategoryIndex = subcategories?.indexOfFirst {item->
+            val subcategoryIndex = subcategories?.indexOfFirst { item ->
                 it.id == item.id
             }
             binding.viewPager.currentItem = subcategoryIndex ?: 0

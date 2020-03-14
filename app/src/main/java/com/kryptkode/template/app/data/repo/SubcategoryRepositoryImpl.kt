@@ -15,4 +15,16 @@ class SubcategoryRepositoryImpl(
     override fun getAllSubCategoriesUnderCategory(categoryId: String): LiveData<List<SubCategory>> {
         return local.getSubCategoriesInCategory(categoryId)
     }
+
+    override fun getFavoriteSubcategories(): LiveData<List<SubCategory>> {
+        return  local.getFavoriteSubcategories()
+    }
+
+    override suspend fun markSubcategoryAsFavorite(subCategory: SubCategory) {
+        return local.updateSubcategory(subCategory.copy(favorite = true))
+    }
+
+    override suspend fun unMarkSubcategoryAsFavorite(subCategory: SubCategory) {
+        return local.updateSubcategory(subCategory.copy(favorite = true))
+    }
 }

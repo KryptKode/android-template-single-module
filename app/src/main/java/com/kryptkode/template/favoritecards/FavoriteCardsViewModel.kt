@@ -1,38 +1,29 @@
-package com.kryptkode.template.cardlist
+package com.kryptkode.template.favoritecards
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
-import androidx.lifecycle.switchMap
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CardRepository
+import com.kryptkode.template.app.data.model.Event
 import com.kryptkode.template.cardlist.mapper.CardViewMapper
 import com.kryptkode.template.cardlist.model.CardForView
 
 /**
- * Created by kryptkode on 3/10/2020.
+ * Created by kryptkode on 3/13/2020.
  */
-class CardListViewModel(
+class FavoriteCardsViewModel (
     private val repository: CardRepository,
     private val cardViewMapper: CardViewMapper
-) : BaseViewModel() {
+): BaseViewModel() {
 
-    private val subcategoryId = MutableLiveData<String>()
+    private val goToCardDetails = MutableLiveData<Event<CardForView>>()
+    fun getGoToCardDetailsEvent(): LiveData<Event<CardForView>> = goToCardDetails
 
-
-    val cardList = subcategoryId.switchMap {
-        repository.getCardsForSubcategory(it).map {
-            it.map {
-                cardViewMapper.mapTo(it)
-            }
+    val favoriteCardList = repository.getFavoriteCards().map {
+        it.map {
+            cardViewMapper.mapTo(it)
         }
-    }
-
-    fun loadCards(subcategoryId: String) {
-        this.subcategoryId.postValue(subcategoryId)
-    }
-
-    fun handleCardItemClick(item: CardForView?) {
-
     }
 
     fun handleCardFavoriteClick(item: CardForView?, favorite: Boolean) {
@@ -47,9 +38,13 @@ class CardListViewModel(
         }
     }
 
-    fun refresh(subcategoryId: String) {
+    fun handleCardItemClick(item: CardForView?) {
+        goToCardDetails.postValue(Event(item!!))
+    }
+
+    fun refresh() {
         launchDataLoad {
-            repository.refreshCards(subcategoryId)
+
         }
     }
 }

@@ -48,14 +48,30 @@ class LocalImpl(
         appDb.categoryDao().upsert(list.map { mappers.category.mapTo(it) })
     }
 
+    override suspend fun updateSubcategory(subCategory: SubCategory) {
+        appDb.subCategoryDao().update(mappers.subcategory.mapTo(subCategory))
+    }
+
     override suspend fun updateCategory(card: Category) {
         val newCategory = mappers.category.mapTo(card)
         Timber.d("Update category: $newCategory")
         return appDb.categoryDao().update(newCategory)
     }
 
+    override suspend fun getCategory(categoryId: String): Category {
+        return mappers.category.mapFrom(appDb.categoryDao().getCategoryById(categoryId))
+    }
+
     override suspend fun addSubcategories(list: List<SubCategory>) {
         appDb.subCategoryDao().upsert(list.map { mappers.subcategory.mapTo(it) })
+    }
+
+    override fun getFavoriteSubcategories(): LiveData<List<SubCategory>> {
+        return appDb.subCategoryDao().getAllFavoriteSubCategories().map {
+            it.map {
+                mappers.subcategory.mapFrom(it)
+            }
+        }
     }
 
     override fun getSubCategoriesInCategory(categoryId: String): LiveData<List<SubCategory>> {

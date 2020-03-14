@@ -14,4 +14,5 @@ interface CategoryRepository {
     fun getFavoriteCategories(): LiveData<List<Category>>
     suspend fun markCategoryAsFavorite(category: Category)
     suspend fun unMarkCategoryAsFavorite(category: Category)
+    suspend fun getCategory(categoryId: String): Category
 }

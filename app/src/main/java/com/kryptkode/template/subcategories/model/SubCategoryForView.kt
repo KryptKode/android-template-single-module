@@ -11,7 +11,7 @@ import kotlinx.android.parcel.Parcelize
 data class SubCategoryForView(
     val id: String,
     val name: String,
-    val parentId: String,
+    val categoryId: String,
     val imageUrl: String,
     val status: String,
     val sortOrder: String,

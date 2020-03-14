@@ -8,6 +8,10 @@ import com.kryptkode.template.cardlist.CardListViewModel
 import com.kryptkode.template.cardlist.mapper.CardViewMapper
 import com.kryptkode.template.categories.CategoriesViewModel
 import com.kryptkode.template.categories.mapper.CategoryViewMapper
+import com.kryptkode.template.favoritecards.FavoriteCardsViewModel
+import com.kryptkode.template.favoritecategories.FavoriteCategoriesViewModel
+import com.kryptkode.template.favorites.FavoritesViewModel
+import com.kryptkode.template.favoritesubcategories.FavoriteSubcategoriesViewModel
 import com.kryptkode.template.startnav.StartNavViewModel
 import com.kryptkode.template.startnav.mapper.CategoryWithSubcategoriesViewMapper
 import com.kryptkode.template.subcategories.SubcategoriesViewModel
@@ -56,5 +60,41 @@ class ViewModelProviderModule {
         cardViewMapper: CardViewMapper
     ): CardListViewModel {
         return CardListViewModel(cardRepository, cardViewMapper)
+    }
+
+    @Provides
+    fun provideFavoriteCardListViewModel(
+        cardRepository: CardRepository,
+        cardViewMapper: CardViewMapper
+    ): FavoriteCardsViewModel {
+        return FavoriteCardsViewModel(cardRepository, cardViewMapper)
+    }
+
+    @Provides
+    fun provideFavoriteCategoriesViewModel(
+        categoryRepository: CategoryRepository,
+        categoryViewMapper: CategoryViewMapper
+    ): FavoriteCategoriesViewModel {
+        return FavoriteCategoriesViewModel(categoryRepository, categoryViewMapper)
+    }
+
+    @Provides
+    fun provideFavoriteSubcategoriesViewModel(
+        categoryRepository: CategoryRepository,
+        categoryViewMapper: CategoryViewMapper,
+        subCategoryRepository: SubCategoryRepository,
+        subcategoryViewMapper: SubcategoryViewMapper
+    ): FavoriteSubcategoriesViewModel {
+        return FavoriteSubcategoriesViewModel(
+            categoryRepository,
+            subCategoryRepository,
+            categoryViewMapper,
+            subcategoryViewMapper
+        )
+    }
+
+    @Provides
+    fun provideFavoriteViewModel():FavoritesViewModel{
+        return FavoritesViewModel()
     }
 }

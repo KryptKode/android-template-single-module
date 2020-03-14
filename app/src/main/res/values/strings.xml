@@ -36,4 +36,9 @@
     <string name="rate_dialog_ok">Rate now</string>
     <string name="rate_dialog_cancel">Later</string>
     <string name="open_playstore_with">Open with</string>
+    <string name="favorite_title_subcategories">Subcategories</string>
+    <string name="favorite_title_categories">Categories</string>
+    <string name="favorite_title_cards">Cards</string>
+    <string name="subcategory_remove_from_favorites">Remove from favorites</string>
+    <string name="subcategory_add_to_favorites">Add to favorites</string>
 </resources>

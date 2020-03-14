@@ -55,4 +55,8 @@ class CategoryRepositoryImpl(
     override suspend fun unMarkCategoryAsFavorite(category: Category) {
         return local.updateCategory(category.copy(favorite = false))
     }
+
+    override suspend fun getCategory(categoryId: String): Category {
+        return local.getCategory(categoryId)
+    }
 }

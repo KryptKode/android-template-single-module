@@ -1,5 +1,6 @@
 package com.kryptkode.template.app.data.repo
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.kryptkode.template.app.data.dispatchers.AppDispatchers
 import com.kryptkode.template.app.data.domain.model.Card
@@ -41,5 +42,9 @@ class CardRepositoryImpl(
 
     override suspend fun unMarkCardAsFavorite(card: Card) {
         return local.updateCard(card.copy(favorite = false))
+    }
+
+    override fun getFavoriteCards(): LiveData<List<Card>> {
+        return local.getFavoriteCards()
     }
 }

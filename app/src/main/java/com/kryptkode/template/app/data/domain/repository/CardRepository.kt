@@ -16,4 +16,6 @@ interface CardRepository {
 
     suspend fun unMarkCardAsFavorite(card: Card)
 
+    fun getFavoriteCards():LiveData<List<Card>>
+
 }

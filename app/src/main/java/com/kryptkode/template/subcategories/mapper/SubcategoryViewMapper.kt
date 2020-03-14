@@ -12,7 +12,7 @@ class SubcategoryViewMapper : Mapper<SubCategoryForView, SubCategory> {
         return SubCategory(
             model.id,
             model.name,
-            model.parentId,
+            model.categoryId,
             model.imageUrl,
             model.status,
             model.sortOrder,

@@ -8,4 +8,7 @@ import com.kryptkode.template.app.data.domain.model.SubCategory
  */
 interface SubCategoryRepository {
     fun getAllSubCategoriesUnderCategory(categoryId:String): LiveData<List<SubCategory>>
+    fun getFavoriteSubcategories():LiveData<List<SubCategory>>
+    suspend fun markSubcategoryAsFavorite(subCategory: SubCategory)
+    suspend fun unMarkSubcategoryAsFavorite(subCategory: SubCategory)
 }

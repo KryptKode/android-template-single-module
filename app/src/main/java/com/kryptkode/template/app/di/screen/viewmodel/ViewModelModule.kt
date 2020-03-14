@@ -4,6 +4,10 @@ import androidx.lifecycle.ViewModel
 import com.kryptkode.template.MainActivityViewModel
 import com.kryptkode.template.cardlist.CardListViewModel
 import com.kryptkode.template.categories.CategoriesViewModel
+import com.kryptkode.template.favoritecards.FavoriteCardsViewModel
+import com.kryptkode.template.favoritecategories.FavoriteCategoriesViewModel
+import com.kryptkode.template.favorites.FavoritesViewModel
+import com.kryptkode.template.favoritesubcategories.FavoriteSubcategoriesViewModel
 import com.kryptkode.template.startnav.StartNavViewModel
 import com.kryptkode.template.subcategories.SubcategoriesViewModel
 import dagger.Binds
@@ -38,6 +42,28 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CardListViewModel::class)
     abstract fun bindCardListViewModel(viewModel: CardListViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteCardsViewModel::class)
+    abstract fun bindFavoriteCardsViewModel(viewModel: FavoriteCardsViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteCategoriesViewModel::class)
+    abstract fun bindFavoriteCategoriesViewModel(viewModel: FavoriteCategoriesViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoriteSubcategoriesViewModel::class)
+    abstract fun bindFavoriteSubcategoriesViewModel(viewModel: FavoriteSubcategoriesViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(FavoritesViewModel::class)
+    abstract fun bindFavoritesViewModel(viewModel: FavoritesViewModel): ViewModel
 
 
 }
