@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.View
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
+import com.kryptkode.template.app.customviews.SpacesItemDecoration
+import com.kryptkode.template.app.utils.Constants.LIST_SPACING
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.cardlist.adapter.CardAdapter
 import com.kryptkode.template.cardlist.adapter.CardListener
@@ -56,6 +58,7 @@ class CardListFragment :
 
     private fun initList() {
         binding.recyclerView.adapter = categoriesAdapter
+        binding.recyclerView.addItemDecoration(SpacesItemDecoration(LIST_SPACING))
         binding.recyclerView.setEmptyView(binding.emptyStateLayout)
     }
 

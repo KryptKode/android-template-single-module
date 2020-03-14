@@ -5,6 +5,7 @@ import com.kryptkode.template.R
 import com.kryptkode.template.app.base.recycler.BaseRecyclerViewHolder
 import com.kryptkode.template.app.customviews.PlaceHolderDrawable
 import com.kryptkode.template.app.utils.ImageUrl.getImageUrl
+import com.kryptkode.template.app.utils.extensions.beInvisible
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.ItemCategoryGridBinding
 
@@ -18,7 +19,7 @@ class CardViewHolder(
     private val placeholderDrawable = PlaceHolderDrawable(binding.root.context)
     override fun performBind(item: CardForView?) {
 
-        binding.tvName.text = item?.name?.capitalize()
+        binding.tvName.beInvisible()
         binding.imgBtnFavourite.isChecked = item?.favorite ?: false
         binding.imgThumbnail.load(getImageUrl(item?.imageUrl)){
             placeholder(placeholderDrawable)

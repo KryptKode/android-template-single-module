@@ -10,9 +10,6 @@
     <com.kryptkode.template.app.customviews.MaskedCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/card_side_margin"
-        android:layout_marginEnd="@dimen/card_side_margin"
-        android:layout_marginBottom="@dimen/card_bottom_margin"
         app:cardElevation="@dimen/card_elevation"
         app:cardPreventCornerOverlap="false"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.Card">
@@ -29,7 +26,7 @@
             <ImageView
                 android:id="@+id/img_thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="150dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/app_name"
                 android:scaleType="centerCrop"
@@ -37,6 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:src="@tools:sample/backgrounds/scenic" />
 
             <View
@@ -60,6 +58,7 @@
                 android:contentDescription="@string/img_lock_content_description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@id/img_btn_favourite"
                 app:srcCompat="@drawable/ic_lock" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -70,31 +69,34 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:ellipsize="end"
                 android:marqueeRepeatLimit="marquee_forever"
                 android:padding="8dp"
                 android:textAppearance="@style/TextAppearance.App.ListPrimary"
                 app:autoSizeMaxTextSize="20sp"
+                android:textColor="@color/colorOnGradient"
                 app:autoSizeMinTextSize="12sp"
                 app:autoSizeStepGranularity="1sp"
                 app:autoSizeTextType="uniform"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/img_btn_favourite"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_thumbnail"
                 tools:text="Beauty and the Beast" />
 
 
-            <CheckBox
+            <com.kryptkode.template.app.customviews.CheckableImageView
                 android:id="@+id/img_btn_favourite"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
+                android:padding="12dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:button="@drawable/btn_favorite"
                 android:checked="true"
+                app:civ_buttonTint="@color/colorOnGradient"
                 app:layout_constraintBottom_toBottomOf="@id/tv_name"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1"

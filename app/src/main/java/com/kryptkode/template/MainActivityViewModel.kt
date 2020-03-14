@@ -70,7 +70,7 @@ class MainActivityViewModel : BaseViewModel() {
     }
 
     fun sendFeedBack(subject: String?, message: String?) {
-
+        Timber.d("Fake sending feedback: $subject - $message")
     }
 
 }

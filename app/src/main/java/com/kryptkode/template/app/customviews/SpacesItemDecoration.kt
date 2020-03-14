@@ -15,7 +15,7 @@ class SpacesItemDecoration(private val space: Int) : ItemDecoration() {
     ) {
         outRect.left = space
         outRect.right = space
-        outRect.bottom = space
+        outRect.bottom = space + space
         outRect.top = 0
     }
 

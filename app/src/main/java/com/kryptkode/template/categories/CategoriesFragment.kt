@@ -6,6 +6,8 @@ import android.view.View
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
+import com.kryptkode.template.app.customviews.SpacesItemDecoration
+import com.kryptkode.template.app.utils.Constants
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.categories.adapter.CategoriesAdapter
 import com.kryptkode.template.categories.adapter.CategoriesListener
@@ -56,6 +58,7 @@ class CategoriesFragment :
 
     private fun initList() {
         binding.categoryRecyclerView.adapter = categoriesAdapter
+        binding.categoryRecyclerView.addItemDecoration(SpacesItemDecoration(Constants.LIST_SPACING))
         binding.categoryRecyclerView.setEmptyView(binding.emptyStateLayout)
     }
 

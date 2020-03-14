@@ -18,6 +18,9 @@
     <color name="colorBlack">#FF000000</color>
     <color name="colorGrayLight">#55000000</color>
 
+    <color name="colorGradient">#44000000</color>
+    <color name="colorOnGradient">#FFFFFF</color>
+
     <color name="colorTransParent">#0000</color>
     <color name="blackTranslucent">#44000000</color>
 </resources>
