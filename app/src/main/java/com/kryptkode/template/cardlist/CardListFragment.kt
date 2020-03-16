@@ -3,6 +3,7 @@ package com.kryptkode.template.cardlist
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.customviews.SpacesItemDecoration
@@ -13,12 +14,16 @@ import com.kryptkode.template.cardlist.adapter.CardListener
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.FragmentCardListBinding
 import com.kryptkode.template.subcategories.model.SubCategoryForView
+import javax.inject.Inject
 
 /**
  * Created by kryptkode on 3/12/2020.
  */
 class CardListFragment :
     BaseViewModelFragment<FragmentCardListBinding, CardListViewModel>(CardListViewModel::class) {
+
+    @Inject
+    lateinit var navigator: Navigator
 
     private val subcategory by lazy {
         requireArguments().getParcelable<SubCategoryForView>(ARG_SUBCATEGORY)!!
@@ -46,7 +51,7 @@ class CardListFragment :
         super.onViewCreated(view, savedInstanceState)
         initViews()
         setupObservers()
-        viewModel.loadCards(subcategory.id)
+        viewModel.loadCards(subcategory)
     }
 
     private fun initViews() {
@@ -72,6 +77,16 @@ class CardListFragment :
                 binding.swipe.isRefreshing = it
             }
         }
+
+        viewModel.getGoToCardDetailsEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                openCardDetails(it)
+            }
+        }
+    }
+
+    private fun openCardDetails( card: CardForView) {
+        navigator.openCardDetails( card)
     }
 
     companion object {

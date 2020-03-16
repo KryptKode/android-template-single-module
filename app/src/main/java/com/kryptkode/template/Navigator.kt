@@ -1,9 +1,9 @@
 package com.kryptkode.template
 
 import android.content.Intent
-import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
+import com.kryptkode.template.carddetails.CardDetailActivity
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.favorites.FavoritesActivity
@@ -32,6 +32,6 @@ class Navigator(private val activity: FragmentActivity) {
     }
 
     fun openCardDetails(card: CardForView) {
-        Toast.makeText(activity, "${card.name.capitalize()} coming soon...", Toast.LENGTH_SHORT).show()
+        CardDetailActivity.start(activity, card)
     }
 }

@@ -40,4 +40,5 @@
     <dimen name="dialog_corner_radius">8dp</dimen>
     <dimen name="dialog_button_width">141dp</dimen>
     <dimen name="dialog_button_height">44dp</dimen>
+    <dimen name="card_detail_share_icon_margin">8dp</dimen>
 </resources>

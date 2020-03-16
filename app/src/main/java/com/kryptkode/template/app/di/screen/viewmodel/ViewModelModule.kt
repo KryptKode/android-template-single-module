@@ -2,6 +2,7 @@ package com.kryptkode.template.app.di.screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.kryptkode.template.MainActivityViewModel
+import com.kryptkode.template.carddetails.CardDetailViewModel
 import com.kryptkode.template.cardlist.CardListViewModel
 import com.kryptkode.template.categories.CategoriesViewModel
 import com.kryptkode.template.favoritecards.FavoriteCardsViewModel
@@ -64,6 +65,12 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(FavoritesViewModel::class)
     abstract fun bindFavoritesViewModel(viewModel: FavoritesViewModel): ViewModel
+
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(CardDetailViewModel::class)
+    abstract fun bindCardDetailViewModel(viewModel: CardDetailViewModel): ViewModel
 
 
 }

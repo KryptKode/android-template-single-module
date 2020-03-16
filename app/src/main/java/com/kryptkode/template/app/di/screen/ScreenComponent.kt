@@ -5,6 +5,7 @@ import com.kryptkode.template.app.di.screen.modules.ScreenModule
 import com.kryptkode.template.app.di.screen.viewmodel.ViewModelFactoryModule
 import com.kryptkode.template.app.di.screen.viewmodel.ViewModelModule
 import com.kryptkode.template.app.di.screen.viewmodel.ViewModelProviderModule
+import com.kryptkode.template.carddetails.CardDetailFragment
 import com.kryptkode.template.cardlist.CardListFragment
 import com.kryptkode.template.categories.CategoriesFragment
 import com.kryptkode.template.favoritecards.FavoriteCardsFragment
@@ -38,4 +39,5 @@ interface ScreenComponent {
     fun inject(favoriteCardsFragment: FavoriteCardsFragment)
     fun inject(favoriteCategoriesFragment: FavoriteCategoriesFragment)
     fun inject(favoriteSubcategoriesFragment: FavoriteSubcategoriesFragment)
+    fun inject(cardDetailFragment: CardDetailFragment)
 }

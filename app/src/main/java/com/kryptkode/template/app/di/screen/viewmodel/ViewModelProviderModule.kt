@@ -4,6 +4,7 @@ import com.kryptkode.template.MainActivityViewModel
 import com.kryptkode.template.app.data.domain.repository.CardRepository
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.domain.repository.SubCategoryRepository
+import com.kryptkode.template.carddetails.CardDetailViewModel
 import com.kryptkode.template.cardlist.CardListViewModel
 import com.kryptkode.template.cardlist.mapper.CardViewMapper
 import com.kryptkode.template.categories.CategoriesViewModel
@@ -94,7 +95,17 @@ class ViewModelProviderModule {
     }
 
     @Provides
-    fun provideFavoriteViewModel():FavoritesViewModel{
+    fun provideFavoriteViewModel(): FavoritesViewModel {
         return FavoritesViewModel()
+    }
+
+    @Provides
+    fun provideCardDetailViewModel(
+        cardRepository: CardRepository,
+        cardViewMapper: CardViewMapper
+    ): CardDetailViewModel {
+        return CardDetailViewModel(
+            cardRepository, cardViewMapper
+        )
     }
 }

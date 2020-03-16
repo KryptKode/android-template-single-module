@@ -33,6 +33,8 @@
         <activity android:name=".privacypolicy.PrivacyPolicyActivity" />
         <activity android:name=".subcategories.SubcategoryActivity" />
         <activity android:name=".favorites.FavoritesActivity" />
+        <activity android:name=".carddetails.CardDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar.Detail"/>
 
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
