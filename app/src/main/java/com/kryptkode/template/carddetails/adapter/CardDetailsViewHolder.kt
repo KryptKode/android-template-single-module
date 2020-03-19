@@ -1,6 +1,7 @@
 package com.kryptkode.template.carddetails.adapter
 
 import coil.api.load
+import coil.request.CachePolicy
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.recycler.BaseRecyclerViewHolder
 import com.kryptkode.template.app.customviews.PlaceHolderDrawable
@@ -21,6 +22,7 @@ class CardDetailsViewHolder(
 
         binding.imgBtnFavourite.isChecked = item?.favorite ?: false
         binding.image.load(getImageUrl(item?.imageUrl)) {
+            diskCachePolicy(CachePolicy.ENABLED)
             placeholder(placeholderDrawable)
             error(R.mipmap.ic_launcher)
         }

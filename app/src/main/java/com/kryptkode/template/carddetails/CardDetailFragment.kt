@@ -45,6 +45,7 @@ class CardDetailFragment :
     }
 
     private val adapter = CardDetailsAdapter(cardDetailsListener)
+    private var firstTime = true
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -77,6 +78,7 @@ class CardDetailFragment :
     }
 
     private fun initSwipeRefresh() {
+        binding.swipe.isEnabled = false
         binding.swipe.setOnRefreshListener {
             viewModel.loadData(card.subcategoryId)
         }
@@ -84,7 +86,6 @@ class CardDetailFragment :
 
     private fun initViewPager() {
         binding.viewPager.adapter = adapter
-
     }
 
     private fun setupObservers() {
@@ -96,19 +97,19 @@ class CardDetailFragment :
 
         viewModel.cardList.observe(this) {
             adapter.submitList(it)
-            scrollToTabIfCardPresent(it)
+            scrollToTabIfFirstTimeAndCardPresent(it)
         }
     }
 
-    private fun scrollToTabIfCardPresent(cards: List<CardForView>?) {
-        val cardIndex = cards?.indexOfFirst { item ->
-            card.id == item.id
-        }
-
-        binding.viewPager.postDelayed({
+    private fun scrollToTabIfFirstTimeAndCardPresent(cards: List<CardForView>?) {
+        if (firstTime) {
+            val cardIndex = cards?.indexOfFirst { item ->
+                card.id == item.id
+            }
             Timber.d("CARD INDEX: $cardIndex")
-            binding.viewPager.currentItem = cardIndex ?: 0
-        }, 500)
+            binding.viewPager.setCurrentItem(cardIndex ?: 0, false)
+            firstTime = false
+        }
     }
 
 
@@ -121,7 +122,6 @@ class CardDetailFragment :
             fragment.arguments = args
             return fragment
         }
-
     }
 
 }
