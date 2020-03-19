@@ -17,6 +17,7 @@ import com.kryptkode.template.app.di.screen.ScreenScope
 import com.kryptkode.template.app.di.screen.modules.mapper.MapperModule
 import com.kryptkode.template.app.di.screen.modules.mapper.local.LocalMapperModule
 import com.kryptkode.template.app.di.screen.modules.repo.RepositoryModule
+import com.kryptkode.template.app.utils.AppToastCreator
 import com.kryptkode.template.app.utils.DateHelper
 import com.kryptkode.template.app.utils.rating.RatingDataProvider
 import com.kryptkode.template.app.utils.rating.RatingManager
@@ -88,5 +89,11 @@ class ScreenModule(private val activity: FragmentActivity) {
     @ScreenScope
     fun providePlayStoreUtils(activity: FragmentActivity): PlayStoreUtils {
         return PlayStoreUtils(activity)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideAppToastCreator(context: Context): AppToastCreator {
+        return AppToastCreator(context)
     }
 }
