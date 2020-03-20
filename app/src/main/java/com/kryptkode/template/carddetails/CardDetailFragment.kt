@@ -83,7 +83,7 @@ class CardDetailFragment :
     }
 
     private fun loadData() {
-        viewModel.loadData(card.subcategoryId)
+        viewModel.loadData(card)
     }
 
     private fun initViews() {
@@ -101,7 +101,7 @@ class CardDetailFragment :
     private fun initSwipeRefresh() {
         binding.swipe.isEnabled = false
         binding.swipe.setOnRefreshListener {
-            viewModel.loadData(card.subcategoryId)
+            viewModel.loadData(card)
         }
     }
 
@@ -194,13 +194,15 @@ class CardDetailFragment :
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
-    private fun scrollToTabIfFirstTimeAndCardPresent(cards: List<CardForView>?) {
-        if (firstTime) {
-            val cardIndex = cards?.indexOfFirst { item ->
-                card.id == item.id
+    private fun scrollToTabIfFirstTimeAndCardPresent(list: List<CardForView>?) {
+        if (firstTime && !list.isNullOrEmpty()) {
+            val cardIndex = list.indexOfFirst {
+                it.id == card.id
             }
             Timber.d("CARD INDEX: $cardIndex")
-            binding.viewPager.setCurrentItem(cardIndex ?: 0, false)
+            binding.viewPager.post {
+                binding.viewPager.currentItem = cardIndex
+            }
             firstTime = false
         }
     }

@@ -127,7 +127,7 @@ class SubcategoriesFragment :
     }
 
     private fun scrollToTabIfCategoryPresent() {
-        if(firstTime){
+        if(firstTime && !subcategories.isNullOrEmpty()){
             subcategory?.let {
                 val subcategoryIndex = subcategories?.indexOfFirst { item ->
                     it.id == item.id

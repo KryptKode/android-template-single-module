@@ -29,10 +29,10 @@ class CardDetailViewModel(
     private val cardViewMapper: CardViewMapper
 ) : BaseViewModel() {
 
-    private val subcategoryId = MutableLiveData<String>()
+    private val defaultCard = MutableLiveData<CardForView>()
 
-    val cardList = subcategoryId.switchMap {
-        val result  = cardRepository.getCardsForSubcategory(it)
+    val cardList = defaultCard.switchMap {
+        val result  = cardRepository.getCardsForSubcategory(it.subcategoryId)
         addErrorAndLoadingSource(result)
         result.map {
             it.successOr(listOf()).map {
@@ -160,9 +160,10 @@ class CardDetailViewModel(
         }
     }
 
-    fun loadData(subcategory: String) {
-        this.subcategoryId.postValue(subcategory)
+    fun loadData(card: CardForView) {
+        this.defaultCard.postValue(card)
     }
+
 
     enum class ShareType {
         WHATS_APP, FACEBOOK, TWITTER, OTHERS

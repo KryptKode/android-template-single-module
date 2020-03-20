@@ -30,13 +30,13 @@ class CategoryRepositoryImpl(
         return liveData {
             emit(DataState.Loading)
             try {
+                val allCategories: LiveData<DataState<List<Category>>> = local.getAllCategories()
+                    .map { DataState.Success(it) }
                 val cachedExpired = local.isCategoryCacheExpired()
                 if (cachedExpired) {
                     refreshAllCategoriesAndSubCategories()
                     local.setCategoryCacheTime(dateHelper.nowInMillis())
                 }
-                val allCategories: LiveData<DataState<List<Category>>> = local.getAllCategories()
-                    .map { DataState.Success(it) }
                 emitSource(allCategories)
             } catch (e: Exception) {
                 handleError(errorHandler, e)
