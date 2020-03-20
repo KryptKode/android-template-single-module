@@ -64,7 +64,7 @@ class CardListFragment :
     private fun initList() {
         binding.recyclerView.adapter = categoriesAdapter
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(LIST_SPACING))
-        binding.recyclerView.setEmptyView(binding.emptyStateLayout)
+        binding.recyclerView.setEmptyView(binding.emptyStateLayout.emptyView)
     }
 
     private fun setupObservers() {

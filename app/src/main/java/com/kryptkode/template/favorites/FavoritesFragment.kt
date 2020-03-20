@@ -50,6 +50,6 @@ class FavoritesFragment : BaseViewModelFragment<FragmentFavoritesBinding, Favori
     }
 
     private fun toggleEmptyViewVisibility(visible:Boolean){
-        binding.emptyStateLayout.beVisibleIf(visible)
+        binding.emptyStateLayout.emptyView.beVisibleIf(visible)
     }
 }

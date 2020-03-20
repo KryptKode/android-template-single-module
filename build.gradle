@@ -19,6 +19,21 @@ buildscript {
         classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.12.4'
         classpath 'com.google.android.gms:oss-licenses-plugin:0.9.5'
     }
+
+    gradle.projectsEvaluated {
+        tasks.withType(JavaCompile.class) {
+            options.compilerArgs << "-Xmaxerrs" << "10000"
+        }
+    }
+    afterEvaluate {
+        if (project.plugins.hasPlugin("kotlin-kapt")) {
+            kapt {
+                javacOptions {
+                    option("-Xmaxerrs", 10000)
+                }
+            }
+        }
+    }
 }
 
 allprojects {

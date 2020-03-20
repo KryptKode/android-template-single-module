@@ -6,6 +6,7 @@ import androidx.lifecycle.map
 import androidx.lifecycle.switchMap
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CardRepository
+import com.kryptkode.template.app.data.domain.state.successOr
 import com.kryptkode.template.app.data.model.Event
 import com.kryptkode.template.cardlist.mapper.CardViewMapper
 import com.kryptkode.template.cardlist.model.CardForView
@@ -24,12 +25,15 @@ class CardListViewModel(
 
     private val subcategoryId = MutableLiveData<SubCategoryForView>()
     val cardList = subcategoryId.switchMap {
-        repository.getCardsForSubcategory(it.id).map {
-            it.map {
+        val result = repository.getCardsForSubcategory(it.id)
+        addErrorAndLoadingSource (result)
+        result.map {
+            it.successOr(listOf()).map {
                 cardViewMapper.mapTo(it)
             }
         }
     }
+
 
     fun loadCards(subcategory:SubCategoryForView) {
         this.subcategoryId.postValue(subcategory)

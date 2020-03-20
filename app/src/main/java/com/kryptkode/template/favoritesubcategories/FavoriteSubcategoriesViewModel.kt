@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.domain.repository.SubCategoryRepository
+import com.kryptkode.template.app.data.domain.state.successOr
 import com.kryptkode.template.app.data.model.Event
 import com.kryptkode.template.categories.mapper.CategoryViewMapper
 import com.kryptkode.template.categories.model.CategoryForView
@@ -28,8 +29,13 @@ class FavoriteSubcategoriesViewModel (
     private val goToSubCategory = MutableLiveData<Event<Pair<CategoryForView, SubCategoryForView>>>()
     fun getGoToSubCategoryEvent(): LiveData<Event<Pair<CategoryForView, SubCategoryForView>>> = goToSubCategory
 
-    val favoriteSubcategoryList = subCategoryRepository.getFavoriteSubcategories().map {
-        it.map { subcategoryViewMapper.mapTo(it) }
+    val favoriteSubcategoryList: LiveData<List<SubCategoryForView>>
+    init {
+        val result = subCategoryRepository.getFavoriteSubcategories()
+        addErrorAndLoadingSource(result)
+        favoriteSubcategoryList = result.map {
+            it.successOr(listOf()).map { subcategoryViewMapper.mapTo(it) }
+        }
     }
 
     fun refresh() {
@@ -47,7 +53,6 @@ class FavoriteSubcategoriesViewModel (
             }catch (e:Exception){
                 Timber.d(e)
             }
-
         }
     }
 

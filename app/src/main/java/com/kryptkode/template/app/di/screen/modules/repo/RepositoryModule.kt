@@ -1,6 +1,7 @@
 package com.kryptkode.template.app.di.screen.modules.repo
 
 import com.kryptkode.template.app.data.dispatchers.AppDispatchers
+import com.kryptkode.template.app.data.domain.error.ErrorHandler
 import com.kryptkode.template.app.data.domain.repository.CardRepository
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.domain.repository.SubCategoryRepository
@@ -26,17 +27,19 @@ class RepositoryModule {
         appDispatchers: AppDispatchers,
         remote: Remote,
         dateHelper: DateHelper,
-        local: Local
+        local: Local,
+        errorHandler: ErrorHandler
     ): CategoryRepository {
-        return CategoryRepositoryImpl(appDispatchers, dateHelper, local, remote)
+        return CategoryRepositoryImpl(appDispatchers, dateHelper, local, remote, errorHandler)
     }
 
     @Provides
     @ScreenScope
     fun provideSubCategoryRepository(
-        local: Local
+        local: Local,
+        errorHandler: ErrorHandler
     ): SubCategoryRepository {
-        return SubcategoryRepositoryImpl(local)
+        return SubcategoryRepositoryImpl(local,errorHandler)
     }
 
     @Provides
@@ -45,8 +48,9 @@ class RepositoryModule {
         appDispatchers: AppDispatchers,
         remote: Remote,
         dateHelper: DateHelper,
-        local: Local
+        local: Local,
+        errorHandler: ErrorHandler
     ): CardRepository {
-        return CardRepositoryImpl(appDispatchers, dateHelper, local, remote)
+        return CardRepositoryImpl(appDispatchers, dateHelper, local, remote, errorHandler)
     }
 }

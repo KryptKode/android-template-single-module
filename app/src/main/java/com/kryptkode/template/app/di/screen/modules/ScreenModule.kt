@@ -3,6 +3,7 @@ package com.kryptkode.template.app.di.screen.modules
 import android.content.Context
 import androidx.fragment.app.FragmentActivity
 import com.kryptkode.template.Navigator
+import com.kryptkode.template.app.data.domain.error.ErrorHandler
 import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.local.LocalImpl
 import com.kryptkode.template.app.data.local.mapper.LocalMappers
@@ -13,6 +14,7 @@ import com.kryptkode.template.app.data.remote.Remote
 import com.kryptkode.template.app.data.remote.RemoteImpl
 import com.kryptkode.template.app.data.remote.api.Api
 import com.kryptkode.template.app.data.remote.mapper.RemoteMappers
+import com.kryptkode.template.app.data.repo.ErrorHandlerImpl
 import com.kryptkode.template.app.di.screen.ScreenScope
 import com.kryptkode.template.app.di.screen.modules.mapper.MapperModule
 import com.kryptkode.template.app.di.screen.modules.mapper.local.LocalMapperModule
@@ -95,5 +97,11 @@ class ScreenModule(private val activity: FragmentActivity) {
     @ScreenScope
     fun provideAppToastCreator(context: Context): AppToastCreator {
         return AppToastCreator(context)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideErrorHandler(context: Context): ErrorHandler{
+        return ErrorHandlerImpl(context)
     }
 }

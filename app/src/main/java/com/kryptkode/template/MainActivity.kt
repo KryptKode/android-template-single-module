@@ -204,7 +204,7 @@ class MainActivity :
     }
 
     protected fun showRatingDialogIfConditionsAreMet() {
-        if (ratingManager.setDebug(BuildConfig.DEBUG)
+        if (ratingManager/*.setDebug(BuildConfig.DEBUG)*/
                 .showRateIfMeetsConditions()
         ) {
             val dialogFragment = InfoDialog.newInstance(

@@ -34,6 +34,7 @@ class SubcategoriesFragment :
 
     private var fragmentAdapter: SubcategoryFragmentAdapter? = null
     private var subcategories: List<SubCategoryForView>? = null
+    private var firstTime = true
 
 
     override fun onAttach(context: Context) {
@@ -100,6 +101,19 @@ class SubcategoriesFragment :
             toggleEmptyViewVisibility(it.isNullOrEmpty())
             scrollToTabIfCategoryPresent()
         }
+
+        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                Timber.d("Loading Subcategories... $it")
+            }
+        }
+
+        viewModel.getErrorMessageEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                showToast(it)
+                binding.emptyStateLayout.emptyViewTv.text = getString(R.string.swipe_down_msg, it)
+            }
+        }
     }
 
     private fun initAdapter(cardList: List<CardListFragment>) {
@@ -109,15 +123,18 @@ class SubcategoriesFragment :
     }
 
     private fun toggleEmptyViewVisibility(visible: Boolean) {
-        binding.emptyStateLayout.beVisibleIf(visible)
+        binding.emptyStateLayout.emptyView.beVisibleIf(visible)
     }
 
     private fun scrollToTabIfCategoryPresent() {
-        subcategory?.let {
-            val subcategoryIndex = subcategories?.indexOfFirst { item ->
-                it.id == item.id
+        if(firstTime){
+            subcategory?.let {
+                val subcategoryIndex = subcategories?.indexOfFirst { item ->
+                    it.id == item.id
+                }
+                binding.viewPager.currentItem = subcategoryIndex ?: 0
             }
-            binding.viewPager.currentItem = subcategoryIndex ?: 0
+            firstTime = false
         }
     }
 

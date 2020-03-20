@@ -10,6 +10,7 @@ import coil.Coil
 import coil.api.get
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CardRepository
+import com.kryptkode.template.app.data.domain.state.successOr
 import com.kryptkode.template.app.data.model.Event
 import com.kryptkode.template.app.utils.ImageUrl
 import com.kryptkode.template.cardlist.mapper.CardViewMapper
@@ -31,8 +32,10 @@ class CardDetailViewModel(
     private val subcategoryId = MutableLiveData<String>()
 
     val cardList = subcategoryId.switchMap {
-        cardRepository.getCardsForSubcategory(it).map {
-            it.map {
+        val result  = cardRepository.getCardsForSubcategory(it)
+        addErrorAndLoadingSource(result)
+        result.map {
+            it.successOr(listOf()).map {
                 cardViewMapper.mapTo(it)
             }
         }

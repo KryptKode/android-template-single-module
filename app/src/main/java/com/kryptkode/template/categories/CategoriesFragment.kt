@@ -59,7 +59,7 @@ class CategoriesFragment :
     private fun initList() {
         binding.categoryRecyclerView.adapter = categoriesAdapter
         binding.categoryRecyclerView.addItemDecoration(SpacesItemDecoration(Constants.LIST_SPACING))
-        binding.categoryRecyclerView.setEmptyView(binding.emptyStateLayout)
+        binding.categoryRecyclerView.setEmptyView(binding.emptyStateLayout.emptyView)
     }
 
     private fun setupObservers() {
@@ -76,6 +76,13 @@ class CategoriesFragment :
         viewModel.getGoToSubCategoryEvent().observe(viewLifecycleOwner) { event ->
             event?.getContentIfNotHandled()?.let {
                 openSubCategory(it)
+            }
+        }
+
+        viewModel.getErrorMessageEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                showToast(it)
+                binding.emptyStateLayout.emptyViewTv.text = getString(R.string.swipe_down_msg, it)
             }
         }
     }

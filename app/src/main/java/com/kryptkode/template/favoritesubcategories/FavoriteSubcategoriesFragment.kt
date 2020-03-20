@@ -59,7 +59,7 @@ class FavoriteSubcategoriesFragment :
 
     private fun initList() {
         binding.recyclerView.adapter = subcategoriesAdapter
-        binding.recyclerView.setEmptyView(binding.emptyStateLayout)
+        binding.recyclerView.setEmptyView(binding.emptyStateLayout.emptyView)
     }
 
     private fun setupObservers() {
@@ -76,6 +76,19 @@ class FavoriteSubcategoriesFragment :
         viewModel.getGoToSubCategoryEvent().observe(viewLifecycleOwner) { event ->
             event?.getContentIfNotHandled()?.let {
                 openSubCategory(it.first, it.second)
+            }
+        }
+
+        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                binding.swipe.isRefreshing = it
+            }
+        }
+
+        viewModel.getErrorMessageEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                showToast(it)
+                binding.emptyStateLayout.emptyViewTv.text = getString(R.string.swipe_down_msg, it)
             }
         }
     }

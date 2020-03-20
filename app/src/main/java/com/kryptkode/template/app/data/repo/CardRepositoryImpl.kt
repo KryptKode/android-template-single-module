@@ -2,12 +2,16 @@ package com.kryptkode.template.app.data.repo
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.lifecycle.map
 import com.kryptkode.template.app.data.dispatchers.AppDispatchers
+import com.kryptkode.template.app.data.domain.error.ErrorHandler
 import com.kryptkode.template.app.data.domain.model.Card
 import com.kryptkode.template.app.data.domain.repository.CardRepository
+import com.kryptkode.template.app.data.domain.state.DataState
 import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.remote.Remote
 import com.kryptkode.template.app.utils.DateHelper
+import com.kryptkode.template.app.utils.extensions.handleError
 import kotlinx.coroutines.withContext
 
 /**
@@ -17,16 +21,26 @@ class CardRepositoryImpl(
     private val dispatcher: AppDispatchers,
     private val dateHelper: DateHelper,
     private val local: Local,
-    private val remote: Remote
+    private val remote: Remote,
+    private val errorHandler: ErrorHandler
 ) : CardRepository {
 
-    override fun getCardsForSubcategory(subCategoryId: String) = liveData {
-        val cachedExpired = local.isCardCacheExpired(subCategoryId)
-        if (cachedExpired) {
-            refreshCards(subCategoryId)
-            local.setCardCacheTime(subCategoryId, dateHelper.nowInMillis())
+    override fun getCardsForSubcategory(subCategoryId: String): LiveData<DataState<List<Card>>> {
+        return liveData {
+            try {
+                emit(DataState.Loading)
+                val cachedExpired = local.isCardCacheExpired(subCategoryId)
+                if (cachedExpired) {
+                    refreshCards(subCategoryId)
+                    local.setCardCacheTime(subCategoryId, dateHelper.nowInMillis())
+                }
+                val result : LiveData<DataState<List<Card>>> = local.getCardsInSubCategory(subCategoryId)
+                    .map { DataState.Success(it) }
+                emitSource(result)
+            }catch (e:Exception){
+                handleError(errorHandler, e)
+            }
         }
-        emitSource(local.getCardsInSubCategory(subCategoryId))
     }
 
     override suspend fun refreshCards(subCategoryId: String) {
@@ -44,7 +58,17 @@ class CardRepositoryImpl(
         return local.updateCard(card.copy(favorite = false))
     }
 
-    override fun getFavoriteCards(): LiveData<List<Card>> {
-        return local.getFavoriteCards()
+    override fun getFavoriteCards(): LiveData<DataState<List<Card>>> {
+        return liveData {
+            try {
+                emit(DataState.Loading)
+                val result : LiveData<DataState<List<Card>>> = local.getFavoriteCards().map {
+                    DataState.Success(it)
+                }
+                emitSource(result)
+            }catch (e:Exception){
+                handleError(errorHandler, e)
+            }
+        }
     }
 }

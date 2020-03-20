@@ -1,9 +1,10 @@
 package com.kryptkode.template.app.base.viewmodel
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kryptkode.template.app.data.domain.state.DataState
 import com.kryptkode.template.app.data.model.Event
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
@@ -14,10 +15,10 @@ import java.io.IOException
 
 abstract class BaseViewModel : ViewModel() {
 
-    protected val loading = MutableLiveData<Event<Boolean>>(Event(false))
+    protected val loading = MediatorLiveData<Event<Boolean>>()
     fun getLoadingValueEvent(): LiveData<Event<Boolean>> = loading
 
-    protected val errorMessage = MutableLiveData<Event<String>>()
+    protected val errorMessage = MediatorLiveData<Event<String>>()
     fun getErrorMessageEvent(): LiveData<Event<String>> = errorMessage
 
 
@@ -36,7 +37,7 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 
-    private fun handleError(error: Throwable) {
+    protected fun handleError(error: Throwable) {
         //Create Error handler
         errorMessage.postValue(
             Event(
@@ -64,6 +65,27 @@ abstract class BaseViewModel : ViewModel() {
     protected fun showLoading() {
         loading.postValue(Event(true))
     }
+
+    protected fun <T> addErrorSource(data: LiveData<DataState<T>>){
+        errorMessage.addSource(data){
+            if(it is DataState.Error){
+                errorMessage.postValue(Event(it.errorMessage))
+            }
+        }
+
+    }
+
+    protected fun <T> addLoadingSource(data:LiveData<DataState<T>>){
+        loading.addSource(data){
+            loading.postValue(Event(it is DataState.Loading))
+        }
+    }
+
+    protected fun <T> addErrorAndLoadingSource(data: LiveData<DataState<T>>){
+        addErrorSource(data)
+        addLoadingSource(data)
+    }
+
 
 
 }

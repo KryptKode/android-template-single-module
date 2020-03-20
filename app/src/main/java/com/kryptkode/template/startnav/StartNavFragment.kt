@@ -17,6 +17,7 @@ import com.kryptkode.template.subcategories.model.SubCategoryForView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
+import timber.log.Timber
 import javax.inject.Inject
 
 /**
@@ -61,7 +62,7 @@ class StartNavFragment :
         binding.recyclerView.adapter = adapter
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(4))
         binding.recyclerView.layoutManager = groupLayoutManager
-        binding.recyclerView.setEmptyView(binding.emptyStateLayout)
+        binding.recyclerView.setEmptyView(binding.emptyStateLayout.emptyView)
     }
 
     private fun initObservers() {
@@ -72,6 +73,18 @@ class StartNavFragment :
         viewModel.getGoToSubCategoryEvent().observe(this) { event ->
             event?.getContentIfNotHandled()?.let {
                 openSubCategory(it.first, it.second)
+            }
+        }
+        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                Timber.d("Loading... $it")
+            }
+        }
+
+        viewModel.getErrorMessageEvent().observe(viewLifecycleOwner){event ->
+            event?.getContentIfNotHandled()?.let {
+                showToast(it)
+                binding.emptyStateLayout.emptyViewTv.text = getString(R.string.swipe_down_msg, it)
             }
         }
     }
