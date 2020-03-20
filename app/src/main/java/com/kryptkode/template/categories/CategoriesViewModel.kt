@@ -1,6 +1,7 @@
 package com.kryptkode.template.categories
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
@@ -21,21 +22,29 @@ class CategoriesViewModel(
     private val goToSubCategory = MutableLiveData<Event<CategoryForView>>()
     fun getGoToSubCategoryEvent(): LiveData<Event<CategoryForView>> = goToSubCategory
 
-    val categoriesList: LiveData<List<CategoryForView>>
+    private val _categoriesList = MediatorLiveData<List<CategoryForView>>()
+    val categoriesList: LiveData<List<CategoryForView>> = _categoriesList
 
     init {
+        initializeData()
+    }
+
+    private fun initializeData() {
         val result = repository.getAllCategories()
         addErrorAndLoadingSource(result)
-        categoriesList = result.map {
+        _categoriesList.addSource(result.map {
             it.successOr(listOf()).map {
                 categoryViewMapper.mapTo(it)
             }
+        }){
+            _categoriesList.postValue(it)
         }
     }
 
     fun refresh() {
         launchDataLoad {
             repository.refreshAllCategoriesAndSubCategories()
+            initializeData()
         }
     }
 
