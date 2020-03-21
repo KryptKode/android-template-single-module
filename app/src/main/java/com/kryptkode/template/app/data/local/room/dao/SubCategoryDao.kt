@@ -16,7 +16,11 @@ abstract class SubCategoryDao : BaseDao<SubCategoryEntity>() {
      * @return
      */
     @Query("SELECT * FROM subcategory WHERE id = :id")
-    abstract fun getSubCategoryById(id: String): LiveData<SubCategoryEntity>
+    abstract fun getSubCategoryByIdLive(id: String): LiveData<SubCategoryEntity>
+
+    @Query("SELECT * FROM subcategory WHERE id = :id")
+    abstract fun getSubCategoryById(id: String): SubCategoryEntity
+
 
 
     /**
@@ -40,5 +44,17 @@ abstract class SubCategoryDao : BaseDao<SubCategoryEntity>() {
      */
     @Query("SELECT * FROM subcategory WHERE category_id  = :categoryId")
     abstract fun getSubCategoriesInCategory(categoryId: String): LiveData<List<SubCategoryEntity>>
+
+    override suspend fun handleInsertConflict(item: SubCategoryEntity) {
+        val oldCategory = getSubCategoryById(item.id)
+        val clone = oldCategory.copy(
+            name = item.name,
+            categoryId = item.categoryId,
+            imageUrl = item.imageUrl,
+            status = item.status,
+            sortOrder = item.sortOrder
+        )
+        update(clone)
+    }
 
 }

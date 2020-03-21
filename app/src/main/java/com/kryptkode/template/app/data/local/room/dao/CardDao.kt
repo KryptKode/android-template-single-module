@@ -47,4 +47,16 @@ abstract class CardDao : BaseDao<CardEntity>() {
 
     @Query("SELECT * FROM card WHERE category_id  = :categoryId")
     abstract fun getCardEntitysWithCategory(categoryId: String): LiveData<List<CardEntity>>
+
+    override suspend fun handleInsertConflict(item: CardEntity) {
+        val oldCategory = getCardEntityById(item.id)
+        val clone = oldCategory.copy(
+            name = item.name,
+            categoryId = item.categoryId,
+            subcategoryId = item.subcategoryId,
+            imgUrl = item.imgUrl,
+            status = item.status
+        )
+        update(clone)
+    }
 }

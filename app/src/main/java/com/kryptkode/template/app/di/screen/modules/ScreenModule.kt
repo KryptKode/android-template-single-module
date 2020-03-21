@@ -16,6 +16,7 @@ import com.kryptkode.template.app.data.remote.api.Api
 import com.kryptkode.template.app.data.remote.mapper.RemoteMappers
 import com.kryptkode.template.app.data.repo.ErrorHandlerImpl
 import com.kryptkode.template.app.di.screen.ScreenScope
+import com.kryptkode.template.app.di.screen.modules.ads.AdModule
 import com.kryptkode.template.app.di.screen.modules.mapper.MapperModule
 import com.kryptkode.template.app.di.screen.modules.mapper.local.LocalMapperModule
 import com.kryptkode.template.app.di.screen.modules.repo.RepositoryModule
@@ -31,7 +32,7 @@ import dagger.Provides
 /**
  * Created by kryptkode on 2/19/2020.
  */
-@Module(includes = [LocalMapperModule::class, RepositoryModule::class, MapperModule::class])
+@Module(includes = [LocalMapperModule::class, RepositoryModule::class, MapperModule::class, AdModule::class])
 class ScreenModule(private val activity: FragmentActivity) {
 
     @Provides

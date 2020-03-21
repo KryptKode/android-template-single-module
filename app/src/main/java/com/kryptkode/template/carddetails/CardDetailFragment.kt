@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.view.View
+import com.kryptkode.adbase.Ad
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.utils.extensions.observe
@@ -31,6 +32,9 @@ class CardDetailFragment :
 
     @Inject
     lateinit var shareUtils: ShareUtils
+
+    @Inject
+    lateinit var advert: Ad
 
     private val card by lazy {
         arguments?.getParcelable<CardForView>(ARG_CARD)!!
@@ -78,8 +82,13 @@ class CardDetailFragment :
         super.onViewCreated(view, savedInstanceState)
         shareUtils.listener = shareListener
         initViews()
+        initAds()
         setupObservers()
         loadData()
+    }
+
+    private fun initAds() {
+        advert.initBannerAd(binding.adContainer)
     }
 
     private fun loadData() {

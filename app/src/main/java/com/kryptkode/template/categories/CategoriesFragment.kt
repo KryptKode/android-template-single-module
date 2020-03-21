@@ -3,6 +3,7 @@ package com.kryptkode.template.categories
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import com.kryptkode.adbase.Ad
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
@@ -24,6 +25,9 @@ class CategoriesFragment :
     @Inject
     lateinit var navigator: Navigator
 
+    @Inject
+    lateinit var advert:Ad
+
     private val categoriesListener = object : CategoriesListener {
         override fun onItemClick(item: CategoryForView?) {
             viewModel.handleCategoryItemClick(item)
@@ -34,7 +38,7 @@ class CategoriesFragment :
         }
     }
 
-    val categoriesAdapter = CategoriesAdapter(categoriesListener)
+    private val categoriesAdapter = CategoriesAdapter(categoriesListener)
 
     override fun getLayoutResource() = R.layout.fragment_category
 
@@ -46,7 +50,12 @@ class CategoriesFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        initAds()
         setupObservers()
+    }
+
+    private fun initAds() {
+        advert.initBannerAd(binding.adContainer)
     }
 
     private fun initViews() {
