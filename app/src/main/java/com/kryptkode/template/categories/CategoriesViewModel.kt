@@ -44,7 +44,7 @@ class CategoriesViewModel(
     fun refresh() {
         launchDataLoad {
             repository.refreshAllCategoriesAndSubCategories()
-            initializeData()
+//            initializeData()
         }
     }
 

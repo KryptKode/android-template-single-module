@@ -6,7 +6,9 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
+import com.kryptkode.adbase.Ad
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.utils.extensions.beVisibleIf
@@ -17,12 +19,16 @@ import com.kryptkode.template.databinding.FragmentSubcategoryBinding
 import com.kryptkode.template.subcategories.adapter.SubcategoryFragmentAdapter
 import com.kryptkode.template.subcategories.model.SubCategoryForView
 import timber.log.Timber
+import javax.inject.Inject
 
 /**
  * Created by kryptkode on 3/10/2020.
  */
 class SubcategoriesFragment :
     BaseViewModelFragment<FragmentSubcategoryBinding, SubcategoriesViewModel>(SubcategoriesViewModel::class) {
+
+    @Inject
+    lateinit var advert:Ad
 
     private val category by lazy {
         requireArguments().getParcelable<CategoryForView>(ARG_CATEGORY)!!
@@ -76,12 +82,21 @@ class SubcategoriesFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
+        initAds()
         setupObservers()
         viewModel.loadSubcategories(category.id)
     }
 
-    private fun initViews() {
+    private fun initAds() {
+        advert.initInterstitialAd()
+    }
 
+    private fun initViews() {
+        binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                advert.showInterstitialAd()
+            }
+        })
     }
 
     private fun initTabs() {

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.view.View
+import androidx.viewpager2.widget.ViewPager2
 import com.kryptkode.adbase.Ad
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
@@ -89,6 +90,7 @@ class CardDetailFragment :
 
     private fun initAds() {
         advert.initBannerAd(binding.adContainer)
+        advert.initInterstitialAd()
     }
 
     private fun loadData() {
@@ -116,6 +118,11 @@ class CardDetailFragment :
 
     private fun initViewPager() {
         binding.viewPager.adapter = adapter
+        binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                advert.showInterstitialAd()
+            }
+        })
     }
 
     private fun setupObservers() {
