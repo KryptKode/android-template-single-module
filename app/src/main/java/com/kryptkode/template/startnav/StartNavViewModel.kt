@@ -11,6 +11,7 @@ import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.startnav.mapper.CategoryWithSubcategoriesViewMapper
 import com.kryptkode.template.startnav.model.CategoryWithSubCategoriesForView
 import com.kryptkode.template.subcategories.model.SubCategoryForView
+import timber.log.Timber
 
 /**
  * Created by kryptkode on 3/4/2020.
@@ -37,6 +38,14 @@ class StartNavViewModel(
 
     fun onSubCategoryClick(category: CategoryForView, subcategory: SubCategoryForView) {
         goToSubCategory.postValue(Event(Pair(category, subcategory)))
+    }
+
+    fun onCategoryClick(categoryForView: CategoryForView) {
+        if(categoryForView.locked){
+
+        }else{
+            Timber.d("Category Clicked ${categoryForView.id}")
+        }
     }
 
 

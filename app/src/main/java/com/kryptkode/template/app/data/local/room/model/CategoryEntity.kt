@@ -25,7 +25,7 @@ data class CategoryEntity(
     @ColumnInfo(name = COLUMN_FAVORITE)
     val favorite: Boolean,
     @ColumnInfo(name = COLUMN_LOCKED)
-    val locked: Boolean
+    var locked: Boolean
 ) {
     companion object {
         const val TABLE_NAME = "category"

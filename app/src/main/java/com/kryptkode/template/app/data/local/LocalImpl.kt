@@ -138,4 +138,20 @@ class LocalImpl(
     override suspend fun isLinkCacheExpired(): Boolean {
         return dateHelper.nowInMillis() - prefs.getLinkCacheTime() >= CARD_CACHE_TIME_MILLIS
     }
+
+    override fun isCategoryLocked(categoryId: String): Boolean {
+        return prefs.isCategoryLocked(categoryId)
+    }
+
+    override fun setCategoryLocked(categoryId: String, value: Boolean) {
+        return prefs.setCategoryLocked(categoryId, value)
+    }
+
+    override fun getDateWhenCategoryWasUnlocked(categoryId: String): Long {
+        return prefs.getDateWhenCategoryWasUnlocked(categoryId)
+    }
+
+    override fun setDateWhenCategoryWasUnlocked(categoryId: String, time: Long) {
+        return prefs.setDateWhenCategoryWasUnlocked(categoryId, time)
+    }
 }

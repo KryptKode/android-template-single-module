@@ -16,4 +16,10 @@ interface AppPrefs {
     fun setCategoryCacheTime(time: Long)
     fun getCardCacheTime(subcategoryId: String): Long
     fun getCategoryCacheTime(): Long
+
+    fun isCategoryLocked(categoryId:String): Boolean
+    fun setCategoryLocked(categoryId: String, value: Boolean)
+
+    fun setDateWhenCategoryWasUnlocked(categoryId: String, time: Long)
+    fun getDateWhenCategoryWasUnlocked(categoryId: String):Long
 }

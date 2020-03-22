@@ -16,4 +16,5 @@ interface CategoryRepository {
     suspend fun markCategoryAsFavorite(category: Category)
     suspend fun unMarkCategoryAsFavorite(category: Category)
     suspend fun getCategory(categoryId: String): Category
+    suspend fun unlockCategory(category: Category)
 }

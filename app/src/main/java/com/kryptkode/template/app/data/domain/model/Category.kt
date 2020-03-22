@@ -10,5 +10,5 @@ data class Category(
     val status: String,
     val sortOrder: String,
     val favorite: Boolean,
-    val locked: Boolean
+    var locked: Boolean
 )

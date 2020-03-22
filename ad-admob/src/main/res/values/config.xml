@@ -10,7 +10,7 @@
     <string name="admob_banner_id" translatable="false">ca-app-pub-3037078034549596/5287596998</string>
     <string name="admob_interstitial_id" translatable="false">ca-app-pub-3037078034549596/8838567101</string>
     <string name="admob_app_id" translatable="false">ca-app-pub-3037078034549596~4192045863</string>
-    <string name="admob_rewarded_video_ad_unit_id">ca-app-pub-3037078034549596/7410210338</string>
+    <string name="admob_rewarded_video_ad_unit_id">ca-app-pub-3940256099942544/5224354917</string>
 
 
 </resources>

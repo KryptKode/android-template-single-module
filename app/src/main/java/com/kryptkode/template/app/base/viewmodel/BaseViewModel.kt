@@ -1,9 +1,7 @@
 package com.kryptkode.template.app.base.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.annotation.StringRes
+import androidx.lifecycle.*
 import com.kryptkode.template.app.data.domain.state.DataState
 import com.kryptkode.template.app.data.model.Event
 import kotlinx.coroutines.Job
@@ -20,6 +18,9 @@ abstract class BaseViewModel : ViewModel() {
 
     protected val errorMessage = MediatorLiveData<Event<String>>()
     fun getErrorMessageEvent(): LiveData<Event<String>> = errorMessage
+
+    private val showMessage = MutableLiveData<Event<Int>>()
+    fun getShowMessageEvent(): LiveData<Event<Int>> = showMessage
 
 
     protected fun launchDataLoad(block: suspend () -> Unit): Job {
@@ -86,6 +87,9 @@ abstract class BaseViewModel : ViewModel() {
         addLoadingSource(data)
     }
 
+    protected fun showMessage (@StringRes resId:Int){
+        showMessage.postValue(Event(resId))
+    }
 
 
 }

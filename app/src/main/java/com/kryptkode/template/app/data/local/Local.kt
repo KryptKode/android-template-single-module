@@ -24,14 +24,19 @@ interface Local {
     fun getFavoriteCards(): LiveData<List<Card>>
     suspend fun addCards(list: List<Card>)
     suspend fun updateCard(card: Card)
-    suspend fun setCardCacheTime(subcategoryId: String, time:Long)
-    suspend fun setCategoryCacheTime(time:Long)
+    suspend fun setCardCacheTime(subcategoryId: String, time: Long)
+    suspend fun setCategoryCacheTime(time: Long)
 
-    suspend fun isCardCacheExpired(subcategoryId: String):Boolean
-    suspend fun isCategoryCacheExpired():Boolean
+    suspend fun isCardCacheExpired(subcategoryId: String): Boolean
+    suspend fun isCategoryCacheExpired(): Boolean
     suspend fun saveLink(link: Link)
-    suspend fun getLink():Link
-    suspend fun setLinkCacheTime(time:Long)
-    suspend fun isLinkCacheExpired():Boolean
+    suspend fun getLink(): Link
+    suspend fun setLinkCacheTime(time: Long)
+    suspend fun isLinkCacheExpired(): Boolean
+
+    fun isCategoryLocked(categoryId:String): Boolean
+    fun setCategoryLocked(categoryId:String, value: Boolean)
+    fun setDateWhenCategoryWasUnlocked(categoryId: String, time: Long)
+    fun getDateWhenCategoryWasUnlocked(categoryId: String):Long
 
 }

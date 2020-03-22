@@ -13,6 +13,7 @@ import com.kryptkode.template.app.utils.extensions.populate
 import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.databinding.FragmentStartNavBinding
 import com.kryptkode.template.startnav.adapter.ChildItem
+import com.kryptkode.template.startnav.adapter.HeaderItem
 import com.kryptkode.template.subcategories.model.SubCategoryForView
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.OnItemClickListener
@@ -32,7 +33,9 @@ class StartNavFragment :
     private val adapter = GroupAdapter<GroupieViewHolder>()
 
     private val onItemClickListener = OnItemClickListener { item, _ ->
-        if (item is ChildItem) {
+        if (item is HeaderItem){
+            viewModel.onCategoryClick(item.categoryForView)
+        }else if (item is ChildItem) {
             viewModel.onSubCategoryClick(item.categoryForView, item.subCategoryForView)
         }
     }

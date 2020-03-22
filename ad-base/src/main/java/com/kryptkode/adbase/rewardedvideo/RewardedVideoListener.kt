@@ -1,4 +1,4 @@
-package com.kryptkode.admob
+package com.kryptkode.adbase.rewardedvideo
 
 open class RewardedVideoListener{
         open fun onRewardedVideoAdLoaded(){
@@ -6,10 +6,6 @@ open class RewardedVideoListener{
         }
 
         open fun onRewardedVideoAdOpened(){
-
-        }
-
-        open fun onRewardedVideoStarted(){
 
         }
 
@@ -21,15 +17,13 @@ open class RewardedVideoListener{
 
         }
 
-        open fun onRewardedVideoAdLeftApplication(){
-
-        }
 
         open fun onRewardedVideoAdFailedToLoad(errorCode: Int){
 
         }
 
-        open fun onRewardedVideoCompleted(){
+
+        open fun onRewardedAdFailedToShow(errorCode: Int) {
 
         }
-    }
+}

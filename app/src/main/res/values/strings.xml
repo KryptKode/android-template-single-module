@@ -56,6 +56,11 @@
     <string name="permission_denied">For the app to work as expected, please allow the permission</string>
     <string name="permission_never_ask">To use this feature, allow the permissions in settings</string>
     <string name="swipe_down_msg">%s\nSwipe down to refresh</string>
-
+    <string name="category_locked_msg">Category locked. Watch a video to unlock</string>
+    <string name="watch_video_dialog_title">Unlock Content</string>
+    <string name="watch_video_dialog_msg">Watch video to unlock?</string>
+    <string name="watch_video_dialog_confirm_text">Yes</string>
+    <string name="watch_video_dialog_cancel_btn_text">No</string>
+    <string name="video_not_loaded_error_msg">Video not loaded, please try again after some time</string>
 
 </resources>

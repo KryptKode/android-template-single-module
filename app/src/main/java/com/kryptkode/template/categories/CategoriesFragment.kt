@@ -4,10 +4,13 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.kryptkode.adbase.Ad
+import com.kryptkode.adbase.rewardedvideo.Reward
+import com.kryptkode.adbase.rewardedvideo.RewardedVideoListener
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.customviews.SpacesItemDecoration
+import com.kryptkode.template.app.dialogs.InfoDialog
 import com.kryptkode.template.app.utils.Constants
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.categories.adapter.CategoriesAdapter
@@ -26,7 +29,7 @@ class CategoriesFragment :
     lateinit var navigator: Navigator
 
     @Inject
-    lateinit var advert:Ad
+    lateinit var advert: Ad
 
     private val categoriesListener = object : CategoriesListener {
         override fun onItemClick(item: CategoryForView?) {
@@ -35,6 +38,12 @@ class CategoriesFragment :
 
         override fun onItemFavoriteClick(isFavorite: Boolean, item: CategoryForView?) {
             viewModel.handleCategoryFavoriteClick(item, isFavorite)
+        }
+    }
+
+    private val rewardedVideoListener = object : RewardedVideoListener() {
+        override fun onRewarded(reward: Reward?) {
+            viewModel.onVideoRewarded()
         }
     }
 
@@ -56,6 +65,7 @@ class CategoriesFragment :
 
     private fun initAds() {
         advert.initBannerAd(binding.adContainer)
+        advert.initRewardedVideoAd(rewardedVideoListener)
     }
 
     private fun initViews() {
@@ -76,7 +86,7 @@ class CategoriesFragment :
             categoriesAdapter.submitList(it ?: listOf())
         }
 
-        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner){event ->
+        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner) { event ->
             event?.getContentIfNotHandled()?.let {
                 binding.swipe.isRefreshing = it
             }
@@ -88,12 +98,54 @@ class CategoriesFragment :
             }
         }
 
-        viewModel.getErrorMessageEvent().observe(viewLifecycleOwner){event ->
+        viewModel.getErrorMessageEvent().observe(viewLifecycleOwner) { event ->
             event?.getContentIfNotHandled()?.let {
                 showToast(it)
                 binding.emptyStateLayout.emptyViewTv.text = getString(R.string.swipe_down_msg, it)
             }
         }
+
+        viewModel.getShowWatchVideoConfirmDialogEvent().observe(viewLifecycleOwner) { event ->
+            event?.getContentIfNotHandled()?.let {
+                openWatchVideoConfirmDialog()
+            }
+        }
+
+        viewModel.getShowVideoAdEvent().observe(viewLifecycleOwner) { event ->
+            event?.getContentIfNotHandled()?.let {
+                showVideoAd()
+            }
+        }
+
+        viewModel.getShowMessageEvent().observe(viewLifecycleOwner) { event ->
+            event?.getContentIfNotHandled()?.let {
+                showToast(getString(it))
+            }
+        }
+    }
+
+    private fun showVideoAd() {
+        if (advert.showRewardedVideoAdImmediately()) {
+            viewModel.videoAdShown()
+        } else {
+            viewModel.videoAdNotLoaded()
+        }
+    }
+
+    private fun openWatchVideoConfirmDialog() {
+        val dialogFragment = InfoDialog.newInstance(
+            title = getString(R.string.watch_video_dialog_title),
+            message = getString(R.string.watch_video_dialog_msg),
+            buttonText = getString(R.string.watch_video_dialog_confirm_text),
+            hasNeutralButton = true,
+            neutralButtonText = getString(R.string.watch_video_dialog_cancel_btn_text),
+            listener = object : InfoDialog.InfoListener {
+                override fun onConfirm() {
+                    viewModel.onWatchVideo()
+                }
+            }
+        )
+        dialogFragment.show(childFragmentManager, dialogFragment.javaClass.name)
     }
 
     private fun openSubCategory(category: CategoryForView) {

@@ -50,7 +50,8 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
             name = item.name,
             imageUrl = item.imageUrl,
             status = item.status,
-            sortOrder = item.sortOrder
+            sortOrder = item.sortOrder,
+            locked = item.locked
         )
         update(clone)
     }

@@ -1,4 +1,4 @@
-package com.kryptkode.adbase
+package com.kryptkode.adbase.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -6,6 +6,7 @@ import android.provider.Settings
 import java.math.BigInteger
 import java.security.MessageDigest
 import java.security.NoSuchAlgorithmException
+import java.util.*
 
 object DeviceUtils {
     @SuppressLint("HardwareIds")
@@ -15,7 +16,7 @@ object DeviceUtils {
                 context.contentResolver,
                 "android_id"
             )
-        ).toUpperCase()
+        ).toUpperCase(Locale.US)
     }
 
     private fun md5Hash(str: String): String {

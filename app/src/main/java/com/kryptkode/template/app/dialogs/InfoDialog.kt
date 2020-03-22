@@ -1,4 +1,4 @@
-package com.xeenvpn.android.app.dialogs
+package com.kryptkode.template.app.dialogs
 
 import android.os.Bundle
 import android.view.LayoutInflater

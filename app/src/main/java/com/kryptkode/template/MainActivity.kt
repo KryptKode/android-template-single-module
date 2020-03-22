@@ -11,6 +11,7 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.kryptkode.template.app.base.activity.BaseViewModelActivity
 import com.kryptkode.template.app.dialogs.ContactUsDialog
+import com.kryptkode.template.app.dialogs.InfoDialog
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.app.utils.rating.RatingManager
 import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
@@ -18,7 +19,6 @@ import com.kryptkode.template.app.utils.sharing.ShareUtils
 import com.kryptkode.template.databinding.ActivityMainBinding
 import com.kryptkode.template.databinding.NavEndHeaderBinding
 import com.kryptkode.template.startnav.StartNavFragment
-import com.xeenvpn.android.app.dialogs.InfoDialog
 import javax.inject.Inject
 
 class MainActivity :

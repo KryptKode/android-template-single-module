@@ -21,11 +21,25 @@
             android:textAppearance="@style/TextAppearance.App.H3"
             android:textColor="@color/colorOnPrimary"
             app:layout_constraintEnd_toStartOf="@id/toggle_expand_image_view"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/lock_image_view"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread"
             tools:maxLines="1"
             tools:text="@tools:sample/lorem/random" />
+
+        <ImageView
+            android:id="@+id/lock_image_view"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:contentDescription="@string/img_lock_content_description"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            app:srcCompat="@drawable/ic_lock"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintHorizontal_bias="1"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
         <ImageView
             android:id="@+id/toggle_expand_image_view"

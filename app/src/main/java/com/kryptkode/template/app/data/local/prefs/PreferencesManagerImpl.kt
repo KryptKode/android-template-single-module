@@ -83,6 +83,30 @@ open class PreferencesManagerImpl(
     }
 
     override fun isFirstLaunch(): Boolean {
-        return getLongPreference(PREF_KEY_INSTALL_DATE) == 0L
+        return getLongPreference(PREF_KEY_INSTALL_DATE) == -1L
+    }
+
+    override fun isCategoryLocked(categoryId:String): Boolean {
+        return getBooleanPreference(getCategoryPositionKey(categoryId), true)
+    }
+
+    override fun setCategoryLocked(categoryId: String, value: Boolean) {
+        return setBooleanPreference(getCategoryPositionKey(categoryId), value)
+    }
+
+    private fun getCategoryPositionKey(categoryId: String): String {
+        return "$prefCategoryLocked-$categoryId"
+    }
+
+    override fun getDateWhenCategoryWasUnlocked(categoryId: String): Long {
+        return getLongPreference(getDateCategoryUnlockedKey(categoryId))
+    }
+
+    override fun setDateWhenCategoryWasUnlocked(categoryId: String, time: Long) {
+        return setLongPreference(getDateCategoryUnlockedKey(categoryId), time)
+    }
+
+    private fun getDateCategoryUnlockedKey(categoryId: String): String {
+        return "$prefDateCategoryUnLocked-$categoryId"
     }
 }

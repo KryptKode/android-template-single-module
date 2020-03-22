@@ -8,4 +8,5 @@ object Constants {
     const val CARD_CACHE_TIME_MILLIS = 60* 60* 1000L
     const val LINK_CACHE_TIME_MILLIS = 30* 60* 1000L
     const val LIST_SPACING = 10
+    val lockedCategoryPositions = arrayOf(3, 5, 7)
 }

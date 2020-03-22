@@ -1,9 +1,13 @@
-package com.kryptkode.adbase
+package com.kryptkode.adbase.base
 
 import android.app.Activity
+import com.kryptkode.adbase.Ad
+import com.kryptkode.adbase.AdType
+import com.kryptkode.adbase.R
 
 
-abstract class BaseAd(protected var activity: Activity) : Ad {
+abstract class BaseAd(protected var activity: Activity) :
+    Ad {
 
     open val adType = AdType.AD_MOB
     protected var INTERSTITIAL_INTERVAL = 2 //TODO: Randomize the interval

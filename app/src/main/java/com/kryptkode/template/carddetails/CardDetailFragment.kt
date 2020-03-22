@@ -12,13 +12,13 @@ import androidx.viewpager2.widget.ViewPager2
 import com.kryptkode.adbase.Ad
 import com.kryptkode.template.R
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
+import com.kryptkode.template.app.dialogs.InfoDialog
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.app.utils.sharing.ShareUtils
 import com.kryptkode.template.carddetails.adapter.CardDetailsAdapter
 import com.kryptkode.template.carddetails.adapter.CardDetailsListener
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.FragmentCardDetailBinding
-import com.xeenvpn.android.app.dialogs.InfoDialog
 import permissions.dispatcher.*
 import timber.log.Timber
 import javax.inject.Inject
