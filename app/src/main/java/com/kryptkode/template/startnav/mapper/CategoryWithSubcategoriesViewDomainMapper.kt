@@ -10,7 +10,7 @@ import com.kryptkode.template.subcategories.mapper.SubcategoryViewMapper
  * Created by kryptkode on 3/2/2020.
  */
 class CategoryWithSubcategoriesViewMapper(
-    private val categoryViewMapper: CategoryViewMapper,
+    val categoryViewMapper: CategoryViewMapper,
     private val subcategoryViewMapper: SubcategoryViewMapper
 ) : Mapper<CategoryWithSubCategoriesForView, CategoryWithSubCategories> {
 

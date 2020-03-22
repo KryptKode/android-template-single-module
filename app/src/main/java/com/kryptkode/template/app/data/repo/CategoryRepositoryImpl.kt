@@ -41,7 +41,7 @@ class CategoryRepositoryImpl(
                 }
                 emitSource(allCategories)
             } catch (e: Exception) {
-                handleError<DataState<List<Category>>>(errorHandler, e)
+                handleError<List<Category>>(errorHandler, e)
             }
         }
     }
@@ -56,7 +56,7 @@ class CategoryRepositoryImpl(
                         .map { DataState.Success(it) }
                 emitSource(result)
             } catch (e: Exception) {
-                handleError<DataState<List<Category>>>(errorHandler, e)
+                handleError<List<CategoryWithSubCategories>>(errorHandler, e)
             }
         }
     }
@@ -93,7 +93,7 @@ class CategoryRepositoryImpl(
                         .map { DataState.Success(it) }
                 emitSource(result)
             } catch (e: Exception) {
-                handleError<DataState<List<Category>>>(errorHandler, e)
+                handleError<List<Category>>(errorHandler, e)
             }
         }
     }

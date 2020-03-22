@@ -3,6 +3,7 @@ package com.kryptkode.template.startnav
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import com.kryptkode.template.R
 import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.domain.state.successOr
@@ -26,6 +27,14 @@ class StartNavViewModel(
     fun getGoToSubCategoryEvent(): LiveData<Event<Pair<CategoryForView, SubCategoryForView>>> =
         goToSubCategory
 
+    private val showWatchVideoConfirmDialog = MutableLiveData<Event<Unit>>()
+    fun getShowWatchVideoConfirmDialogEvent(): LiveData<Event<Unit>> = showWatchVideoConfirmDialog
+
+    private val showVideoAd = MutableLiveData<Event<Unit>>()
+    fun getShowVideoAdEvent(): LiveData<Event<Unit>> = showVideoAd
+
+    private var clickedCategory: CategoryForView? = null
+
     val categoryWithSubcategoriesList: LiveData<List<CategoryWithSubCategoriesForView>>
 
     init {
@@ -40,13 +49,36 @@ class StartNavViewModel(
         goToSubCategory.postValue(Event(Pair(category, subcategory)))
     }
 
-    fun onCategoryClick(categoryForView: CategoryForView) {
-        if(categoryForView.locked){
-
-        }else{
-            Timber.d("Category Clicked ${categoryForView.id}")
+    fun onCategoryClick(item: CategoryForView) {
+        clickedCategory = item
+        if (item.locked) {
+            showWatchVideoConfirmDialog()
+        } else {
+            Timber.d("Category clicked ${item.id}")
         }
     }
 
+    private fun showWatchVideoConfirmDialog() {
+        showWatchVideoConfirmDialog.postValue(Event(Unit))
+    }
+
+
+    fun onWatchVideo() {
+        showVideoAd.postValue(Event(Unit))
+    }
+
+    fun videoAdShown() {
+        Timber.d("Showing video ad")
+    }
+
+    fun videoAdNotLoaded() {
+        showMessage(R.string.video_not_loaded_error_msg)
+    }
+
+    fun onVideoRewarded() {
+        launchDataLoad {
+            repository.unlockCategory(viewMapper.categoryViewMapper.mapFrom(clickedCategory!!))
+        }
+    }
 
 }
