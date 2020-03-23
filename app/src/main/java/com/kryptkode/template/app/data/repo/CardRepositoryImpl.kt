@@ -10,7 +10,6 @@ import com.kryptkode.template.app.data.domain.repository.CardRepository
 import com.kryptkode.template.app.data.domain.state.DataState
 import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.remote.Remote
-import com.kryptkode.template.app.utils.DateHelper
 import com.kryptkode.template.app.utils.extensions.handleError
 import kotlinx.coroutines.withContext
 
@@ -19,7 +18,6 @@ import kotlinx.coroutines.withContext
  */
 class CardRepositoryImpl(
     private val dispatcher: AppDispatchers,
-    private val dateHelper: DateHelper,
     private val local: Local,
     private val remote: Remote,
     private val errorHandler: ErrorHandler
@@ -32,13 +30,13 @@ class CardRepositoryImpl(
                 val cachedExpired = local.isCardCacheExpired(subCategoryId)
                 if (cachedExpired) {
                     refreshCards(subCategoryId)
-                    local.setCardCacheTime(subCategoryId, dateHelper.nowInMillis())
+                    local.updateCardCacheTime(subCategoryId)
                 }
                 val result : LiveData<DataState<List<Card>>> = local.getCardsInSubCategory(subCategoryId)
                     .map { DataState.Success(it) }
                 emitSource(result)
             }catch (e:Exception){
-                handleError(errorHandler, e)
+                handleError<List<Card>>(errorHandler, e)
             }
         }
     }
@@ -67,7 +65,7 @@ class CardRepositoryImpl(
                 }
                 emitSource(result)
             }catch (e:Exception){
-                handleError(errorHandler, e)
+                handleError<List<Card>>(errorHandler, e)
             }
         }
     }

@@ -28,7 +28,7 @@ class SubcategoryRepositoryImpl(
                     }
                 emitSource(result)
             }catch (e:Exception){
-                handleError(errorHandler, e)
+                handleError<List<SubCategory>>(errorHandler, e)
             }
         }
     }
@@ -43,7 +43,7 @@ class SubcategoryRepositoryImpl(
                     }
                 emitSource(result)
             }catch (e:Exception){
-                handleError(errorHandler, e)
+                handleError<List<SubCategory>>(errorHandler, e)
             }
         }
     }

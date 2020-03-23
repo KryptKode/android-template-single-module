@@ -20,6 +20,7 @@ class CardViewHolder(
     override fun performBind(item: CardForView?) {
 
         binding.tvName.beInvisible()
+        binding.imgLock.beInvisible()
         binding.imgBtnFavourite.isChecked = item?.favorite ?: false
         binding.imgThumbnail.load(getImageUrl(item?.imageUrl)){
             placeholder(placeholderDrawable)

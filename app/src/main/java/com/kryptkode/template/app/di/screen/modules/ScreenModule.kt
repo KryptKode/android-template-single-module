@@ -15,6 +15,7 @@ import com.kryptkode.template.app.data.remote.RemoteImpl
 import com.kryptkode.template.app.data.remote.api.Api
 import com.kryptkode.template.app.data.remote.mapper.RemoteMappers
 import com.kryptkode.template.app.data.repo.ErrorHandlerImpl
+import com.kryptkode.template.app.data.repo.LockedCategoryHelper
 import com.kryptkode.template.app.di.screen.ScreenScope
 import com.kryptkode.template.app.di.screen.modules.ads.AdModule
 import com.kryptkode.template.app.di.screen.modules.mapper.MapperModule
@@ -104,5 +105,17 @@ class ScreenModule(private val activity: FragmentActivity) {
     @ScreenScope
     fun provideErrorHandler(context: Context): ErrorHandler{
         return ErrorHandlerImpl(context)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideLockedCategoryHelper(context: Context, local: Local): LockedCategoryHelper {
+        return LockedCategoryHelper(local, context)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideDateHelper(context: Context): DateHelper {
+        return DateHelper(context)
     }
 }

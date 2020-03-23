@@ -14,6 +14,7 @@
             <option value="$PROJECT_DIR$/ad-admob" />
             <option value="$PROJECT_DIR$/ad-base" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/nativeadtemplate" />
           </set>
         </option>
         <option name="resolveModulePerSourceSet" value="false" />

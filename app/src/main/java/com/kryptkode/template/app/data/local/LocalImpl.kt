@@ -6,7 +6,6 @@ import com.kryptkode.template.app.data.domain.model.*
 import com.kryptkode.template.app.data.local.mapper.LocalMappers
 import com.kryptkode.template.app.data.local.prefs.AppPrefs
 import com.kryptkode.template.app.data.local.room.AppDb
-import com.kryptkode.template.app.utils.Constants.CARD_CACHE_TIME_MILLIS
 import com.kryptkode.template.app.utils.DateHelper
 import timber.log.Timber
 
@@ -115,43 +114,48 @@ class LocalImpl(
         return mappers.link.mapFrom(prefs.getLink())
     }
 
-    override suspend fun setCardCacheTime(subcategoryId: String, time: Long) {
-        return prefs.setCardCacheTime(subcategoryId, time)
+    override suspend fun updateCardCacheTime(subcategoryId: String) {
+        return prefs.setCardCacheTime(subcategoryId, dateHelper.nowInMillis())
     }
 
     override suspend fun isCardCacheExpired(subcategoryId: String): Boolean {
-        return dateHelper.nowInMillis() - prefs.getCardCacheTime(subcategoryId) >= CARD_CACHE_TIME_MILLIS
+        return dateHelper.hasCardCacheExpired(prefs.getCardCacheTime(subcategoryId))
     }
 
-    override suspend fun setCategoryCacheTime(time: Long) {
-        return prefs.setCategoryCacheTime(time)
+    override suspend fun updateCategoryCacheTime() {
+        return prefs.setCategoryCacheTime(dateHelper.nowInMillis())
     }
 
     override suspend fun isCategoryCacheExpired(): Boolean {
-        return dateHelper.nowInMillis() - prefs.getCategoryCacheTime() >= CARD_CACHE_TIME_MILLIS
+        return dateHelper.hasCategoryCacheExpired(prefs.getCategoryCacheTime())
     }
 
-    override suspend fun setLinkCacheTime(time: Long) {
-        return prefs.setLinkCacheTime(time)
-    }
 
     override suspend fun isLinkCacheExpired(): Boolean {
-        return dateHelper.nowInMillis() - prefs.getLinkCacheTime() >= CARD_CACHE_TIME_MILLIS
+        return dateHelper.hasLinkCacheExpired(prefs.getLinkCacheTime())
     }
 
-    override fun isCategoryLocked(categoryId: String): Boolean {
-        return prefs.isCategoryLocked(categoryId)
+    override suspend fun updateLinkCacheTime() {
+        return prefs.setLinkCacheTime(dateHelper.nowInMillis())
+    }
+
+    override fun isCategoryLocked(categoryId: String, lockedByDefault:Boolean): Boolean {
+        return prefs.isCategoryLocked(categoryId, lockedByDefault)
     }
 
     override fun setCategoryLocked(categoryId: String, value: Boolean) {
         return prefs.setCategoryLocked(categoryId, value)
     }
 
+    override fun hasDateWhenCategoryWasUnlockedBeenLongEnough(categoryId: String): Boolean {
+        return dateHelper.hasDateWhenCategoryWasUnlockedBeenLongEnough(prefs.getDateWhenCategoryWasUnlocked(categoryId))
+    }
+
     override fun getDateWhenCategoryWasUnlocked(categoryId: String): Long {
         return prefs.getDateWhenCategoryWasUnlocked(categoryId)
     }
 
-    override fun setDateWhenCategoryWasUnlocked(categoryId: String, time: Long) {
-        return prefs.setDateWhenCategoryWasUnlocked(categoryId, time)
+    override fun updateDateWhenCategoryWasUnlocked(categoryId: String) {
+        return prefs.setDateWhenCategoryWasUnlocked(categoryId, dateHelper.nowInMillis())
     }
 }

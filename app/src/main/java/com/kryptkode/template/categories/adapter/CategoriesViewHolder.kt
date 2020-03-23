@@ -5,6 +5,7 @@ import com.kryptkode.template.R
 import com.kryptkode.template.app.base.recycler.BaseRecyclerViewHolder
 import com.kryptkode.template.app.customviews.PlaceHolderDrawable
 import com.kryptkode.template.app.utils.ImageUrl.getImageUrl
+import com.kryptkode.template.app.utils.extensions.beInvisibleIf
 import com.kryptkode.template.app.utils.extensions.beVisibleIf
 import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.databinding.ItemCategoryGridBinding
@@ -21,6 +22,7 @@ class CategoriesViewHolder(
 
         binding.tvName.text = item?.name?.capitalize()
         binding.imgLock.beVisibleIf(item?.locked ?: false)
+        binding.imgBtnFavourite.beInvisibleIf(item?.locked ?: false)
         binding.imgBtnFavourite.isChecked = item?.favorite ?: false
         binding.imgThumbnail.load(getImageUrl(item?.imageUrl)){
             placeholder(placeholderDrawable)

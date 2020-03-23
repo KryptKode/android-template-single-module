@@ -9,9 +9,9 @@ import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.remote.Remote
 import com.kryptkode.template.app.data.repo.CardRepositoryImpl
 import com.kryptkode.template.app.data.repo.CategoryRepositoryImpl
+import com.kryptkode.template.app.data.repo.LockedCategoryHelper
 import com.kryptkode.template.app.data.repo.SubcategoryRepositoryImpl
 import com.kryptkode.template.app.di.screen.ScreenScope
-import com.kryptkode.template.app.utils.DateHelper
 import dagger.Module
 import dagger.Provides
 
@@ -26,11 +26,11 @@ class RepositoryModule {
     fun provideCategoryRepository(
         appDispatchers: AppDispatchers,
         remote: Remote,
-        dateHelper: DateHelper,
         local: Local,
+        lockedCategoryHelper: LockedCategoryHelper,
         errorHandler: ErrorHandler
     ): CategoryRepository {
-        return CategoryRepositoryImpl(appDispatchers, dateHelper, local, remote, errorHandler)
+        return CategoryRepositoryImpl(appDispatchers, local, remote, lockedCategoryHelper, errorHandler)
     }
 
     @Provides
@@ -47,10 +47,9 @@ class RepositoryModule {
     fun provideCardRepository(
         appDispatchers: AppDispatchers,
         remote: Remote,
-        dateHelper: DateHelper,
         local: Local,
         errorHandler: ErrorHandler
     ): CardRepository {
-        return CardRepositoryImpl(appDispatchers, dateHelper, local, remote, errorHandler)
+        return CardRepositoryImpl(appDispatchers, local, remote, errorHandler)
     }
 }

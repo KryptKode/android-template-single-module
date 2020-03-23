@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <bool name="category_unlocked_initially">false</bool> <!--TRUE = The category is unlocked initially
-    FALSE = The category is locked initially-->
+    <bool name="category_all_positions_locked_initially">true</bool> <!--TRUE = The category is locked initially
+    FALSE = The category is unlocked initially-->
     <integer name="category_lock_days">1</integer>
     <integer-array name="category_locked_positions">
         <item>3</item>
         <item>5</item>
         <item>7</item>
     </integer-array>
+
+    <array name="category_locked_positions_by_default">
+        <item>true</item>
+        <item>false</item>
+        <item>true</item>
+    </array>
 </resources>

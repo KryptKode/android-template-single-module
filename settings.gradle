@@ -1,2 +1,2 @@
-include ':app', ':ad-base', ':ad-admob'
+include ':app', ':ad-base', ':ad-admob', ':nativeadtemplate'
 rootProject.name='WallpaperApp'

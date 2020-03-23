@@ -86,8 +86,8 @@ open class PreferencesManagerImpl(
         return getLongPreference(PREF_KEY_INSTALL_DATE) == -1L
     }
 
-    override fun isCategoryLocked(categoryId:String): Boolean {
-        return getBooleanPreference(getCategoryPositionKey(categoryId), true)
+    override fun isCategoryLocked(categoryId:String, lockedByDefault:Boolean): Boolean {
+        return getBooleanPreference(getCategoryPositionKey(categoryId), lockedByDefault)
     }
 
     override fun setCategoryLocked(categoryId: String, value: Boolean) {

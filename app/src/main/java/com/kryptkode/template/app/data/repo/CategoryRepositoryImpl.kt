@@ -11,8 +11,6 @@ import com.kryptkode.template.app.data.domain.repository.CategoryRepository
 import com.kryptkode.template.app.data.domain.state.DataState
 import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.remote.Remote
-import com.kryptkode.template.app.utils.Constants
-import com.kryptkode.template.app.utils.DateHelper
 import com.kryptkode.template.app.utils.extensions.handleError
 import kotlinx.coroutines.withContext
 import timber.log.Timber
@@ -22,9 +20,9 @@ import timber.log.Timber
  */
 class CategoryRepositoryImpl(
     private val dispatcher: AppDispatchers,
-    private val dateHelper: DateHelper,
     private val local: Local,
     private val remote: Remote,
+    private val lockedCategoryHelper: LockedCategoryHelper,
     private val errorHandler: ErrorHandler
 ) : CategoryRepository {
 
@@ -37,7 +35,7 @@ class CategoryRepositoryImpl(
                 val cachedExpired = local.isCategoryCacheExpired()
                 if (cachedExpired) {
                     refreshAllCategoriesAndSubCategories()
-                    local.setCategoryCacheTime(dateHelper.nowInMillis())
+                    local.updateCategoryCacheTime()
                 }
                 emitSource(allCategories)
             } catch (e: Exception) {
@@ -73,13 +71,18 @@ class CategoryRepositoryImpl(
     }
 
     private fun lockCategory(categoriesResult: List<Category>) {
-        Constants.lockedCategoryPositions.forEach {
-            Timber.e("Locked position: $it")
-            if(categoriesResult.size > it && it > 0){
+        lockedCategoryHelper.lockedCategories.forEach {lockedCategory->
+            Timber.e("Locked category: $lockedCategory")
+            if(categoriesResult.size > lockedCategory.position && lockedCategory.position > 0){
                 Timber.e("Locking category")
-                val category = categoriesResult[it-1]
-                category.locked = local.isCategoryLocked(category.id)
-                Timber.d("Locked category $category")
+                val category = categoriesResult[lockedCategory.position-1]
+                val dateWhenCategoryWasUnLocked = local.hasDateWhenCategoryWasUnlockedBeenLongEnough(category.id)
+                if(dateWhenCategoryWasUnLocked){
+                    category.locked = local.isCategoryLocked(category.id, lockedCategory.lockedByDefault)
+                    Timber.d("Locked category $category")
+                }else{
+                    Timber.d("Category date has been long enough")
+                }
             }
         }
     }
@@ -112,6 +115,6 @@ class CategoryRepositoryImpl(
 
     override suspend fun unlockCategory(category: Category) {
         local.updateCategory(category.copy(locked = false))
-        local.setDateWhenCategoryWasUnlocked(category.id, dateHelper.nowInMillis())
+        local.updateDateWhenCategoryWasUnlocked(category.id)
     }
 }
