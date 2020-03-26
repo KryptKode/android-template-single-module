@@ -13,7 +13,7 @@ import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.customviews.SpacesItemDecoration
 import com.kryptkode.template.app.dialogs.InfoDialog
 import com.kryptkode.template.app.utils.extensions.observe
-import com.kryptkode.template.app.utils.extensions.populate
+import com.kryptkode.template.app.utils.extensions.populateCategoriesAndSubcategories
 import com.kryptkode.template.categories.model.CategoryForView
 import com.kryptkode.template.databinding.FragmentStartNavBinding
 import com.kryptkode.template.startnav.adapter.ChildItem
@@ -88,7 +88,7 @@ class StartNavFragment :
 
     private fun initObservers() {
         viewModel.categoryWithSubcategoriesList.observe(viewLifecycleOwner) {
-            adapter.populate(it)
+            adapter.populateCategoriesAndSubcategories(it)
         }
 
         viewModel.getGoToSubCategoryEvent().observe(this) { event ->

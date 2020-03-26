@@ -8,6 +8,7 @@ import com.kryptkode.template.app.base.viewmodel.BaseViewModel
 import com.kryptkode.template.app.data.domain.repository.CardRepository
 import com.kryptkode.template.app.data.domain.state.successOr
 import com.kryptkode.template.app.data.model.Event
+import com.kryptkode.template.app.utils.extensions.isNotNullOrEmpty
 import com.kryptkode.template.cardlist.mapper.CardViewMapper
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.subcategories.model.SubCategoryForView
@@ -36,7 +37,9 @@ class CardListViewModel(
 
 
     fun loadCards(subcategory:SubCategoryForView) {
-        this.subcategoryId.postValue(subcategory)
+        if(cardList.value.isNotNullOrEmpty()){
+            this.subcategoryId.postValue(subcategory)
+        }
     }
 
     fun handleCardItemClick(item: CardForView?) {
