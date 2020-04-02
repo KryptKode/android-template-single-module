@@ -24,7 +24,9 @@ data class CardEntity(
     @ColumnInfo(name = COLUMN_STATUS)
     val status: String,
     @ColumnInfo(name = COLUMN_FAVORITE)
-    val favorite: Boolean
+    val favorite: Boolean,
+    @ColumnInfo(name= COLUMN_POSITION)
+    val position: Int
 ) {
     companion object {
         const val TABLE_NAME = "card"
@@ -35,5 +37,6 @@ data class CardEntity(
         const val COLUMN_IMG_URL = "image_url"
         const val COLUMN_STATUS = "status"
         const val COLUMN_FAVORITE = "favorite"
+        const val COLUMN_POSITION = "position"
     }
 }

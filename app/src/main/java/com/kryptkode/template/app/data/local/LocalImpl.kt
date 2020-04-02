@@ -90,7 +90,7 @@ class LocalImpl(
     }
 
     override fun getCardsInSubCategory(subCategoryId: String): LiveData<List<Card>> {
-        return appDb.cardDao().getCardEntitysWithSubCategory(subCategoryId).map {
+        return appDb.cardDao().getCardEntitiesWithSubCategory(subCategoryId).map {
             it.map {
                 mappers.card.mapFrom(it)
             }

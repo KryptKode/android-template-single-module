@@ -16,7 +16,8 @@ class CardRemoteDomainMapper : Mapper<CardRemote, Card> {
             model.subcategoryId,
             model.imgUrl,
             model.status,
-            false
+            false,
+            0
         )
     }
 

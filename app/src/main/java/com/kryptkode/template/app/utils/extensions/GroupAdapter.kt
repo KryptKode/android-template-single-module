@@ -36,6 +36,6 @@ fun GroupAdapter<GroupieViewHolder>.populateCards(
     items.forEach {
         allGroups.add(CardItem(it, cardListener))
     }
-    update(allGroups)
+    updateAsync(allGroups)
 }
 

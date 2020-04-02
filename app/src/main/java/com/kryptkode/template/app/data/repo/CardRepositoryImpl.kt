@@ -12,6 +12,7 @@ import com.kryptkode.template.app.data.local.Local
 import com.kryptkode.template.app.data.remote.Remote
 import com.kryptkode.template.app.utils.extensions.handleError
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * Created by kryptkode on 3/12/2020.
@@ -33,7 +34,9 @@ class CardRepositoryImpl(
                     local.updateCardCacheTime(subCategoryId)
                 }
                 val result : LiveData<DataState<List<Card>>> = local.getCardsInSubCategory(subCategoryId)
-                    .map { DataState.Success(it) }
+                    .map {
+                        Timber.d("Cards: $it")
+                        DataState.Success(it) }
                 emitSource(result)
             }catch (e:Exception){
                 handleError<List<Card>>(errorHandler, e)

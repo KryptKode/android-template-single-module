@@ -9,10 +9,10 @@ import com.kryptkode.template.app.data.local.room.model.CardEntity
  */
 class CardLocalDomainMapper : Mapper<CardEntity, Card> {
     override fun mapFrom(model: CardEntity): Card {
-        return Card(model.id, model.name, model.categoryId, model.subcategoryId, model.imgUrl, model.status, model.favorite)
+        return Card(model.id, model.name, model.categoryId, model.subcategoryId, model.imgUrl, model.status, model.favorite, model.position)
     }
 
     override fun mapTo(model: Card): CardEntity {
-        return CardEntity(model.id, model.name, model.categoryId, model.subcategoryId, model.imageUrl, model.status, model.favorite)
+        return CardEntity(model.id, model.name, model.categoryId, model.subcategoryId, model.imageUrl, model.status, model.favorite, model.position)
     }
 }

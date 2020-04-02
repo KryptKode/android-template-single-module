@@ -16,7 +16,8 @@ class CardViewMapper : Mapper<CardForView, Card> {
             model.subcategoryId,
             model.imageUrl,
             model.status,
-            model.favorite
+            model.favorite,
+            model.position
         )
     }
 
@@ -28,7 +29,8 @@ class CardViewMapper : Mapper<CardForView, Card> {
             model.subcategoryId,
             model.imageUrl,
             model.status,
-            model.favorite
+            model.favorite,
+            model.position
         )
     }
 }

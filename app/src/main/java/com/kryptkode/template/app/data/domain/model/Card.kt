@@ -10,5 +10,6 @@ data class Card(
     val subcategoryId: String,
     val imageUrl: String,
     val status: String,
-    val favorite: Boolean
+    val favorite: Boolean,
+    val position:Int
 )

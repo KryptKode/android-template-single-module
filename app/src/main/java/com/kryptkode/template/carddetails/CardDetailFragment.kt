@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.Settings
 import android.view.View
+import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
 import com.kryptkode.adbase.Ad
 import com.kryptkode.template.R
@@ -69,7 +70,14 @@ class CardDetailFragment :
         }
     }
 
-    private val adapter = CardDetailsAdapter(cardDetailsListener)
+    private val adapter = CardDetailsAdapter(cardDetailsListener).apply {
+        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                Timber.d("Item inserted: $positionStart")
+                scrollToTabIfFirstTimeAndCardPresent()
+            }
+        })
+    }
     private var firstTime = true
 
     override fun onAttach(context: Context) {
@@ -79,12 +87,16 @@ class CardDetailFragment :
 
     override fun getLayoutResource() = R.layout.fragment_card_detail
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupObservers()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         shareUtils.listener = shareListener
         initViews()
         initAds()
-        setupObservers()
         loadData()
     }
 
@@ -118,7 +130,7 @@ class CardDetailFragment :
 
     private fun initViewPager() {
         binding.viewPager.adapter = adapter
-        binding.viewPager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+        binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 advert.showInterstitialAd()
             }
@@ -126,7 +138,7 @@ class CardDetailFragment :
     }
 
     private fun setupObservers() {
-        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner) { event ->
+        viewModel.getLoadingValueEvent().observe(this) { event ->
             event?.getContentIfNotHandled()?.let {
                 binding.swipe.isRefreshing = it
             }
@@ -134,7 +146,6 @@ class CardDetailFragment :
 
         viewModel.cardList.observe(this) {
             adapter.submitList(it)
-            scrollToTabIfFirstTimeAndCardPresent(it)
         }
 
         viewModel.getShareOthersState().observe(this) { event ->
@@ -210,16 +221,24 @@ class CardDetailFragment :
         onRequestPermissionsResult(requestCode, grantResults)
     }
 
-    private fun scrollToTabIfFirstTimeAndCardPresent(list: List<CardForView>?) {
-        if (firstTime && !list.isNullOrEmpty()) {
-            val cardIndex = list.indexOfFirst {
-                it.id == card.id
-            }
-            Timber.d("CARD INDEX: $cardIndex")
-            binding.viewPager.post {
-                binding.viewPager.currentItem = cardIndex
-            }
-            firstTime = false
+    private fun scrollToTabIfFirstTimeAndCardPresent() {
+        Timber.d("scrollToTabIfFirstTimeAndCardPresent $firstTime")
+//        if (firstTime) {
+        val position = getCardPosition()
+        binding.viewPager.post {
+            binding.viewPager.currentItem = position
+        }
+        Timber.d("Updating position $position")
+        firstTime = false
+//        }
+    }
+
+    private fun getCardPosition(): Int {
+        val position = card.position
+        return if (position > 0) {
+            position - 1
+        } else {
+            0
         }
     }
 

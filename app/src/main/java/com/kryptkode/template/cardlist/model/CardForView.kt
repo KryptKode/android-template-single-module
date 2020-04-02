@@ -15,8 +15,10 @@ data class CardForView(
     val subcategoryId: String,
     val imageUrl: String,
     val status: String,
-    val favorite: Boolean
+    val favorite: Boolean,
+    val position:Int
 ) : Parcelable {
+
     companion object {
         val diffUtil = object : DiffUtil.ItemCallback<CardForView>() {
             override fun areContentsTheSame(oldItem: CardForView, newItem: CardForView): Boolean {

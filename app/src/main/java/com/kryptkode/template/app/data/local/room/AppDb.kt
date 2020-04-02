@@ -14,7 +14,7 @@ import com.kryptkode.template.app.data.local.room.model.SubCategoryEntity
 
 @Database(
     entities = [CardEntity::class, CategoryEntity::class, SubCategoryEntity::class],
-    version = 1, exportSchema = true
+    version = 2, exportSchema = true
 )
 abstract class AppDb : RoomDatabase() {
 

@@ -4,6 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Query
 import com.kryptkode.template.app.data.local.room.model.CardEntity
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_CATEGORY_ID
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_FAVORITE
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_ID
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_IMG_URL
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_NAME
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_POSITION
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_STATUS
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.COLUMN_SUBCATEGORY_ID
+import com.kryptkode.template.app.data.local.room.model.CardEntity.Companion.TABLE_NAME
 
 /**
  * Created by kryptkode on 2/23/2020.
@@ -41,12 +50,23 @@ abstract class CardDao : BaseDao<CardEntity>() {
      *
      * @return
      */
-    @Query("SELECT * FROM card WHERE sub_category_id  = :subCategoryId")
-    abstract fun getCardEntitysWithSubCategory(subCategoryId: String): LiveData<List<CardEntity>>
+    @Query(
+        "SELECT " +
+                "$COLUMN_ID, " +
+                "$COLUMN_NAME, " +
+                "$COLUMN_CATEGORY_ID, " +
+                "$COLUMN_SUBCATEGORY_ID, " +
+                "$COLUMN_IMG_URL, " +
+                "$COLUMN_STATUS, " +
+                "$COLUMN_FAVORITE, " +
+                "(SELECT COUNT(*) from $TABLE_NAME b  WHERE a.id >= b.id AND sub_category_id  = :subCategoryId ORDER BY $COLUMN_ID) as $COLUMN_POSITION " +
+                "FROM card a WHERE sub_category_id  = :subCategoryId ORDER BY $COLUMN_ID"
+    )
+    abstract fun getCardEntitiesWithSubCategory(subCategoryId: String): LiveData<List<CardEntity>>
 
 
     @Query("SELECT * FROM card WHERE category_id  = :categoryId")
-    abstract fun getCardEntitysWithCategory(categoryId: String): LiveData<List<CardEntity>>
+    abstract fun getCardEntitiesWithCategory(categoryId: String): LiveData<List<CardEntity>>
 
     override suspend fun handleInsertConflict(item: CardEntity) {
         val oldCategory = getCardEntityById(item.id)
