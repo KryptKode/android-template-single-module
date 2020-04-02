@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <item name="intervals_for_interstitial" type="integer">4</item> <!--Intervals between interstitial, defaults to 4-->
+    <item name="intervals_for_interstitial" type="integer">19</item> <!--Intervals between interstitial, defaults to 4-->
     <item name="intervals_for_rewarded_video" type="integer">2</item> <!--Intervals between interstitial, defaults to 4-->
 </resources>

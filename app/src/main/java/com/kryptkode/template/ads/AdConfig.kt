@@ -7,5 +7,5 @@ object AdConfig {
 
     const val NUM_NATIVE_ADS = 3 // max is 5
 
-    const val NATIVE_AD_AFTER_POSTS = 4
+    const val NATIVE_AD_AFTER_POSTS = 6
 }

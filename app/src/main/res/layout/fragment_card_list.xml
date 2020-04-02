@@ -15,38 +15,46 @@
         android:layout_height="match_parent">
 
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe"
+        <com.kryptkode.template.app.customviews.NestedScrollableHost
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/root_home"
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <com.kryptkode.template.app.customviews.EmptyRecyclerView
-                    android:id="@+id/recycler_view"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/root_home"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingStart="@dimen/card_side_margin"
-                    android:paddingTop="@dimen/header_margin"
-                    android:paddingEnd="@dimen/card_side_margin"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0"
-                    tools:listitem="@layout/item_category_grid" />
+                    android:layout_height="match_parent">
 
-                <include
-                    android:id="@+id/empty_state_layout"
-                    layout="@layout/empty_state_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    <com.kryptkode.template.app.customviews.EmptyRecyclerView
+                        android:id="@+id/recycler_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/card_side_margin"
+                        android:paddingTop="@dimen/header_margin"
+                        android:paddingEnd="@dimen/card_side_margin"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintVertical_bias="0"
+                        tools:listitem="@layout/item_category_grid" />
 
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    <include
+                        android:id="@+id/empty_state_layout"
+                        layout="@layout/empty_state_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        </com.kryptkode.template.app.customviews.NestedScrollableHost>
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

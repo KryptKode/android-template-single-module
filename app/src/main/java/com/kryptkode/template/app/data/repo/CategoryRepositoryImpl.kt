@@ -34,6 +34,7 @@ class CategoryRepositoryImpl(
                     .map { DataState.Success(it) }
                 val cachedExpired = local.isCategoryCacheExpired()
                 if (cachedExpired) {
+                    Timber.d("Cache expired.... refreshing")
                     refreshAllCategoriesAndSubCategories()
                     local.updateCategoryCacheTime()
                 }

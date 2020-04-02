@@ -6,15 +6,16 @@ import com.kryptkode.template.cardlist.adapter.items.NativeAdItem
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 import timber.log.Timber
+import kotlin.math.floor
 
 /**
  * Created by kryptkode on 3/23/2020.
  */
-class NativeAdAdapterHelper (val adapter: GroupAdapter<GroupieViewHolder>){
+class NativeAdAdapterHelper(val adapter: GroupAdapter<GroupieViewHolder>) {
     private val nativeAds = mutableListOf<UnifiedNativeAd>()
     private val nativeAdRows = mutableListOf<Int>()
 
-    fun addNativeAd(unifiedNativeAd: UnifiedNativeAd){
+    fun addNativeAd(unifiedNativeAd: UnifiedNativeAd) {
         nativeAds.add(unifiedNativeAd)
     }
 
@@ -33,7 +34,7 @@ class NativeAdAdapterHelper (val adapter: GroupAdapter<GroupieViewHolder>){
 
     fun removeNativeAdsIfLoaded() {
         if (hasNativeAds()) {
-            Timber.e( "Removing native ad")
+            Timber.e("Removing native ad")
             nativeAdRows.forEach {
                 Timber.e("Removing native ad from position $it")
                 adapter.notifyItemRemoved(it)
@@ -44,14 +45,14 @@ class NativeAdAdapterHelper (val adapter: GroupAdapter<GroupieViewHolder>){
 
     private fun showNativeAdIfLoaded() {
         if (hasNativeAds()) {
-            nativeAdRows.forEach {position->
+            nativeAdRows.forEach { position ->
                 val adPosition = position % nativeAds.size
-                if(isNativeAdPosition(adPosition)){
+                if (isNativeAdPosition(adPosition)) {
                     Timber.d("Getting native ad row... $adPosition")
                     val nativeAd = nativeAds[adPosition]
                     val nativeAdItem = NativeAdItem(nativeAd)
                     adapter.add(position, nativeAdItem)
-                }else{
+                } else {
                     Timber.d("$adPosition is not a valid ad position")
                 }
             }
@@ -59,7 +60,7 @@ class NativeAdAdapterHelper (val adapter: GroupAdapter<GroupieViewHolder>){
     }
 
 
-    private fun getTotalItems():Int{
+    private fun getTotalItems(): Int {
         return adapter.groupCount
     }
 
@@ -68,7 +69,8 @@ class NativeAdAdapterHelper (val adapter: GroupAdapter<GroupieViewHolder>){
         val totalItems = getTotalItems()
         for (i in 0..totalItems) {
             Timber.d("Native ad to be added in row: $i total--> $totalItems")
-            if (i != 0 && i % AdConfig.NATIVE_AD_AFTER_POSTS == 0) {
+            if (numberIsNativeAdPosition(i)) {
+                Timber.d("Adding position: $i")
                 nativeAdRows.add(i)
             }
         }
@@ -78,6 +80,16 @@ class NativeAdAdapterHelper (val adapter: GroupAdapter<GroupieViewHolder>){
             nativeAdRows.add(totalItems)
         }
         Timber.d("Native ad rows: $nativeAdRows")
+    }
+
+    private fun numberIsNativeAdPosition(number:Int):Boolean{
+        val commonDifference = AdConfig.NATIVE_AD_AFTER_POSTS + 1
+        val positionInSequence = ((number +  commonDifference) + 1.0) / commonDifference
+        return isWholeNumber(positionInSequence)
+    }
+
+    private fun isWholeNumber(number:Double): Boolean {
+        return number == floor(number) && number.isFinite()
     }
 
 

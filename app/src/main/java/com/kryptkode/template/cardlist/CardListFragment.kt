@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
@@ -48,13 +49,13 @@ class CardListFragment :
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply {
         spanCount = 2
+        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                Timber.d("Item inserted: $positionStart -- $itemCount")
+            }
+        })
     }
     private val nativeAdHelper = NativeAdAdapterHelper(adapter)
-    private val layoutManager by lazy {
-        GridLayoutManager(requireContext(), adapter.spanCount).apply {
-            spanSizeLookup = adapter.spanSizeLookup
-        }
-    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -66,7 +67,7 @@ class CardListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        initNativeAds()
+//        initNativeAds()
         setupObservers()
         viewModel.loadCards(subcategory)
     }
@@ -88,11 +89,18 @@ class CardListFragment :
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(LIST_SPACING))
         binding.recyclerView.setEmptyView(binding.emptyStateLayout.emptyView)
+        adapter.hasObservers()
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+
+            }
+        })
     }
 
     private fun setupObservers() {
         viewModel.cardList.observe(this) {
             adapter.populateCards(it ?: listOf(), cardListListener)
+//            initNativeAds()
         }
 
         viewModel.getLoadingValueEvent().observe(viewLifecycleOwner) { event ->
@@ -101,20 +109,20 @@ class CardListFragment :
             }
         }
 
-        viewModel.getGoToCardDetailsEvent().observe(viewLifecycleOwner){event ->
+        viewModel.getGoToCardDetailsEvent().observe(viewLifecycleOwner) { event ->
             event?.getContentIfNotHandled()?.let {
                 openCardDetails(it)
             }
         }
     }
 
-    private fun openCardDetails( card: CardForView) {
-        navigator.openCardDetails( card)
+    private fun openCardDetails(card: CardForView) {
+        navigator.openCardDetails(card)
     }
 
     private fun initNativeAds() {
         context?.let {
-            val nativeAdHelper = NativeAdHelper(it, object : NativeAdHelper.NativeAdListener {
+            NativeAdHelper.getInstance(it).loadNativeAds(object : NativeAdHelper.NativeAdListener {
                 override fun onAdLoaded() {
                     nativeAdHelper.updateAdapterWithNativeAds()
                 }
@@ -128,7 +136,6 @@ class CardListFragment :
                     nativeAdHelper.addNativeAd(unifiedNativeAd)
                 }
             })
-            nativeAdHelper.loadNativeAds()
         }
     }
 
