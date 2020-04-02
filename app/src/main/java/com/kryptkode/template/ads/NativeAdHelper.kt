@@ -26,8 +26,8 @@ class NativeAdHelper(private val context: Context) {
         }else{
             for (unifiedNativeAd in adList) {
                 listener?.addNativeAd(unifiedNativeAd)
-                listener?.onAdLoaded()
             }
+            listener?.onAdLoaded()
         }
 
     }

@@ -15,6 +15,7 @@ import com.kryptkode.template.app.utils.Constants.LIST_SPACING
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.app.utils.extensions.populateCards
 import com.kryptkode.template.cardlist.adapter.CardListener
+import com.kryptkode.template.cardlist.adapter.items.NativeAdItem
 import com.kryptkode.template.cardlist.adapter.nativead.NativeAdAdapterHelper
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.FragmentCardListBinding
@@ -51,11 +52,21 @@ class CardListFragment :
         spanCount = 2
         registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                Timber.d("Item inserted: $positionStart -- $itemCount")
+                Timber.d("Item inserted ${subcategory.name}: $positionStart -- $itemCount")
+                val item = getItem(positionStart)
+                Timber.d("Item is $item")
+                Timber.d("Item is native ${item is NativeAdItem}")
+                if(!(item is NativeAdItem)){
+                    Timber.d("Inserting native ad...")
+                    insertNativeAds(positionStart, itemCount)
+                }
             }
         })
     }
-    private val nativeAdHelper = NativeAdAdapterHelper(adapter)
+
+    private val nativeAdAdapterHelper by lazy {
+        NativeAdAdapterHelper(adapter,subcategory.name)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -67,7 +78,6 @@ class CardListFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-//        initNativeAds()
         setupObservers()
         viewModel.loadCards(subcategory)
     }
@@ -89,18 +99,11 @@ class CardListFragment :
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.addItemDecoration(SpacesItemDecoration(LIST_SPACING))
         binding.recyclerView.setEmptyView(binding.emptyStateLayout.emptyView)
-        adapter.hasObservers()
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-
-            }
-        })
     }
 
     private fun setupObservers() {
         viewModel.cardList.observe(this) {
             adapter.populateCards(it ?: listOf(), cardListListener)
-//            initNativeAds()
         }
 
         viewModel.getLoadingValueEvent().observe(viewLifecycleOwner) { event ->
@@ -120,20 +123,20 @@ class CardListFragment :
         navigator.openCardDetails(card)
     }
 
-    private fun initNativeAds() {
+    private fun insertNativeAds(startPosition:Int, itemCount:Int) {
         context?.let {
             NativeAdHelper.getInstance(it).loadNativeAds(object : NativeAdHelper.NativeAdListener {
                 override fun onAdLoaded() {
-                    nativeAdHelper.updateAdapterWithNativeAds()
+                    nativeAdAdapterHelper.updateAdapterWithNativeAds(startPosition, itemCount)
                 }
 
                 override fun onAdFailed() {
                     Timber.e("Failed to load native ads")
-                    nativeAdHelper.updateAdapterWithNativeAds()
+                    nativeAdAdapterHelper.updateAdapterWithNativeAds(startPosition, itemCount)
                 }
 
                 override fun addNativeAd(unifiedNativeAd: UnifiedNativeAd) {
-                    nativeAdHelper.addNativeAd(unifiedNativeAd)
+                    nativeAdAdapterHelper.addNativeAd(unifiedNativeAd)
                 }
             })
         }

@@ -11,7 +11,10 @@ import kotlin.math.floor
 /**
  * Created by kryptkode on 3/23/2020.
  */
-class NativeAdAdapterHelper(val adapter: GroupAdapter<GroupieViewHolder>) {
+class NativeAdAdapterHelper(
+    val adapter: GroupAdapter<GroupieViewHolder>,
+    private val name: String
+) {
     private val nativeAds = mutableListOf<UnifiedNativeAd>()
     private val nativeAdRows = mutableListOf<Int>()
 
@@ -19,8 +22,8 @@ class NativeAdAdapterHelper(val adapter: GroupAdapter<GroupieViewHolder>) {
         nativeAds.add(unifiedNativeAd)
     }
 
-    fun updateAdapterWithNativeAds() {
-        populateNativeAdRows()
+    fun updateAdapterWithNativeAds(startPosition: Int, itemCount: Int) {
+        populateNativeAdRows(startPosition, itemCount)
         showNativeAdIfLoaded()
     }
 
@@ -48,38 +51,33 @@ class NativeAdAdapterHelper(val adapter: GroupAdapter<GroupieViewHolder>) {
             nativeAdRows.forEach { position ->
                 val adPosition = position % nativeAds.size
                 if (isNativeAdPosition(adPosition)) {
-                    Timber.d("Getting native ad row... $adPosition")
+                    Timber.d("Getting native ad row [$name]... $adPosition")
                     val nativeAd = nativeAds[adPosition]
                     val nativeAdItem = NativeAdItem(nativeAd)
                     adapter.add(position, nativeAdItem)
                 } else {
-                    Timber.d("$adPosition is not a valid ad position")
+                    Timber.d("$adPosition is not a valid ad position  [$name]")
                 }
             }
         }
     }
 
 
-    private fun getTotalItems(): Int {
-        return adapter.groupCount
-    }
-
-    private fun populateNativeAdRows() {
+    private fun populateNativeAdRows(startPosition: Int, itemCount: Int) {
         nativeAdRows.clear()
-        val totalItems = getTotalItems()
-        for (i in 0..totalItems) {
-            Timber.d("Native ad to be added in row: $i total--> $totalItems")
+        for (i in startPosition..itemCount) {
+            Timber.d("Native ad to be added in row  [$name]: $i total--> $itemCount")
             if (numberIsNativeAdPosition(i)) {
-                Timber.d("Adding position: $i")
+                Timber.d("Adding position [$name]: $i")
                 nativeAdRows.add(i)
             }
         }
 
         if (nativeAdRows.isEmpty()) {
             //add to the end
-            nativeAdRows.add(totalItems)
+            nativeAdRows.add(itemCount)
         }
-        Timber.d("Native ad rows: $nativeAdRows")
+        Timber.d("Native ad rows [$name]: $nativeAdRows")
     }
 
     private fun numberIsNativeAdPosition(number:Int):Boolean{
