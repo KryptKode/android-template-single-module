@@ -54,9 +54,7 @@ class CardListFragment :
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 Timber.d("Item inserted ${subcategory.name}: $positionStart -- $itemCount")
                 val item = getItem(positionStart)
-                Timber.d("Item is $item")
-                Timber.d("Item is native ${item is NativeAdItem}")
-                if(!(item is NativeAdItem)){
+                if(item !is NativeAdItem){
                     Timber.d("Inserting native ad...")
                     insertNativeAds(positionStart, itemCount)
                 }
@@ -73,12 +71,16 @@ class CardListFragment :
         getScreenComponent().inject(this)
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setupObservers()
+    }
+
     override fun getLayoutResource() = R.layout.fragment_card_list
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initViews()
-        setupObservers()
         viewModel.loadCards(subcategory)
     }
 
@@ -103,16 +105,17 @@ class CardListFragment :
 
     private fun setupObservers() {
         viewModel.cardList.observe(this) {
+            Timber.d("Subscribe...")
             adapter.populateCards(it ?: listOf(), cardListListener)
         }
 
-        viewModel.getLoadingValueEvent().observe(viewLifecycleOwner) { event ->
+        viewModel.getLoadingValueEvent().observe(this) { event ->
             event?.getContentIfNotHandled()?.let {
                 binding.swipe.isRefreshing = it
             }
         }
 
-        viewModel.getGoToCardDetailsEvent().observe(viewLifecycleOwner) { event ->
+        viewModel.getGoToCardDetailsEvent().observe(this) { event ->
             event?.getContentIfNotHandled()?.let {
                 openCardDetails(it)
             }
