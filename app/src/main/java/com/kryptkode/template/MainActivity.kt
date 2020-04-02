@@ -1,6 +1,7 @@
 package com.kryptkode.template
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -9,9 +10,12 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
+import com.kryptkode.template.ads.NativeAdHelper
 import com.kryptkode.template.app.base.activity.BaseViewModelActivity
 import com.kryptkode.template.app.dialogs.ContactUsDialog
 import com.kryptkode.template.app.dialogs.InfoDialog
+import com.kryptkode.template.app.dialogs.exit.ExitDialog
+import com.kryptkode.template.app.utils.AppToastCreator
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.app.utils.rating.RatingManager
 import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
@@ -34,7 +38,15 @@ class MainActivity :
     lateinit var navigator: Navigator
 
     @Inject
+    lateinit var nativeAdHelper: NativeAdHelper
+
+    @Inject
+    lateinit var appToastCreator: AppToastCreator
+
+    @Inject
     lateinit var playStoreUtils: PlayStoreUtils
+
+    var doubleBackToExitPressedOnce = false
 
 
     override fun getLayoutResourceId() = R.layout.activity_main
@@ -54,7 +66,7 @@ class MainActivity :
         super.onCreate(savedInstanceState)
         showRatingDialogIfConditionsAreMet()
         setSupportActionBar(binding.appBarMain.toolbar)
-
+        loadNativeAd()
         val toggle = ActionBarDrawerToggle(
             this,
             binding.drawerLayout,
@@ -78,6 +90,10 @@ class MainActivity :
         initNavigationView()
 
         setupObservers()
+    }
+
+    private fun loadNativeAd() {
+        nativeAdHelper.loadNativeAds(this)
     }
 
     private fun initNavigationView() {
@@ -204,9 +220,9 @@ class MainActivity :
     }
 
     protected fun showRatingDialogIfConditionsAreMet() {
-        if (ratingManager/*.setDebug(BuildConfig.DEBUG)*/
-                .showRateIfMeetsConditions()
-        ) {
+        ratingManager.monitor()
+        ratingManager.setDebug(BuildConfig.DEBUG)
+        if (ratingManager.showRateIfMeetsConditions()) {
             val dialogFragment = InfoDialog.newInstance(
                 title = getString(R.string.rate_dialog_title),
                 message = getString(R.string.rate_dialog_message),
@@ -250,5 +266,35 @@ class MainActivity :
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onBackPressed() {
+        when {
+            binding.drawerLayout.isDrawerOpen(GravityCompat.START) -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.START)
+            }
+            binding.drawerLayout.isDrawerOpen(GravityCompat.END) -> {
+                binding.drawerLayout.closeDrawer(GravityCompat.END)
+            }
+            else -> {
+                if (doubleBackToExitPressedOnce) {
+                    if (nativeAdHelper.isLoaded) {
+                        val dialog: ExitDialog =
+                            ExitDialog.newInstance(nativeAdHelper.getNativeAd(), object : ExitDialog.ExitListener{
+                                override fun onExit() {
+                                    this@MainActivity.finish()
+                                }
+                            })
+                        dialog.show(supportFragmentManager, ExitDialog::class.java.simpleName)
+                    } else {
+                        super.onBackPressed()
+                    }
+                }
+                doubleBackToExitPressedOnce = true
+                appToastCreator.showToast(getString(R.string.press_to_exit))
+                Handler()
+                    .postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+            }
+        }
     }
 }

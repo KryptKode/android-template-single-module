@@ -2,6 +2,7 @@ package com.kryptkode.template.app.di.screen.viewmodel
 
 import androidx.lifecycle.ViewModel
 import com.kryptkode.template.MainActivityViewModel
+import com.kryptkode.template.app.dialogs.exit.ExitDialogViewModel
 import com.kryptkode.template.carddetails.CardDetailViewModel
 import com.kryptkode.template.cardlist.CardListViewModel
 import com.kryptkode.template.categories.CategoriesViewModel
@@ -71,6 +72,11 @@ abstract class ViewModelModule {
     @IntoMap
     @ViewModelKey(CardDetailViewModel::class)
     abstract fun bindCardDetailViewModel(viewModel: CardDetailViewModel): ViewModel
+
+    @Binds
+    @IntoMap
+    @ViewModelKey(ExitDialogViewModel::class)
+    abstract fun bindExitDialogViewModel(viewModel: ExitDialogViewModel): ViewModel
 
 
 }

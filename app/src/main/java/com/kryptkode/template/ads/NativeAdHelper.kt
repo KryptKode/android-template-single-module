@@ -10,20 +10,24 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.kryptkode.template.R
 import timber.log.Timber
 
-class NativeAdHelper(private val context: Context) {
+class NativeAdHelper{
 
     private var adLoader: AdLoader? = null
     private val adList = mutableListOf<UnifiedNativeAd>()
 
-    init {
-        loadNativeAds()
+    val isLoaded: Boolean
+        get() = adList.isNotEmpty()
+
+
+    fun getNativeAd(): UnifiedNativeAd {
+        return adList.random()
     }
 
-    fun loadNativeAds(listener: NativeAdListener?= null) {
+    fun loadNativeAds(context: Context, listener: NativeAdListener? = null) {
 
-        if(adList.isEmpty()){
-            initAds(listener)
-        }else{
+        if (adList.isEmpty()) {
+            initAds(context,listener)
+        } else {
             for (unifiedNativeAd in adList) {
                 listener?.addNativeAd(unifiedNativeAd)
             }
@@ -32,7 +36,7 @@ class NativeAdHelper(private val context: Context) {
 
     }
 
-    private fun initAds(listener: NativeAdListener?) {
+    private fun initAds(context: Context, listener: NativeAdListener?) {
 
         val videoOptions = VideoOptions.Builder()
             .setStartMuted(false)
@@ -65,11 +69,11 @@ class NativeAdHelper(private val context: Context) {
         private var INSTANCE: NativeAdHelper? = null
         private val lock = Any()
 
-        fun getInstance(context: Context): NativeAdHelper {
+        fun getInstance(): NativeAdHelper {
             if (INSTANCE == null) {
                 synchronized(lock) {
                     if (INSTANCE == null) {
-                        INSTANCE = NativeAdHelper(context)
+                        INSTANCE = NativeAdHelper()
                     }
                     return INSTANCE as NativeAdHelper
                 }
@@ -77,7 +81,6 @@ class NativeAdHelper(private val context: Context) {
             return INSTANCE as NativeAdHelper
         }
     }
-
 
 
     interface NativeAdListener {

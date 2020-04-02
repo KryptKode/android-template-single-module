@@ -128,7 +128,7 @@ class CardListFragment :
 
     private fun insertNativeAds(startPosition:Int, itemCount:Int) {
         context?.let {
-            NativeAdHelper.getInstance(it).loadNativeAds(object : NativeAdHelper.NativeAdListener {
+            NativeAdHelper.getInstance().loadNativeAds(it, object : NativeAdHelper.NativeAdListener {
                 override fun onAdLoaded() {
                     nativeAdAdapterHelper.updateAdapterWithNativeAds(startPosition, itemCount)
                 }

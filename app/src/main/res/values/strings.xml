@@ -62,5 +62,8 @@
     <string name="watch_video_dialog_confirm_text">Yes</string>
     <string name="watch_video_dialog_cancel_btn_text">No</string>
     <string name="video_not_loaded_error_msg">Video not loaded, please try again after some time</string>
+    <string name="btn_exit_text">Exit</string>
+    <string name="rate_us_btn_text">Rate us</string>
+    <string name="press_to_exit">Press again to exit</string>
 
 </resources>
