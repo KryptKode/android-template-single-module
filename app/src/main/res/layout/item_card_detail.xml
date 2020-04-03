@@ -15,23 +15,22 @@
             android:id="@+id/image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:minHeight="500dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
             android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
-            tools:src="@tools:sample/backgrounds/scenic"/>
+            android:minHeight="500dp"
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/gradient_top_bg"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="parent"
             android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
+            android:background="@drawable/gradient_top_bg"
             app:layout_constraintBottom_toTopOf="@id/barrier"
-            />
+            app:layout_constraintEnd_toStartOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
 
         <com.kryptkode.template.app.customviews.CheckableImageView
@@ -41,10 +40,10 @@
             android:layout_gravity="center"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:padding="12dp"
             android:background="?selectableItemBackgroundBorderless"
             android:button="@drawable/btn_favorite"
             android:checked="true"
+            android:padding="12dp"
             app:civ_buttonTint="@color/colorOnGradient"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1"
@@ -56,32 +55,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="top"
-            app:constraint_referenced_ids="btn_share_whats_app,btn_share_face_book,btn_share_twitter,btn_share_others"/>
+            app:constraint_referenced_ids="btn_share_whats_app,btn_share_face_book,btn_share_twitter,btn_share_others" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_share_whats_app"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_whatsapp"
-            android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
             android:layout_marginStart="@dimen/card_detail_share_icon_margin"
             android:layout_marginEnd="@dimen/card_detail_share_icon_margin"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_chainStyle="packed"
+            android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
+            app:backgroundTint="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_share_face_book"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_whatsapp"
+            app:tint="@null" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_share_face_book"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_facebook"
-            android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
             android:layout_marginStart="@dimen/card_detail_share_icon_margin"
             android:layout_marginEnd="@dimen/card_detail_share_icon_margin"
+            android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
+            app:backgroundTint="@color/colorWhite"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_share_twitter"
             app:layout_constraintStart_toEndOf="@id/btn_share_whats_app"
-            app:layout_constraintEnd_toStartOf="@id/btn_share_twitter"/>
+            app:srcCompat="@drawable/ic_facebook"
+            app:tint="@null" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_share_twitter"
@@ -89,23 +92,27 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/card_detail_share_icon_margin"
             android:layout_marginEnd="@dimen/card_detail_share_icon_margin"
-            app:srcCompat="@drawable/ic_twitter"
             android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
-            app:layout_constraintStart_toEndOf="@id/btn_share_face_book"
+            app:tint="@null"
+            app:backgroundTint="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/btn_share_others"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toEndOf="@id/btn_share_face_book"
+            app:srcCompat="@drawable/ic_twitter" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btn_share_others"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_apps"
-            android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
             android:layout_marginStart="@dimen/card_detail_share_icon_margin"
             android:layout_marginEnd="@dimen/card_detail_share_icon_margin"
-            app:layout_constraintStart_toEndOf="@id/btn_share_twitter"
+            android:layout_marginBottom="@dimen/card_detail_share_icon_margin"
+            app:tint="@null"
+            app:backgroundTint="@color/colorWhite"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toEndOf="@id/btn_share_twitter"
+            app:srcCompat="@drawable/ic_apps" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
