@@ -29,7 +29,8 @@
             android:layout_height="match_parent"
             android:layout_gravity="start">
 
-            <include layout="@layout/nav_start_content" />
+            <include layout="@layout/nav_start_content"
+                app:viewModel="@{viewModel}"/>
 
         </com.google.android.material.navigation.NavigationView>
 

@@ -15,7 +15,6 @@ import com.kryptkode.template.app.utils.Constants.LIST_SPACING
 import com.kryptkode.template.app.utils.extensions.observe
 import com.kryptkode.template.app.utils.extensions.populateCards
 import com.kryptkode.template.cardlist.adapter.CardListener
-import com.kryptkode.template.cardlist.adapter.items.NativeAdItem
 import com.kryptkode.template.cardlist.adapter.nativead.NativeAdAdapterHelper
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.FragmentCardListBinding
@@ -53,11 +52,11 @@ class CardListFragment :
         registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 Timber.d("Item inserted ${subcategory.name}: $positionStart -- $itemCount")
-                val item = getItem(positionStart)
+               /* val item = getItem(positionStart)
                 if(item !is NativeAdItem){
                     Timber.d("Inserting native ad...")
                     insertNativeAds(positionStart, itemCount)
-                }
+                }*/
             }
         })
     }

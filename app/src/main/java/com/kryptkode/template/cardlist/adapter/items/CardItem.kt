@@ -8,6 +8,7 @@ import com.kryptkode.template.app.utils.extensions.beInvisible
 import com.kryptkode.template.cardlist.adapter.CardListener
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.ItemCategoryGridBinding
+import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.BindableItem
 
 /**
@@ -41,4 +42,29 @@ class CardItem  (val item: CardForView, private val cardListener: CardListener):
     override fun getSpanSize(spanCount: Int, position: Int): Int {
         return 1
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is CardItem) return false
+
+        if (item != other.item) return false
+        if (cardListener != other.cardListener) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = item.hashCode()
+        result = 31 * result + cardListener.hashCode()
+        return result
+    }
+
+    override fun isSameAs(other: Item<*>?): Boolean {
+        return item.id == (other as CardItem).item.id
+    }
+
+    override fun hasSameContentAs(other: Item<*>?): Boolean {
+       return item == (other as CardItem).item
+    }
+
 }

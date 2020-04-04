@@ -32,7 +32,7 @@
                     android:paddingStart="@dimen/card_side_margin"
                     android:paddingTop="@dimen/header_margin"
                     android:paddingEnd="@dimen/card_side_margin"
-                    app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:layout_constraintBottom_toTopOf="@id/ad_container"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

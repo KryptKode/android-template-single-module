@@ -22,6 +22,7 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_gravity="end"
+            android:background="?selectableItemBackgroundBorderless"
             android:layout_marginTop="20dp"
             android:onClick="@{()-> viewModel.handleStartNavCloseClick()}"
             app:iconGravity="textEnd"
