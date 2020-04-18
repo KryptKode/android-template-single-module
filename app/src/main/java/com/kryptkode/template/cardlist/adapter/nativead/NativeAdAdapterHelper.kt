@@ -36,11 +36,15 @@ class NativeAdAdapterHelper(
     }
 
     private fun noNativeAdAtPosition(position: Int): Boolean {
-        val item = adapter.getItem(position)
-        return if (item is NativeAdItem) {
-            item.unifiedNativeAd == null
+        return if (adapter.itemCount > position) {
+            val item = adapter.getItem(position)
+            return if (item is NativeAdItem) {
+                item.unifiedNativeAd == null
+            } else {
+                true
+            }
         } else {
-            true
+            false
         }
     }
 

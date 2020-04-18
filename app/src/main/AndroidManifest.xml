@@ -31,7 +31,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".privacypolicy.PrivacyPolicyActivity" />
-        <activity android:name=".subcategories.SubcategoryActivity" />
+        <activity android:name=".subcategories.SubcategoryActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".favorites.FavoritesActivity" />
         <activity android:name=".carddetails.CardDetailActivity"
             android:theme="@style/AppTheme.NoActionBar.Detail"/>

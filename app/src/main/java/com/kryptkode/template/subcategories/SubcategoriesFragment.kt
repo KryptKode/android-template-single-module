@@ -97,6 +97,10 @@ class SubcategoriesFragment :
                 advert.showInterstitialAd()
             }
         })
+
+        (activity as? SubcategoryActivity)?.setSupportActionBar(binding.toolbar)
+        (activity as? SubcategoryActivity)?.showUpEnabled(true)
+        (activity as? SubcategoryActivity)?.setActionBarTitle(category.name.capitalize())
     }
 
     private fun initTabs() {

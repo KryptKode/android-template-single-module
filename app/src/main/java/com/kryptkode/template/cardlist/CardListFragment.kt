@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
+import com.kryptkode.template.ads.AdConfig
 import com.kryptkode.template.ads.NativeAdHelper
 import com.kryptkode.template.ads.NativeAdRowHelper
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
@@ -123,7 +124,9 @@ class CardListFragment :
     }
 
     private fun populateCards(items: List<CardForView>) {
-        nativeAdRowHelper.populateNativeAdRows(0, items.size)
+        val itemSize = items.size
+        nativeAdRowHelper.populateNativeAdRows(0, itemSize)
+
         adapter.updateAsync(items.mapIndexed { index, card ->
             if (nativeAdRowHelper.getNativeAdRows().contains(index)) {
                 NativeAdItem(nativeAdHelper.getNativeAd())
@@ -131,7 +134,10 @@ class CardListFragment :
                 CardItem(card, cardListListener)
             }
         }) {
-            initNativeAds(0, items.size)
+            if(itemSize < AdConfig.NATIVE_AD_AFTER_POSTS){
+                adapter.add(NativeAdItem(nativeAdHelper.getNativeAd()))
+            }
+            /*initNativeAds(0, items.size)*/
         }
     }
 
