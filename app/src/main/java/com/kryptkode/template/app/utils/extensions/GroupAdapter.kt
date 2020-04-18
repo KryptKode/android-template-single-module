@@ -7,7 +7,6 @@ import com.kryptkode.template.startnav.adapter.ChildItem
 import com.kryptkode.template.startnav.adapter.HeaderItem
 import com.kryptkode.template.startnav.model.CategoryWithSubCategoriesForView
 import com.xwray.groupie.ExpandableGroup
-import com.xwray.groupie.Group
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
 
@@ -15,28 +14,26 @@ import com.xwray.groupie.kotlinandroidextensions.GroupieViewHolder
  * Created by kryptkode on 3/10/2020.
  */
 fun GroupAdapter<GroupieViewHolder>.populateCategoriesAndSubcategories(items: List<CategoryWithSubCategoriesForView>?) {
-    val allGroups = mutableListOf<Group>()
-    items?.forEach {
+    updateAsync(items?.map {
         val headerItem = HeaderItem(it.category)
         val expandableGroup = ExpandableGroup(headerItem)
         val childItems = it.subcategories.map { item ->
             ChildItem(it.category, item)
         }
         expandableGroup.addAll(childItems)
-        allGroups.add(expandableGroup)
-        update(allGroups)
-    }
+        expandableGroup
+    } ?: listOf())
 }
+
 
 fun GroupAdapter<GroupieViewHolder>.populateCards(
     items: List<CardForView>,
     cardListener: CardListener
 ) {
-    val allGroups = mutableListOf<Group>()
-    items.forEach {
-        allGroups.add(CardItem(it, cardListener))
-    }
-    addAll(allGroups)
-    updateAsync(allGroups)
+
+    updateAsync(items.map {
+        CardItem(it, cardListener)
+    })
+
 }
 

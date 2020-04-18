@@ -1,17 +1,30 @@
 package com.kryptkode.template.cardlist.adapter.items
 
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.kryptkode.template.R
+import com.kryptkode.template.app.utils.extensions.beGone
+import com.kryptkode.template.app.utils.extensions.beVisible
 import com.kryptkode.template.databinding.ItemNativeAdBinding
 import com.xwray.groupie.databinding.BindableItem
 
 /**
  * Created by kryptkode on 3/23/2020.
  */
-class NativeAdItem(val unifiedNativeAd: UnifiedNativeAd) : BindableItem<ItemNativeAdBinding>() {
+class NativeAdItem(val unifiedNativeAd: UnifiedNativeAd?) : BindableItem<ItemNativeAdBinding>() {
 
     override fun bind(viewBinding: ItemNativeAdBinding, position: Int) {
-        viewBinding.nativeAd.setNativeAd(unifiedNativeAd)
+        if(unifiedNativeAd == null){
+            viewBinding.itemRoot.beGone()
+        }else {
+            viewBinding.itemRoot.beVisible()
+            viewBinding.itemRoot.layoutParams.apply {
+               height =  WRAP_CONTENT
+               width =  MATCH_PARENT
+            }
+            viewBinding.nativeAd.setNativeAd(unifiedNativeAd)
+        }
     }
 
     override fun getLayout(): Int {

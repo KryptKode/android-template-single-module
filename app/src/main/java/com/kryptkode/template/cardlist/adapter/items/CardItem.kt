@@ -14,14 +14,15 @@ import com.xwray.groupie.databinding.BindableItem
 /**
  * Created by kryptkode on 3/23/2020.
  */
-class CardItem  (val item: CardForView, private val cardListener: CardListener): BindableItem<ItemCategoryGridBinding>() {
+class CardItem(val item: CardForView, private val cardListener: CardListener) :
+    BindableItem<ItemCategoryGridBinding>() {
 
     override fun bind(viewBinding: ItemCategoryGridBinding, position: Int) {
         val placeholderDrawable = PlaceHolderDrawable(viewBinding.root.context)
         viewBinding.tvName.beInvisible()
         viewBinding.imgLock.beInvisible()
         viewBinding.imgBtnFavourite.isChecked = item.favorite
-        viewBinding.imgThumbnail.load(ImageUrl.getImageUrl(item.imageUrl)){
+        viewBinding.imgThumbnail.load(ImageUrl.getImageUrl(item.imageUrl)) {
             placeholder(placeholderDrawable)
             error(R.mipmap.ic_launcher)
         }
@@ -60,11 +61,26 @@ class CardItem  (val item: CardForView, private val cardListener: CardListener):
     }
 
     override fun isSameAs(other: Item<*>?): Boolean {
-        return item.id == (other as CardItem).item.id
+        return if (other is CardItem) {
+            item.id == other.item.id
+        } else {
+            super.isSameAs(other)
+        }
     }
 
     override fun hasSameContentAs(other: Item<*>?): Boolean {
-       return item == (other as CardItem).item
+        return if (other is CardItem) {
+            item == other.item
+        } else {
+            super.hasSameContentAs(other)
+        }
     }
 
+    override fun getId(): Long {
+        return try {
+            item.id.toLong()
+        } catch (e: Exception) {
+            super.getId()
+        }
+    }
 }

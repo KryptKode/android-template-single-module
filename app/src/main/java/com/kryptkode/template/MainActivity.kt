@@ -93,7 +93,7 @@ class MainActivity :
     }
 
     private fun loadNativeAd() {
-        nativeAdHelper.loadNativeAds(this)
+        nativeAdHelper.loadNativeAds()
     }
 
     private fun initNavigationView() {
@@ -278,9 +278,10 @@ class MainActivity :
             }
             else -> {
                 if (doubleBackToExitPressedOnce) {
-                    if (nativeAdHelper.isLoaded) {
+                    val nativeAd = nativeAdHelper.getNativeAd()
+                    if (nativeAd != null) {
                         val dialog: ExitDialog =
-                            ExitDialog.newInstance(nativeAdHelper.getNativeAd(), object : ExitDialog.ExitListener{
+                            ExitDialog.newInstance(nativeAd, object : ExitDialog.ExitListener{
                                 override fun onExit() {
                                     this@MainActivity.finish()
                                 }

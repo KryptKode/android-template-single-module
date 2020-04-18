@@ -4,17 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.R
 import com.kryptkode.template.ads.NativeAdHelper
+import com.kryptkode.template.ads.NativeAdRowHelper
 import com.kryptkode.template.app.base.fragment.BaseViewModelFragment
 import com.kryptkode.template.app.customviews.SpacesItemDecoration
 import com.kryptkode.template.app.utils.Constants.LIST_SPACING
 import com.kryptkode.template.app.utils.extensions.observe
-import com.kryptkode.template.app.utils.extensions.populateCards
 import com.kryptkode.template.cardlist.adapter.CardListener
+import com.kryptkode.template.cardlist.adapter.items.CardItem
+import com.kryptkode.template.cardlist.adapter.items.NativeAdItem
 import com.kryptkode.template.cardlist.adapter.nativead.NativeAdAdapterHelper
 import com.kryptkode.template.cardlist.model.CardForView
 import com.kryptkode.template.databinding.FragmentCardListBinding
@@ -33,6 +34,12 @@ class CardListFragment :
     @Inject
     lateinit var navigator: Navigator
 
+    @Inject
+    lateinit var nativeAdRowHelper: NativeAdRowHelper
+
+    @Inject
+    lateinit var nativeAdHelper: NativeAdHelper
+
     private val subcategory by lazy {
         requireArguments().getParcelable<SubCategoryForView>(ARG_SUBCATEGORY)!!
     }
@@ -49,20 +56,14 @@ class CardListFragment :
 
     private val adapter = GroupAdapter<GroupieViewHolder>().apply {
         spanCount = 2
-        registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                Timber.d("Item inserted ${subcategory.name}: $positionStart -- $itemCount")
-               /* val item = getItem(positionStart)
-                if(item !is NativeAdItem){
-                    Timber.d("Inserting native ad...")
-                    insertNativeAds(positionStart, itemCount)
-                }*/
-            }
-        })
     }
 
     private val nativeAdAdapterHelper by lazy {
-        NativeAdAdapterHelper(adapter,subcategory.name)
+        NativeAdAdapterHelper(
+            adapter,
+            nativeAdRowHelper,
+            subcategory.name
+        )
     }
 
     override fun onAttach(context: Context) {
@@ -105,7 +106,7 @@ class CardListFragment :
     private fun setupObservers() {
         viewModel.cardList.observe(this) {
             Timber.d("Subscribe...")
-            adapter.populateCards(it ?: listOf(), cardListListener)
+            populateCards(it ?: listOf())
         }
 
         viewModel.getLoadingValueEvent().observe(this) { event ->
@@ -121,27 +122,50 @@ class CardListFragment :
         }
     }
 
-    private fun openCardDetails(card: CardForView) {
-        navigator.openCardDetails(card)
+    private fun populateCards(items: List<CardForView>) {
+        nativeAdRowHelper.populateNativeAdRows(0, items.size)
+        adapter.updateAsync(items.mapIndexed { index, card ->
+            if (nativeAdRowHelper.getNativeAdRows().contains(index)) {
+                NativeAdItem(nativeAdHelper.getNativeAd())
+            } else {
+                CardItem(card, cardListListener)
+            }
+        }) {
+            initNativeAds(0, items.size)
+        }
     }
 
-    private fun insertNativeAds(startPosition:Int, itemCount:Int) {
-        context?.let {
-            NativeAdHelper.getInstance().loadNativeAds(it, object : NativeAdHelper.NativeAdListener {
-                override fun onAdLoaded() {
-                    nativeAdAdapterHelper.updateAdapterWithNativeAds(startPosition, itemCount)
-                }
+    private fun initNativeAds(positionStart: Int, itemCount: Int) {
+        Timber.d("Item inserted ${subcategory.name}: $positionStart -- $itemCount")
+        Timber.d("Inserting native ad...")
+        insertNativeAds(positionStart, itemCount)
+    }
 
-                override fun onAdFailed() {
-                    Timber.e("Failed to load native ads")
-                    nativeAdAdapterHelper.updateAdapterWithNativeAds(startPosition, itemCount)
-                }
+    private fun insertNativeAds(startPosition: Int, itemCount: Int) {
+        nativeAdHelper.loadNativeAds(object : NativeAdHelper.NativeAdListener {
+            override fun onAdLoaded() {
+                nativeAdAdapterHelper.updateAdapterWithNativeAds(
+                    startPosition,
+                    itemCount
+                )
+            }
 
-                override fun addNativeAd(unifiedNativeAd: UnifiedNativeAd) {
-                    nativeAdAdapterHelper.addNativeAd(unifiedNativeAd)
-                }
-            })
-        }
+            override fun onAdFailed() {
+                Timber.e("Failed to load native ads")
+                nativeAdAdapterHelper.updateAdapterWithNativeAds(
+                    startPosition,
+                    itemCount
+                )
+            }
+
+            override fun addNativeAd(unifiedNativeAd: UnifiedNativeAd) {
+                nativeAdAdapterHelper.addNativeAd(unifiedNativeAd)
+            }
+        })
+    }
+
+    private fun openCardDetails(card: CardForView) {
+        navigator.openCardDetails(card)
     }
 
     companion object {

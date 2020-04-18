@@ -10,7 +10,7 @@ import com.google.android.gms.ads.formats.UnifiedNativeAd
 import com.kryptkode.template.R
 import timber.log.Timber
 
-class NativeAdHelper{
+class NativeAdHelper(private val context: Context) {
 
     private var adLoader: AdLoader? = null
     private val adList = mutableListOf<UnifiedNativeAd>()
@@ -19,14 +19,18 @@ class NativeAdHelper{
         get() = adList.isNotEmpty()
 
 
-    fun getNativeAd(): UnifiedNativeAd {
-        return adList.random()
+    fun getNativeAd(): UnifiedNativeAd? {
+        return if (adList.isNotEmpty()) {
+            adList.random()
+        } else {
+            null
+        }
     }
 
-    fun loadNativeAds(context: Context, listener: NativeAdListener? = null) {
+    fun loadNativeAds(listener: NativeAdListener? = null) {
 
         if (adList.isEmpty()) {
-            initAds(context,listener)
+            initAds(context, listener)
         } else {
             for (unifiedNativeAd in adList) {
                 listener?.addNativeAd(unifiedNativeAd)
@@ -69,11 +73,11 @@ class NativeAdHelper{
         private var INSTANCE: NativeAdHelper? = null
         private val lock = Any()
 
-        fun getInstance(): NativeAdHelper {
+        fun getInstance(context: Context): NativeAdHelper {
             if (INSTANCE == null) {
                 synchronized(lock) {
                     if (INSTANCE == null) {
-                        INSTANCE = NativeAdHelper()
+                        INSTANCE = NativeAdHelper(context)
                     }
                     return INSTANCE as NativeAdHelper
                 }
