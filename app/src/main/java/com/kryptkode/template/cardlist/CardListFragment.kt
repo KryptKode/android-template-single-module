@@ -129,7 +129,7 @@ class CardListFragment :
 
         adapter.updateAsync(items.mapIndexed { index, card ->
             if (nativeAdRowHelper.getNativeAdRows().contains(index)) {
-                NativeAdItem(nativeAdHelper.getNativeAd())
+                NativeAdItem(nativeAdHelper.getNativeAd(index))
             } else {
                 CardItem(card, cardListListener)
             }

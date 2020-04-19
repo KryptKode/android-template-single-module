@@ -45,6 +45,10 @@ class CategoriesFragment :
         override fun onRewarded(reward: Reward?) {
             viewModel.onVideoRewarded()
         }
+
+        override fun onRewardedVideoAdClosed() {
+            initRewardedVideoAd()
+        }
     }
 
     private val categoriesAdapter = CategoriesAdapter(categoriesListener)
@@ -64,8 +68,16 @@ class CategoriesFragment :
     }
 
     private fun initAds() {
-        advert.initBannerAd(binding.adContainer)
+        initBannerAd()
+        initRewardedVideoAd()
+    }
+
+    private fun initRewardedVideoAd() {
         advert.initRewardedVideoAd(rewardedVideoListener)
+    }
+
+    private fun initBannerAd() {
+        advert.initBannerAd(binding.adContainer)
     }
 
     private fun initViews() {

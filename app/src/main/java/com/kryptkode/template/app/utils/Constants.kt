@@ -8,5 +8,4 @@ object Constants {
     const val ONE_HOUR_IN_MILLIS = 60* 60* 1000L
     const val ONE_DAY_IN_MILLIS = 24* 60* 60* 1000L
     const val LIST_SPACING = 10
-    val lockedCategoryPositions = arrayOf(3, 5, 7)
 }

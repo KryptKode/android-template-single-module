@@ -32,7 +32,6 @@
     <style name="AppTheme.Toolbar" parent="Widget.AppCompat.Toolbar">
         <!--This line changes the color of text in Toolbar-->
         <!--        <item name="android:textColorPrimary">@color/colorBlack</item>-->
-
         <item name="android:background">?colorSurface</item>
     </style>
 

@@ -2,7 +2,7 @@ package com.kryptkode.template.app.data.remote.api
 
 import android.content.Context
 import com.kryptkode.template.BuildConfig
-import com.readystatesoftware.chuck.ChuckInterceptor
+//import com.readystatesoftware.chuck.ChuckInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -29,7 +29,7 @@ class RestClient (context: Context) {
                 connectTimeout(TIMEOUT, TimeUnit.SECONDS)
                 writeTimeout(TIMEOUT, TimeUnit.SECONDS)
                 readTimeout(TIMEOUT, TimeUnit.SECONDS)
-                addInterceptor(ChuckInterceptor(context))
+//                addInterceptor(ChuckInterceptor(context))
                 addInterceptor(loggingInterceptor)
             }
 

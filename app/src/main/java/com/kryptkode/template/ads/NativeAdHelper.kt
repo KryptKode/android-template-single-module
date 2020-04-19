@@ -19,9 +19,14 @@ class NativeAdHelper(private val context: Context) {
         get() = adList.isNotEmpty()
 
 
-    fun getNativeAd(): UnifiedNativeAd? {
+    fun getNativeAd(position: Int? = null): UnifiedNativeAd? {
         return if (adList.isNotEmpty()) {
-            adList.random()
+            if (position == null) {
+                adList.random()
+            } else {
+                val size = adList.size
+                adList[position % size]
+            }
         } else {
             null
         }

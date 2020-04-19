@@ -164,7 +164,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
 
-    debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
+  /*  debugImplementation "com.amitshekhar.android:debug-db:1.0.6"
     debugImplementation "com.squareup.leakcanary:leakcanary-android:2.1"
 
     // Chuck
@@ -172,7 +172,7 @@ dependencies {
         def chuckVersion = "1.1.0"
         debugImplementation "com.readystatesoftware.chuck:library:${chuckVersion}"
         releaseImplementation "com.readystatesoftware.chuck:library-no-op:${chuckVersion}"
-    }
+    }*/
 }
 
 apply plugin: 'com.google.gms.google-services'

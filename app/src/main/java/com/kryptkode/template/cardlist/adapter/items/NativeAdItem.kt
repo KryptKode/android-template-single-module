@@ -7,6 +7,7 @@ import com.kryptkode.template.R
 import com.kryptkode.template.app.utils.extensions.beGone
 import com.kryptkode.template.app.utils.extensions.beVisible
 import com.kryptkode.template.databinding.ItemNativeAdBinding
+import com.xwray.groupie.Item
 import com.xwray.groupie.databinding.BindableItem
 
 /**
@@ -15,13 +16,13 @@ import com.xwray.groupie.databinding.BindableItem
 class NativeAdItem(val unifiedNativeAd: UnifiedNativeAd?) : BindableItem<ItemNativeAdBinding>() {
 
     override fun bind(viewBinding: ItemNativeAdBinding, position: Int) {
-        if(unifiedNativeAd == null){
+        if (unifiedNativeAd == null) {
             viewBinding.itemRoot.beGone()
-        }else {
+        } else {
             viewBinding.itemRoot.beVisible()
             viewBinding.itemRoot.layoutParams.apply {
-               height =  WRAP_CONTENT
-               width =  MATCH_PARENT
+                height = WRAP_CONTENT
+                width = MATCH_PARENT
             }
             viewBinding.nativeAd.setNativeAd(unifiedNativeAd)
         }
@@ -36,5 +37,38 @@ class NativeAdItem(val unifiedNativeAd: UnifiedNativeAd?) : BindableItem<ItemNat
             is NativeAdItem -> 2
             else -> 1
         }
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is NativeAdItem) return false
+
+        if (unifiedNativeAd != other.unifiedNativeAd) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return unifiedNativeAd?.hashCode() ?: 0
+    }
+
+    override fun isSameAs(other: Item<*>?): Boolean {
+        return if (other is NativeAdItem) {
+            unifiedNativeAd.hashCode() == other.unifiedNativeAd.hashCode()
+        } else {
+            super.isSameAs(other)
+        }
+    }
+
+    override fun hasSameContentAs(other: Item<*>?): Boolean {
+        return if (other is NativeAdItem) {
+            unifiedNativeAd == other.unifiedNativeAd
+        } else {
+            super.hasSameContentAs(other)
+        }
+    }
+
+    override fun getId(): Long {
+        return unifiedNativeAd?.hashCode()?.toLong() ?: super.getId()
     }
 }
