@@ -29,19 +29,19 @@ abstract class CategoryDao : BaseDao<CategoryEntity>() {
      * Get all entities that are marked as favorite
      * @return
      */
-    @Query("SELECT * FROM category WHERE favorite = 1 ORDER BY id")
+    @Query("SELECT * FROM category WHERE favorite = 1 ORDER BY sort")
     abstract fun getAllFavoriteCategories(): LiveData<List<CategoryEntity>>
 
 
     @Transaction
-    @Query("SELECT * FROM category ORDER BY id")
+    @Query("SELECT * FROM category ORDER BY sort")
     abstract fun getCategoriesWithSubCategories(): LiveData<List<CategoryWithSubCategoriesEntity>>
 
     /**
      * Get all entities of type Category
      * @return
      */
-    @Query("SELECT * FROM category ORDER BY id")
+    @Query("SELECT * FROM category ORDER BY sort")
     abstract fun getAllCategories(): LiveData<List<CategoryEntity>>
 
     override suspend fun handleInsertConflict(item: CategoryEntity) {

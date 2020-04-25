@@ -26,8 +26,8 @@ class CategoryViewMapper : Mapper<CategoryForView, Category> {
             model.name,
             model.imageUrl,
             model.favorite,
-            model.status,
             model.sortOrder,
+            model.status,
             model.locked
         )
     }
