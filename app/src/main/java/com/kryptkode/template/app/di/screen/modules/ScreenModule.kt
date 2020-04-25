@@ -1,6 +1,7 @@
 package com.kryptkode.template.app.di.screen.modules
 
 import android.content.Context
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentActivity
 import com.kryptkode.template.Navigator
 import com.kryptkode.template.app.data.domain.error.ErrorHandler
@@ -23,6 +24,7 @@ import com.kryptkode.template.app.di.screen.modules.mapper.local.LocalMapperModu
 import com.kryptkode.template.app.di.screen.modules.repo.RepositoryModule
 import com.kryptkode.template.app.utils.AppToastCreator
 import com.kryptkode.template.app.utils.DateHelper
+import com.kryptkode.template.app.utils.inappupdates.InAppUpdateChecker
 import com.kryptkode.template.app.utils.rating.RatingDataProvider
 import com.kryptkode.template.app.utils.rating.RatingManager
 import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
@@ -34,7 +36,7 @@ import dagger.Provides
  * Created by kryptkode on 2/19/2020.
  */
 @Module(includes = [LocalMapperModule::class, RepositoryModule::class, MapperModule::class, AdModule::class])
-class ScreenModule(private val activity: FragmentActivity) {
+class ScreenModule(private val activity: AppCompatActivity) {
 
     @Provides
     @ScreenScope
@@ -44,7 +46,13 @@ class ScreenModule(private val activity: FragmentActivity) {
 
     @Provides
     @ScreenScope
-    fun provideActivity(): FragmentActivity {
+    fun provideActivity(): AppCompatActivity {
+        return activity
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideFragmentActivity(): FragmentActivity {
         return activity
     }
 
@@ -117,5 +125,14 @@ class ScreenModule(private val activity: FragmentActivity) {
     @ScreenScope
     fun provideDateHelper(context: Context): DateHelper {
         return DateHelper(context)
+    }
+
+    @Provides
+    @ScreenScope
+    fun provideInAppUpdateChecker(
+        appToastCreator: AppToastCreator,
+        activity: AppCompatActivity
+    ): InAppUpdateChecker {
+        return InAppUpdateChecker(appToastCreator, activity)
     }
 }

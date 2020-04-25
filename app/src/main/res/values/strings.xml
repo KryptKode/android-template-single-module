@@ -65,5 +65,5 @@
     <string name="btn_exit_text">Exit</string>
     <string name="rate_us_btn_text">Rate us</string>
     <string name="press_to_exit">Press again to exit</string>
-
+    <string name="remote_update_failed_msg">Error occurred while updating.</string>
 </resources>

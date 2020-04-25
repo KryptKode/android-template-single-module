@@ -9,7 +9,8 @@
         <item>7</item>
     </integer-array>
 
-    <array name="category_locked_positions_by_default">
+    <array name="category_locked_positions_by_default"> <!--TRUE = The category is locked initially
+    FALSE = The category is unlocked initially-->
         <item>true</item>
         <item>false</item>
         <item>true</item>

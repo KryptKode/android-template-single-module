@@ -1,5 +1,6 @@
 package com.kryptkode.template
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.Menu
@@ -17,6 +18,7 @@ import com.kryptkode.template.app.dialogs.InfoDialog
 import com.kryptkode.template.app.dialogs.exit.ExitDialog
 import com.kryptkode.template.app.utils.AppToastCreator
 import com.kryptkode.template.app.utils.extensions.observe
+import com.kryptkode.template.app.utils.inappupdates.InAppUpdateChecker
 import com.kryptkode.template.app.utils.rating.RatingManager
 import com.kryptkode.template.app.utils.sharing.PlayStoreUtils
 import com.kryptkode.template.app.utils.sharing.ShareUtils
@@ -45,6 +47,9 @@ class MainActivity :
 
     @Inject
     lateinit var playStoreUtils: PlayStoreUtils
+
+    @Inject
+    lateinit var inAppUpdateChecker: InAppUpdateChecker
 
     var doubleBackToExitPressedOnce = false
 
@@ -90,6 +95,11 @@ class MainActivity :
         initNavigationView()
 
         setupObservers()
+        checkForUpdates()
+    }
+
+    private fun checkForUpdates() {
+        inAppUpdateChecker.checkForUpdates()
     }
 
     private fun loadNativeAd() {
@@ -297,5 +307,10 @@ class MainActivity :
                     .postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        inAppUpdateChecker.onActivityResult(requestCode, resultCode)
     }
 }
